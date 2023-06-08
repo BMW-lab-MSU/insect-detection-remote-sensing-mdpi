@@ -42,37 +42,37 @@ for scanNum = 1:length(scanNums)
 imageDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + structName;
 beeStruct = load(imageDirectory);
 numImages = numel(beeStruct.adjusted_data_junecal);
-directoryResults = [];
+directoryResults = zeros(numImages,2);     % Image # | Insect Present 
+directoryResults(1:end,1) = (1:numImages);
+directoryData = cell(numImages,1);
 
     % Image Iteration
+    images = struct2cell(beeStruct.adjusted_data_junecal);
     parfor imageNum = 1:numImages
-
-        image = beeStruct.adjusted_data_junecal(imageNum).data;
-        beeRows = [];
+        image = images{3,1,imageNum}
+        beeRows = cell(1,size(image,2));
         % Row Iteration
         for row = 1:size(image,1)
             tmpResults = gfpop(image(row,:),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                beeRows = [beeRows tmpResults];
+                beeRows{1,col} = tmpResults;
             end
         end
 
-        if(length(beeRows) > 0)
-            outputStructure = struct("rowData",beeRows,"image",imageNum);
-            directoryResults = [directoryResults outputStructure];
-        else
-            outputStructure = struct("rowData",nan,"image",nan);
-            directoryResults = [directoryResults outputStructure];
+        if(~isempty(beeRows))
+            directoryData{imageNum} = beeRows;
         end
 
     end
 
+    beeIndeces = ~cellfun(@isempty,directoryData);
+    directoryResults(beeIndeces,2) = 1;
+
     % Saving Full Directory Structure
-    results = {directoryResults,date+"-"+scanNums(scanNum)};
+    results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
     save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "rowResults.mat","results");
 
 end
 end
-toc
 runtime = toc;
 save("rowSparseRuntime.mat","runtime")

@@ -42,38 +42,37 @@ for scanNum = 1:length(scanNums)
 imageDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + structName;
 beeStruct = load(imageDirectory);
 numImages = numel(beeStruct.adjusted_data_junecal);
-directoryResults = [];
+directoryResults = zeros(numImages,2);     % Image # | Insect Present 
+directoryResults(1:end,1) = (1:numImages);
+directoryData = cell(numImages,1);
 
     % Image Iteration
+    images = struct2cell(beeStruct.adjusted_data_junecal);
     parfor imageNum = 1:numImages
-
-        image = beeStruct.adjusted_data_junecal(imageNum).data;
-        beeColumns = [];
+        image = images{3,1,imageNum}
+        beeColumns = cell(1,size(image,2));
         % Column Iteration
         for col = 1:size(image,2)
             tmpResults = gfpop(image(:,col),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                beeColumns = [beeColumns tmpResults];
+                beeColumns{1,col} = tmpResults;
             end
         end
 
-        if(length(beeColumns) > 0)
-            outputStructure = struct("columnData",beeColumns,"image",imageNum);
-            directoryResults =  [directoryResults outputStructure];
-        else
-            outputStructure = struct("columnData",nan,"image",nan);
-            directoryResults = [directoryResults outputStructure];
+        if(~isempty(beeColumns))
+            directoryData{imageNum} = beeColumns;
         end
 
     end
 
+    beeIndeces = ~cellfun(@isempty,directoryData);
+    directoryResults(beeIndeces,2) = 1;
+
     % Saving Full Directory Structure
-    results = {directoryResults,date+"-"+scanNums(scanNum)};
+    results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
     save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "columnResults.mat","results");
 
 end
 end
-toc
-save("columnSparseRuntime.mat","toc")
-
-%% Insect Image Iteration
+runtime = toc;
+save("columnSparseRuntime.mat","runtime")
