@@ -1,4 +1,4 @@
-baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
+baseDir = "../data/raw";
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
 folderPrefix = "MSU-horticulture-farm-bees-";
 imageNum0623 = ["121320" "121708" "121757" "122126" "131621" "131933" "133400" "135615" "141253" "144154" "145241"];
@@ -6,8 +6,8 @@ imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "
 imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
 imageNum0729 = ["090758" "093945" "095958" "101924"];
 scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
-rowStructName = "rowResults.mat";
-colStructName = "colResults.mat";
+rowResultsInput = "rowResults.mat";
+colResultsInput = "colResults.mat";
 labelsName = "labels.mat";
 
 % Matrix Initialization
@@ -29,11 +29,13 @@ labelsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(s
 
     % Loading Row Results
     rowResultsIn = load(rowResultsDirectory);
-    rowResults = rowResultsIn{1,1};
+    rowResultsTMP = rowResultsIn{1,1};
+    rowResults = rowResultsTMP(:,2);
 
     % Loading Column Results
     colResultsIn = load(colResultsDirectory);
-    colResults = colResultsIn{1,1};
+    colResultsTMP = colResultsIn{1,1};
+    colResults = colResultsTMP(:,2);
 
     % Creating Vectors for Confusion Matrix
     rowPredicted = zeros(1,length(imagesTrue));
