@@ -24,10 +24,11 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 %% Bee Image Iteration
 tic
 
-baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
+% baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
+baseDir = "../data/raw";
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
 folderPrefix = "MSU-horticulture-farm-bees-";
-imageNum0623 = ["121320" "121708" "121757" "135615" "141253" "144154" "145241"];
+imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
 imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
 imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
 imageNum0729 = ["090758" "093945" "095958" "101924"];

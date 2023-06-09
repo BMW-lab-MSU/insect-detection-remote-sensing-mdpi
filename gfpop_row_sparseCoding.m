@@ -24,10 +24,11 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 %% Bee Image Iteration
 tic
 
-baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
+% baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
+baseDir = "../data/raw";
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
 folderPrefix = "MSU-horticulture-farm-bees-";
-imageNum0623 = ["121320" "121708" "121757" "135615" "141253" "144154" "145241"];
+imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
 imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
 imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
 imageNum0729 = ["090758" "093945" "095958" "101924"];
@@ -50,12 +51,12 @@ directoryData = cell(numImages,1);
     images = struct2cell(beeStruct.adjusted_data_junecal);
     parfor imageNum = 1:numImages
         image = images{3,1,imageNum}
-        beeRows = cell(1,size(image,2));
+        beeRows = cell(1,size(image,1));
         % Row Iteration
         for row = 1:size(image,1)
             tmpResults = gfpop(image(row,:),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                beeRows{1,col} = tmpResults;
+                beeRows{1,row} = tmpResults;
             end
         end
 

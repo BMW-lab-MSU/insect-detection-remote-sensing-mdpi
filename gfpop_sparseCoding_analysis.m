@@ -1,7 +1,7 @@
 baseDir = "../data/raw";
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
 folderPrefix = "MSU-horticulture-farm-bees-";
-imageNum0623 = ["121320" "121708" "121757" "122126" "131621" "131933" "133400" "135615" "141253" "144154" "145241"];
+imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
 imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
 imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
 imageNum0729 = ["090758" "093945" "095958" "101924"];
@@ -19,8 +19,8 @@ for index = 1:length(dates)
 date = dates(index);
 scanNums = scanNumbers{index};
 for scanNum = 1:length(scanNums)
-rowResultsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + rowStructName;
-colResultsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + colStructName;
+rowResultsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + rowResultsInput;
+colResultsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + rowResultsInput;
 labelsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + labelsName;
 
     % Loading Image Labels
@@ -29,23 +29,25 @@ labelsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(s
 
     % Loading Row Results
     rowResultsIn = load(rowResultsDirectory);
-    rowResultsTMP = rowResultsIn{1,1};
+    rowResultsTMP = rowResultsIn.results{1,1};
     rowResults = rowResultsTMP(:,2);
 
     % Loading Column Results
     colResultsIn = load(colResultsDirectory);
-    colResultsTMP = colResultsIn{1,1};
+    colResultsTMP = colResultsIn.results{1,1};
     colResults = colResultsTMP(:,2);
 
     % Creating Vectors for Confusion Matrix
-    rowPredicted = zeros(1,length(imagesTrue));
-    colPredicted = zeros(1,length(imagesTrue));
-
-    rowPredicted(~isnan([rowResults.image])) = 1;
-    rowPredicted = logical(rowPredicted);
-
-    colPredicted(~isnan([colResults.image])) = 1;
-    colPredicted = logical(colPredicted);
+    rowPredicted = logical(rowResults);
+    colPredicted = logical(colResults);
+    % rowPredicted = zeros(1,length(imagesTrue));
+    % colPredicted = zeros(1,length(imagesTrue));
+    % 
+    % rowPredicted(~isnan([rowResults.image])) = 1;
+    % rowPredicted = logical(rowPredicted);
+    % 
+    % colPredicted(~isnan([colResults.image])) = 1;
+    % colPredicted = logical(colPredicted);
 
     % Creating Confusion Matrix
     rowMatrix = confusionmat(imagesTrue,rowPredicted);
@@ -53,11 +55,11 @@ labelsDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(s
 
     % Analyzing and Combining Matrices
     if(imagesTrue == rowPredicted)
-        rowMatrix = [(sum(imagesTrue(:)) == 0)*rowMatrix 0 ; 0 (sum(imagesTrue:) == 1))*rowMatrix];
+        rowMatrix = [(sum(imagesTrue(:)) == 0)*rowMatrix 0 ; 0 (sum(imagesTrue(:)) == 1)*rowMatrix];
     end
 
     if(imagesTrue == colPredicted)
-        colMatrix = [(sum(imagesTrue(:)) == 0)*colMatrix 0 ; 0 (sum(imagesTrue:) == 1))*colMatrix];
+        colMatrix = [(sum(imagesTrue(:)) == 0)*colMatrix 0 ; 0 (sum(imagesTrue(:)) == 1)*colMatrix];
     end
     totalRowResults = totalRowResults + rowMatrix;
     totalColResults = totalColResults + colMatrix;
