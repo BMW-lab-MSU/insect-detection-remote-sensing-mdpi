@@ -1,8 +1,7 @@
-% gfpop rows with sparse coding
+% gfpop columns with original images
 
-% Runs through the LiDAR images after sparse coding preprocessing. This
-% means there is less verification of the changepoints since in theory the
-% hard targets that cause all of the issues have been removed.
+% Runs through the LiDAR images with verification after detecting
+% changepoint.
 
 %% Graph Generation
 
@@ -24,7 +23,7 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 %% Bee Image Iteration
 tic
 
-% baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
+% baseDir = "../bee-lidar-data\msu-bee-hives";
 baseDir = "../data/raw";
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
 folderPrefix = "MSU-horticulture-farm-bees-";
@@ -49,24 +48,26 @@ directoryData = cell(numImages,1);
 
     % Image Iteration
     images = struct2cell(beeStruct.adjusted_data_junecal);
-    parfor imageNum = 1:numImages
-        image = images{3,1,imageNum}
-        
+    for imageNum = 1:numImages
+        image = -1.*images{3,1,imageNum};
+
         % Preprocessing
         image(image < 0) = 0;
-        smoothdata(image,2,'movmean',3);
+        smoothdata(image,1,'movmean',3);
 
-        % Row Iteration
-        beeRows = cell(1,size(image,1));
-        for row = 1:size(image,1)
-            tmpResults = gfpop(image(row,:),beeGraph,"mean");
+        % Column Iteration
+        beeCols = cell(1,size(image,1));
+        for col = 1:size(image,1)
+            tmpResults = gfpop(image(:,col),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                beeRows{1,row} = tmpResults;
+                if(tmpResults.parameters(tmpResults.states.contains("BEE"))) > 2*mean(image(col,:)) % Hard Target Verification
+                    beeCols{1,col} = tmpResults;
+                end
             end
         end
 
-        if(~isempty(beeRows))
-            directoryData{imageNum} = beeRows;
+        if(~isempty(beeCols))
+            directoryData{imageNum} = beeCols;
         end
 
     end
@@ -76,9 +77,9 @@ directoryData = cell(numImages,1);
 
     % Saving Full Directory Structure
     results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "rowResultsSparse.mat","results");
+    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "colResultsOriginal.mat","results");
 
 end
 end
 runtime = toc;
-save("rowSparseRuntime.mat","runtime")
+save("colOriginalRuntime.mat","runtime")

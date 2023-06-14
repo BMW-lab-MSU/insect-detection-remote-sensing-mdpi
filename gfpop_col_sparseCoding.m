@@ -51,8 +51,13 @@ directoryData = cell(numImages,1);
     images = struct2cell(beeStruct.adjusted_data_junecal);
     parfor imageNum = 1:numImages
         image = images{3,1,imageNum}
-        beeColumns = cell(1,size(image,2));
+
+        % Preprocessing
+        image(image < 0) = 0;
+        smoothdata(image,2,'movmean',3);
+
         % Column Iteration
+        beeColumns = cell(1,size(image,2));
         for col = 1:size(image,2)
             tmpResults = gfpop(image(:,col),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
@@ -71,7 +76,7 @@ directoryData = cell(numImages,1);
 
     % Saving Full Directory Structure
     results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "columnResults.mat","results");
+    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "colResultsSparse.mat","results");
 
 end
 end
