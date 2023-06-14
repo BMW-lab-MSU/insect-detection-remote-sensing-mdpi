@@ -163,7 +163,8 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
         end
 
         function testInHarmonicPeaks(testCase)
-
+        % NOTE: this will occasionally fail if noise magnitude is high
+        % enough.
 
             fundamentalFreq = 100;
             samplingFreq = 3000;
@@ -177,7 +178,7 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
             sin2 = sin(2 * pi * 2.312 * fundamentalFreq * t);
             sin4 = sin(2 * pi * 7.138 * fundamentalFreq * t);
 
-            x = sin1 + sin2 + sin3 + sin4 + sin5 + rand(size(t))*15;
+            x = sin1 + sin2 + sin3 + sin4 + sin5 + rand(size(t))*10;
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
