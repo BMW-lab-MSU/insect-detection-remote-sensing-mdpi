@@ -19,5 +19,11 @@ for j = 1:nSpectra
     spectra(j, :, :) = spectrum(:, 1:j:(j * cols));
 end
 
-hps = squeeze(prod(spectra));
+% The first dimension of the output of prod(spectra) is guaranteed to be a
+% singleton dimension that we don't want; we use reshape to get rid of that
+% singleton dimension and force the hps matrix to be rows x cols instead of
+% 1 x rows x cols. Note that using `squeeze` here only works when rows !=
+% 1; when rows == 1, squeeze returns a column vector (cols x 1) instead of
+% a row vector (1 x cols).
+hps = reshape(prod(spectra), [rows, cols]);
 end
