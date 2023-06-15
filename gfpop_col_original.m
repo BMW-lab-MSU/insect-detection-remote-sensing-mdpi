@@ -48,7 +48,7 @@ directoryData = cell(numImages,1);
 
     % Image Iteration
     images = struct2cell(beeStruct.adjusted_data_junecal);
-    for imageNum = 1:numImages
+    parfor imageNum = 1:numImages
         image = -1.*images{3,1,imageNum};
 
         % Preprocessing
@@ -66,7 +66,7 @@ directoryData = cell(numImages,1);
             end
         end
 
-        if(~isempty(beeCols))
+        if(any(~cellfun(@isempty,beeColumns)))
             directoryData{imageNum} = beeCols;
         end
 

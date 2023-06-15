@@ -36,10 +36,10 @@ scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
 structName = "adjusted_data_junecal_volts";
 
 % Folder Setup
-for index = 1:length(dates)
+for index = 1   %:length(dates)
 date = dates(index);
 scanNums = scanNumbers{index};
-for scanNum = 1:length(scanNums)
+for scanNum = 1 %:length(scanNums)
 imageDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + structName;
 beeStruct = load(imageDirectory);
 numImages = numel(beeStruct.adjusted_data_junecal);
@@ -65,7 +65,7 @@ directoryData = cell(numImages,1);
             end
         end
 
-        if(~isempty(beeColumns))
+        if(any(~cellfun(@isempty,beeColumns)))
             directoryData{imageNum} = beeColumns;
         end
 
