@@ -57,16 +57,16 @@ directoryData = cell(numImages,1);
         smoothdata(image,2,'movmean',3);
 
         % Column Iteration
-        beeColumns = cell(1,size(image,2));
+        beeCols = cell(1,size(image,2));
         for col = 1:size(image,2)
             tmpResults = gfpop(image(:,col),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                beeColumns{1,col} = tmpResults;
+                beeCols{1,col} = tmpResults;
             end
         end
 
-        if(any(~cellfun(@isempty,beeColumns)))
-            directoryData{imageNum} = beeColumns;
+        if(any(~cellfun(@isempty,beeCols)))
+            directoryData{imageNum} = beeCols;
         end
 
     end

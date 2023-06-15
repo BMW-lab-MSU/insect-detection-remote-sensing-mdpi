@@ -66,7 +66,7 @@ directoryData = cell(numImages,1);
             end
         end
 
-        if(any(~cellfun(@isempty,beeColumns)))
+        if(any(~cellfun(@isempty,beeCols)))
             directoryData{imageNum} = beeCols;
         end
 
