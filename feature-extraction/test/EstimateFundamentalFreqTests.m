@@ -199,17 +199,17 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
             samplingFreq = 4000;
             t = 0:1/samplingFreq:1023/samplingFreq;
 
-                sin1 = sin(2 * pi * fundamentalFreqs .* t);
-                sin3 = sin(2 * pi * 3 * fundamentalFreqs .* t);
-                % sin5 = sin(2 * pi * 5 * fundamentalFreqs(i) * t);
-    
-                % inhamornic peaks
-                sin2 = sin(2 * pi * 2.312 * fundamentalFreqs .* t);
-                % sin4 = sin(2 * pi * 7.138 * fundamentalFreqs(i) * t);
+            sin1 = sin(2 * pi * fundamentalFreqs .* t);
+            sin3 = sin(2 * pi * 3 * fundamentalFreqs .* t);
+            % sin5 = sin(2 * pi * 5 * fundamentalFreqs(i) * t);
 
-                x = sin1 + sin2 + sin3;
+            % inhamornic peaks
+            sin2 = sin(2 * pi * 2.312 * fundamentalFreqs .* t);
+            % sin4 = sin(2 * pi * 7.138 * fundamentalFreqs(i) * t);
 
-                expected = round(numel(t) / samplingFreq * fundamentalFreqs + 1);
+            x = sin1 + sin2 + sin3;
+
+            expected = round(numel(t) / samplingFreq * fundamentalFreqs + 1);
             
 
             psd = abs(fft(x, [], 2).^2);
