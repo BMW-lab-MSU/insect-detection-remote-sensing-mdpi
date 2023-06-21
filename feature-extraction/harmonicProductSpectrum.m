@@ -8,6 +8,13 @@ function hps = harmonicProductSpectrum(spectrum, nSpectra)
 %   copies to use when computing the harmonic product spectrum.
 
 % SPDX-License-Identifier: BSD-3-Clause
+arguments
+    % NOTE: spectrum must be wider than it is tall
+    spectrum (:,:) {mustBeNumeric}
+    nSpectra (1,1) {mustBeInteger}
+end
+
+% NOTE: the harmonic product spectrum sometimes finds the fundamental as an octave above the actual fundamental
 
 rows = height(spectrum);
 cols = floor(width(spectrum) / nSpectra);
