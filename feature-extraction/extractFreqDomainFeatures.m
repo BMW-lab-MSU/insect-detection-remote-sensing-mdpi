@@ -1,4 +1,4 @@
-function features = extractFreqDomainFeatures(X, opts)
+function features = extractFreqDomainFeatures(X, avgSamplingFrequency, opts)
 % extractFreqDomainFeatures extract frequency-domain features for insect
 % detection
 %
@@ -27,10 +27,14 @@ function features = extractFreqDomainFeatures(X, opts)
 
 arguments
     X (:,:) {mustBeNumeric}
+    avgSamplingFrequency (1,1) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
 end
 
+% TODO: nHarmonics should be an input parameter at the top of extractFeatures
 nHarmonics = 3;
+
+fftSize = width(X);
 
 psd = abs(fft(X, [], 2).^2);
 
@@ -41,7 +45,7 @@ psd = psd(:,1:end/2);
 psd = psd./psd(:,1);
 
 psdStats = extractPsdStats(psd);
-harmonicFeatures = extractHarmonicFeatures(psd, nHarmonics, 'UseParallel', opts.UseParallel);
+harmonicFeatures = extractHarmonicFeatures(psd, nHarmonics, avgSamplingFrequency, fftSize, 'UseParallel', opts.UseParallel);
 
 features = [psdStats, harmonicFeatures];
 end

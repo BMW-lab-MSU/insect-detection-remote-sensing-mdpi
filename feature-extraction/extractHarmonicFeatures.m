@@ -1,4 +1,4 @@
-function features = extractHarmonicFeatures(psd, nHarmonics, opts)
+function features = extractHarmonicFeatures(psd, nHarmonics, avgSamplingFrequency, fftSize, opts)
 % extractHarmonicFeatures extract features related to harmonics in the PSD.
 %
 %   features = extractHarmonicFeatures(psd, nHarmonics) extracts features from
@@ -7,7 +7,7 @@ function features = extractHarmonicFeatures(psd, nHarmonics, opts)
 %
 %   The extracted features for each harmonic are:
 %       'HarmonicHeight'            - The height of the harmonic
-%       'HarmonicLoc'               - The harmonic location (frequency bin)
+%       'harmonicFreq'              - The harmonic frequency in Hz
 %       'HarmonicWidth'             - The harmonic's half-prominence peak width
 %       'HarmonicProminence'        - The harmonic's prominence
 %
@@ -17,15 +17,14 @@ function features = extractHarmonicFeatures(psd, nHarmonics, opts)
 %       'HarmonicProminenceRatio'   - The ratio between harmonic prominences
 
 % SPDX-License-Identifier: BSD-3-Clause
-
-% TODO: make nBins an input parameter
 arguments
     psd (:,:) {mustBeNumeric}
-    nHarmonics (1,1) double
+    nHarmonics (1,1) {mustBeNumeric}
+    avgSamplingFrequency (1,1) {mustBeNumeric}
+    fftSize (1,1) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
 end
 
-nBins = 2;
 nRows = height(psd);
 
 harmonicCombinations = nchoosek(1:nHarmonics, 2);
@@ -37,7 +36,7 @@ peakWidth = cell(nRows, 1);
 peakProminence = cell(nRows, 1);
 
 harmonicHeight = nan(nRows, nHarmonics, 'like', psd);
-harmonicLoc = nan(nRows, nHarmonics, 'like', psd);
+harmonicFreq = nan(nRows, nHarmonics, 'like', psd);
 harmonicWidth = nan(nRows, nHarmonics, 'like', psd);
 harmonicProminence = nan(nRows, nHarmonics, 'like', psd);
 harmonicHeightRatio = nan(nRows, nHarmonicCombinations, 'like', psd);
@@ -63,7 +62,7 @@ end
 
 for i = 1:nRows
     % Grab the peaks that are harmonics of the fundamental
-    [harmonicLoc(i,:), harmonicIdx] = findHarmonics(peakLoc{i}, fundamental(i), nHarmonics);
+    [harmonicFreq(i,:), harmonicIdx] = findHarmonics(peakLoc{i}, fundamental(i), nHarmonics, avgSamplingFrequency, fftSize);
     
     % Get features for the harmonics. If a harmonic wasn't found, harmonicIdx
     % will be 0. All related features to be 0 if the harmonic wasn't found.
@@ -94,7 +93,7 @@ features = table;
 
 for n = 1:nHarmonics
     features.(['HarmonicHeight' num2str(n)]) = harmonicHeight(:, n);
-    features.(['HarmonicLoc' num2str(n)]) = harmonicLoc(:, n);
+    features.(['HarmonicFreq' num2str(n)]) = harmonicFreq(:, n);
     features.(['HarmonicWidth' num2str(n)]) = harmonicWidth(:, n);
     features.(['HarmonicProminence' num2str(n)]) = harmonicProminence(:, n);
 end
