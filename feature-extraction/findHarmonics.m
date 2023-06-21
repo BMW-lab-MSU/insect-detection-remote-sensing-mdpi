@@ -8,7 +8,6 @@ arguments
     opts.nBins {mustBeInteger} = 2;
 end
 
-harmonicFrequencies = zeros(nHarmonics, 1, 'like', peakLocations);
 harmonicBins = zeros(nHarmonics, 1, 'like', peakLocations);
 harmonicIdx = zeros(nHarmonics, 1, 'like', peakLocations);
 
