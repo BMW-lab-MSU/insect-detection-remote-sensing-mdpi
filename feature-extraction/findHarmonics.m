@@ -15,27 +15,27 @@ harmonicIdx = zeros(nHarmonics, 1, 'like', peakLocations);
 % MATLAB indexing starts at one, so we need to remove 1 from the frequency
 % location to get the actual frequency index/bin
 fundamentalBin = fundamentalLocation - 1;
-peakFreqs = peakLocations - 1;
+peakBins = peakLocations - 1;
 
 for i = 1:numel(peakLocations)
     for harmonicNum = 1:nHarmonics
         harmonic = fundamentalBin * harmonicNum;
 
-        freqDiff = abs(peakFreqs(i) - harmonic);
-        if freqDiff <= opts.nBins
+        binDiff = abs(peakBins(i) - harmonic);
+        if binDiff <= opts.nBins
             % the peak is within range of the theoretical harmonic frequency.
             if harmonicBins(harmonicNum) ~= 0
                 % if a potential harmonic has already been found, check if the
                 % new candidate is closer than the previous candidate. Keep the 
                 % candidate that is closest to the theoretical harmonic.
-                previousFreqDiff = abs(harmonicBins(harmonicNum) - harmonic);
-                if freqDiff < previousFreqDiff
-                    harmonicBins(harmonicNum) = peakFreqs(i);
+                previousbinDiff = abs(harmonicBins(harmonicNum) - harmonic);
+                if binDiff < previousbinDiff
+                    harmonicBins(harmonicNum) = peakBins(i);
                     harmonicIdx(harmonicNum) = i;
                 end
             else
                 % this is the first harmonic candidate we've found
-                harmonicBins(harmonicNum) = peakFreqs(i);
+                harmonicBins(harmonicNum) = peakBins(i);
                 harmonicIdx(harmonicNum) = i;
             end
         end
