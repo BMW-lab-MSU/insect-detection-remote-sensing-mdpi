@@ -33,7 +33,7 @@ hps = harmonicProductSpectrum(psd, 3);
 % always single-threaded. islocalmax could be parallelized as well if I
 % split the data up into nWorkers separate sections, which should achieve a
 % near-linear speedup, I think. Just some things to think about.
-[maximaIndicator] = islocalmax(hps,2,"FlatSelection","center","MaxNumExtrema",1,"MinProminence",1,"MinSeparation",5);
+[maximaIndicator] = islocalmax(hps,2,"FlatSelection","center","MaxNumExtrema",1);
 
 [row, fundamentalLocTmp] = find(maximaIndicator);
 
