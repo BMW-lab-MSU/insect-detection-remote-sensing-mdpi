@@ -36,7 +36,7 @@ nHarmonics = 3;
 
 fftSize = width(X);
 
-psd = abs(fft(X, [], 2).^2);
+psd = abs(fft(X, [], 2)).^2;
 
 % Only look at the positive frequencies
 psd = psd(:,1:end/2);
