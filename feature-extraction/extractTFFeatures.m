@@ -7,13 +7,13 @@ end
 [rows,columns] = size(X);
 
 % TODO: camelCase
-max_mean = zeros(rows,1,'like',X);
-max_std = zeros(rows,1,'like',X);
-avg_mean = zeros(rows,1,'like',X);
-avg_skewness = zeros(rows,1,'like',X);
-max_peak = zeros(rows,1,'like',X);
-max_diff = zeros(rows,1,'like',X);
-brk_up = zeros(rows,1,'like',X);
+maxMean = zeros(rows,1,'like',X);
+maxStd = zeros(rows,1,'like',X);
+avgMean = zeros(rows,1,'like',X);
+avgSkewness = zeros(rows,1,'like',X);
+maxPeak = zeros(rows,1,'like',X);
+maxDiff = zeros(rows,1,'like',X);
+brkUp = zeros(rows,1,'like',X);
 
 if opts.UseParallel
     nWorkers = gcp('nocreate').NumWorkers;
@@ -33,23 +33,21 @@ parfor(i = 1:rows, nWorkers)
         cwavelet = zeros(1,1024);
     end
 
-    % features = extractTFStats(cwavelet);
-
-    max_mean(i) = max(mean(cwavelet,2));
-    max_std(i) = max(std(cwavelet,0,2));
-    avg_mean(i) = mean(mean(cwavelet,2));
-    avg_skewness(i) = mean(skewness(cwavelet,1,2));
-    max_peak(i) = max(max(cwavelet));
-    max_diff(i) = max(max(diff(cwavelet)));
+    maxMean(i) = max(mean(cwavelet,2));
+    maxStd(i) = max(std(cwavelet,0,2));
+    avgMean(i) = mean(mean(cwavelet,2));
+    avgSkewness(i) = mean(skewness(cwavelet,1,2));
+    maxPeak(i) = max(max(cwavelet));
+    maxDiff(i) = max(max(diff(cwavelet)));
 
 end
 
 features = table;
-features.max_mean = max_mean;
-features.max_std = max_std;
-features.avg_mean = avg_mean;
-features.avg_skewness = avg_skewness;
-features.max_peak = max_peak;
-features.max_diff = max_diff;
+features.WaveletMaxMean = maxMean;
+features.WaveletMaxStd = maxStd;
+features.WaveletAvgMean = avgMean;
+features.WaveletAvgSkewness = avgSkewness;
+features.WaveletMaxPeak = maxPeak;
+features.WaveletMaxDiff = maxDiff;
 
 end
