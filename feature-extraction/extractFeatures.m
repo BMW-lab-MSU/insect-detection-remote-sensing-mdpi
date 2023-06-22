@@ -10,13 +10,13 @@ function features = extractFeatures(X, avgSamplingFrequency, opts)
 %       'StdDev'                - The standard deviation of each row
 %       'MaxDiff'               - The maximum absolute first difference in a row
 %
-%   The extracted PSD statistics are:
-%       'MeanPsd'                   - The mean of the PSD
-%       'StdPsd'                    - The standard deviation of the PSD
-%       'MedianPsd'                 - The median of the PSD
-%       'MadPsd'                    - The median absolute deviation of the PSD
-%       'SkewnessPsd'               - Zero-mean skewness of the PSD   
-%       'KurtosisPsd'               - Zero-mean kurtosis of the PSD     
+%   The extracted ESD statistics are:
+%       'MeanEsd'                   - The mean of the ESD
+%       'StdEsd'                    - The standard deviation of the ESD
+%       'MedianEsd'                 - The median of the ESD
+%       'MadEsd'                    - The median absolute deviation of the ESD
+%       'SkewnessEsd'               - Zero-mean skewness of the ESD   
+%       'KurtosisEsd'               - Zero-mean kurtosis of the ESD     
 %       
 %   The extracted features for each harmonic are:
 %       'HarmonicHeight'            - The height of the harmonic

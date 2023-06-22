@@ -24,12 +24,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 2; 3];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -50,12 +50,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 2; 3];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -76,12 +76,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 2; 3];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -104,12 +104,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 2; 3; 4; 5];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -132,12 +132,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 2; 3; 4; 5];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -163,12 +163,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 0; 3];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -189,12 +189,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 0; 3];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 
@@ -217,12 +217,12 @@ classdef FindHarmonicsTests < matlab.unittest.TestCase
 
             expected = fundamentalFreq * [1; 2];
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            fundamentalLoc = estimateFundamentalFreq(psd);
+            fundamentalLoc = estimateFundamentalFreq(esd);
 
-            [~, peakLocations] = findpeaks(psd);
+            [~, peakLocations] = findpeaks(esd);
 
             result = findHarmonics(peakLocations, fundamentalLoc, nHarmonics, samplingFreq, numel(x));
 

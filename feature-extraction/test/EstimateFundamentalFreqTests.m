@@ -21,10 +21,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
@@ -42,10 +42,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
@@ -63,10 +63,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
@@ -86,10 +86,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
@@ -109,10 +109,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             % results need to be within 3 bins; that's what the findHarmonics algorithm looks for
             testCase.verifyEqual(result, expected, "AbsTol", 2);
@@ -131,10 +131,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             % results need to be within 3 bins; that's what the findHarmonics algorithm looks for
             testCase.verifyEqual(result, expected);
@@ -154,10 +154,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
@@ -182,10 +182,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
 
             expected = round(numel(t) / samplingFreq * fundamentalFreq + 1);
 
-            psd = abs(fft(x)).^2;
-            psd = psd(1:floor(end/2));
+            esd = abs(fft(x)).^2;
+            esd = esd(1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
@@ -212,10 +212,10 @@ classdef EstimateFundamentalFreqTests < matlab.unittest.TestCase
             expected = round(numel(t) / samplingFreq * fundamentalFreqs + 1);
             
 
-            psd = abs(fft(x, [], 2).^2);
-            psd = psd(:,1:floor(end/2));
+            esd = abs(fft(x, [], 2).^2);
+            esd = esd(:,1:floor(end/2));
 
-            result = estimateFundamentalFreq(psd);
+            result = estimateFundamentalFreq(esd);
 
             testCase.verifyEqual(result, expected);
         end
