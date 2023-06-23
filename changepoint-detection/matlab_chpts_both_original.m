@@ -50,4 +50,4 @@ results = {testingResultsLabel,testingResultData,"Results | Data"};
 save("../../results/changepoint-results/bothResultsOriginal_matlab.mat","results");
 
 runtime = toc;
-save("results/bothOriginalRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/bothOriginalRuntime_matlab.mat","runtime")
