@@ -1,5 +1,6 @@
 %% Bee Image Iteration
 tic
+load("../../data/testing/testingData.mat");
 
 numImages = length(testingData);
 testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
