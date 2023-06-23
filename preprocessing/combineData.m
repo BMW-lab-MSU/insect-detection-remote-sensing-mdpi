@@ -42,11 +42,11 @@ for index = 1:length(dates)
             imageNum = imageNum + 1;
 
 
-	    % conver data to single-precision to save RAM
+            % convert data to single-precision to save RAM
             data{imageNum} = single(adjusted_data_junecal(scanNum).data);
 
             rowLabels(imageNum) = labels.rowLabels(scanNum);
-            imgLabels(imageNum) = labels.imageLabels(scanNum); 
+            imgLabels(imageNum) = logical(labels.imageLabels(scanNum)); 
 
             metadata(imageNum).Day = date;
             metadata(imageNum).FolderName = folderPrefix + scanNums(scanNum);
