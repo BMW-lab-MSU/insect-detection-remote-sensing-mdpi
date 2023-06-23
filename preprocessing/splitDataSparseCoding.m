@@ -4,7 +4,7 @@
 rng(0, 'twister');
 
 %% Load training data
-original = load(trainingDir + "trainingDataNoKSVD.mat");
+original = load(trainingDir + filesep + "trainingDataNoKSVD.mat");
 
 nImages = numel(original.trainingImgLabels);
 
