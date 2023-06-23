@@ -1,16 +1,16 @@
-function features = extractFreqDomainFeatures(X, opts)
+function features = extractFreqDomainFeatures(X, avgSamplingFrequency, opts)
 % extractFreqDomainFeatures extract frequency-domain features for insect
 % detection
 %
 %   features = extractFreqDomainFeatures(X) extracts features from the data %   %   matrix, X, and returns the features as a table. Observations are rows in X.
 %
-%   The extracted PSD statistics are:
-%       'MeanPsd'                   - The mean of the PSD
-%       'StdPsd'                    - The standard deviation of the PSD
-%       'MedianPsd'                 - The median of the PSD
-%       'MadPsd'                    - The median absolute deviation of the PSD
-%       'SkewnessPsd'               - Zero-mean skewness of the PSD   
-%       'KurtosisPsd'               - Zero-mean kurtosis of the PSD     
+%   The extracted ESD statistics are:
+%       'MeanEsd'                   - The mean of the ESD
+%       'StdEsd'                    - The standard deviation of the ESD
+%       'MedianEsd'                 - The median of the ESD
+%       'MadEsd'                    - The median absolute deviation of the ESD
+%       'SkewnessEsd'               - Zero-mean skewness of the ESD   
+%       'KurtosisEsd'               - Zero-mean kurtosis of the ESD     
 %       
 %   The extracted features for each harmonic are:
 %       'HarmonicHeight'            - The height of the harmonic
@@ -27,21 +27,25 @@ function features = extractFreqDomainFeatures(X, opts)
 
 arguments
     X (:,:) {mustBeNumeric}
+    avgSamplingFrequency (1,1) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
 end
 
+% TODO: nHarmonics should be an input parameter at the top of extractFeatures
 nHarmonics = 3;
 
-psd = abs(fft(X, [], 2).^2);
+fftSize = width(X);
+
+esd = abs(fft(X, [], 2)).^2;
 
 % Only look at the positive frequencies
-psd = psd(:,1:end/2);
+esd = esd(:,1:end/2);
 
 % Normalize by the DC component
-psd = psd./psd(:,1);
+esd = esd./esd(:,1);
 
-psdStats = extractPsdStats(psd);
-harmonicFeatures = extractHarmonicFeatures(psd, nHarmonics, 'UseParallel', opts.UseParallel);
+esdStats = extractEsdStats(esd);
+harmonicFeatures = extractHarmonicFeatures(esd, nHarmonics, avgSamplingFrequency, fftSize, 'UseParallel', opts.UseParallel);
 
-features = [psdStats, harmonicFeatures];
+features = [esdStats, harmonicFeatures];
 end

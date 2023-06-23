@@ -1,4 +1,4 @@
-function features = extractFeatures(X, opts)
+function features = extractFeatures(X, avgSamplingFrequency, opts)
 % extractFeatures extract features for insect detection
 %
 %   features = extractFeatures(X) extracts features from the data matrix, X,
@@ -10,13 +10,13 @@ function features = extractFeatures(X, opts)
 %       'StdDev'                - The standard deviation of each row
 %       'MaxDiff'               - The maximum absolute first difference in a row
 %
-%   The extracted PSD statistics are:
-%       'MeanPsd'                   - The mean of the PSD
-%       'StdPsd'                    - The standard deviation of the PSD
-%       'MedianPsd'                 - The median of the PSD
-%       'MadPsd'                    - The median absolute deviation of the PSD
-%       'SkewnessPsd'               - Zero-mean skewness of the PSD   
-%       'KurtosisPsd'               - Zero-mean kurtosis of the PSD     
+%   The extracted ESD statistics are:
+%       'MeanEsd'                   - The mean of the ESD
+%       'StdEsd'                    - The standard deviation of the ESD
+%       'MedianEsd'                 - The median of the ESD
+%       'MadEsd'                    - The median absolute deviation of the ESD
+%       'SkewnessEsd'               - Zero-mean skewness of the ESD   
+%       'KurtosisEsd'               - Zero-mean kurtosis of the ESD     
 %       
 %   The extracted features for each harmonic are:
 %       'HarmonicHeight'            - The height of the harmonic
@@ -33,19 +33,21 @@ function features = extractFeatures(X, opts)
 
 arguments
     X (:,:) {mustBeNumeric}
+    avgSamplingFrequency (1,1) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
 end
 
-if height(X) == 178
-    % only zero out rows when we are working with an actual image; we don't want to zero out rows of synthetic data
-    row_reduced = rowcollector(X, 'UseParallel', opts.UseParallel);
-else
-    row_reduced = X;
-end
-timeFeatures = extractTimeDomainFeatures(row_reduced);
+% TODO: revist this... maybe we should get rid of it.
+% if height(X) == 178
+%     % only zero out rows when we are working with an actual image; we don't want to zero out rows of synthetic data
+%     row_reduced = rowcollector(X, 'UseParallel', opts.UseParallel);
+% else
+%     row_reduced = X;
+% end
+timeFeatures = extractTimeDomainFeatures(X);
 
-freqFeatures = extractFreqDomainFeatures(row_reduced, 'UseParallel', opts.UseParallel);
-tfFeatures = extractTFFeatures(row_reduced, 'UseParallel', opts.UseParallel);
+freqFeatures = extractFreqDomainFeatures(X, avgSamplingFrequency, 'UseParallel', opts.UseParallel);
+tfFeatures = extractTFFeatures(X, 'UseParallel', opts.UseParallel);
 features = [timeFeatures, freqFeatures, tfFeatures]; % ,tfFeatures
 
 % replace nans with zeros because we don't want the ML algorithms to throw out
