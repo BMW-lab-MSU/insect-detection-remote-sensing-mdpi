@@ -19,9 +19,7 @@ parfor imageNum = 1:length(testingData)
     for col = 1:size(image,2)
         tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResults))
-            if(any(image(tmpResults,col)) > 2*mean(image(tmpResults,:))) % Hard Target Verification
-                beeCols{1,col} = tmpResults;
-            end
+            beeCols{1,col} = tmpResults;
         end
     end
 
@@ -36,7 +34,7 @@ testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
 results = {testingResultsLabel,testingResultData,"Results | Data"};
-save("../../results/changepoint-results/colResultsOriginal_matlab.mat","results");
+save("../../results/changepoint-results/colResultsSparse_matlab.mat","results");
 
 runtime = toc;
-save("../../results/changepoint-results/colOriginalRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/colSparseRuntime_matlab.mat","runtime")

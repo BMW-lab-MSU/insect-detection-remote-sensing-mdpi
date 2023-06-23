@@ -23,71 +23,51 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 
 %% Bee Image Iteration
 tic
+load("../../data/testing/testingData.mat");
 
-% baseDir = "../afrl-data/insect-lidar/msu-bee-hives";
-baseDir = "../data/raw";
-dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
-folderPrefix = "MSU-horticulture-farm-bees-";
-imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
-imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
-imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
-imageNum0729 = ["093945" "095958" "101924"];
-scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
-structName = "adjusted_data_junecal_volts";
+numImages = length(testingData);
+testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
+testingResultsLabel(1:end,1) = (1:numImages);
+testingResultData = cell(numImages,1);
 
-% Folder Setup
-for index = 1:length(dates)
-date = dates(index);
-scanNums = scanNumbers{index};
-for scanNum = 1:length(scanNums)
-imageDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + structName;
-beeStruct = load(imageDirectory);
-numImages = numel(beeStruct.adjusted_data_junecal);
-directoryResults = zeros(numImages,2);     % Image # | Insect Present 
-directoryResults(1:end,1) = (1:numImages);
-directoryData = cell(numImages,1);
+% Training Image Iteration
+parfor imageNum = 1:length(testingData)
+    image = -1.*testingData{1,imageNum}
 
-    % Image Iteration
-    images = struct2cell(beeStruct.adjusted_data_junecal);
-    parfor imageNum = 1:numImages
-        image = -1.*images{3,1,imageNum}
-        
-        % Preprocessing
-        image(image < 0) = 0;
-        smoothdata(image,2,'movmean',3);
+    % Preprocessing
+    image(image < 0) = 0;
+    smoothdata(image,2,'movmean',3);
 
-        % Row Iteration
-        beeBoth = cell(2,size(image,1));
-        for row = 1:size(image,1)
-            tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
-            if(any(tmpResultsRow.states.contains("BEE")))
-                beeCols = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
-                if(~isempty(beeCols))
-                    for beeColumns = 1:length(beeCols)
-                        tmpResultsCol = gfpop(image(:,beeCols(beeColumns)),beeGraph,"mean");
-                        if(any(tmpResultsCol.states.contains("BEE")))
-                            beeBoth{1,row} = tmpResultsRow;
-                            beeBoth{2,row} = tmpResultsCol;
-                        end
+    % Row Iteration
+    beeBoth = cell(2,size(image,1));
+    for row = 1:size(image,1)
+        tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
+        if(any(tmpResultsRow.states.contains("BEE")))
+            beeCols = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
+            if(~isempty(beeCols))
+                for beeColumns = 1:length(beeCols)
+                    tmpResultsCol = gfpop(image(:,beeCols(beeColumns)),beeGraph,"mean");
+                    if(any(tmpResultsCol.states.contains("BEE")))
+                        beeBoth{1,row} = tmpResultsRow;
+                        beeBoth{2,row} = tmpResultsCol;
                     end
                 end
             end
         end
-
-        if(any(~cellfun(@isempty,beeBoth)))
-            directoryData{imageNum,1} = beeBoth;
-        end
-
     end
 
-    beeIndeces = ~cellfun(@isempty,directoryData);
-    directoryResults(beeIndeces,2) = 1;
-
-    % Saving Full Directory Structure
-    results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "bothResultsSparse_gfpop.mat","results");
+    if(any(~cellfun(@isempty,beeBoth)))
+        directoryData{imageNum,1} = beeBoth;
+    end
 
 end
-end
+
+beeIndeces = ~cellfun(@isempty,testingResultData);
+testingResultsLabel(beeIndeces,2) = 1;
+
+% Saving Full Directory Structure
+results = {testingResultsLabel,testingResultData,"Results | Data"};
+save("../../results/changepoint-results/bothResultsOriginal_gfpop.mat","results");
+
 runtime = toc;
-save("bothSparseRuntime_gfpop.mat","runtime")
+save("../../results/changepoint-results/bothOriginalRuntime_gfpop.mat","runtime")

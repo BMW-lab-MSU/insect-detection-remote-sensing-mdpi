@@ -20,13 +20,11 @@ parfor imageNum = 1:length(testingData)
     for row = 1:size(image,1)
         tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResultsRow))
-            if(any(image(row,tmpResultsRow)) > 2*mean(image(row,:)))
-                tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.005);
-                if(~isempty(tmpResultsCol))
-                    if(any(tmpResultsCol == row))
-                        beeBoth{1,row} = tmpResultsRow;
-                        beeBoth{2,row} = tmpResultsCol;
-                    end
+            tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.005);
+            if(~isempty(tmpResultsCol))
+                if(any(tmpResultsCol == row))
+                    beeBoth{1,row} = tmpResultsRow;
+                    beeBoth{2,row} = tmpResultsCol;
                 end
             end
         end
@@ -43,7 +41,7 @@ testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
 results = {testingResultsLabel,testingResultData,"Results | Data"};
-save("../../results/changepoint-results/bothResultsOriginal_matlab.mat","results");
+save("../../results/changepoint-results/bothResultsSparse_matlab.mat","results");
 
 runtime = toc;
-save("../../results/changepoint-results/bothOriginalRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/bothSparseRuntime_matlab.mat","runtime")

@@ -22,65 +22,44 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 
 %% Bee Image Iteration
 tic
+load("../../data/testing/testingData.mat");
 
-% baseDir = "../bee-lidar-data\msu-bee-hives";
-baseDir = "../data/raw";
-dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
-folderPrefix = "MSU-horticulture-farm-bees-";
-imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
-imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
-imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
-imageNum0729 = ["093945" "095958" "101924"];
-scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
-structName = "adjusted_data_junecal_volts";
+numImages = length(testingData);
+testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
+testingResultsLabel(1:end,1) = (1:numImages);
+testingResultData = cell(numImages,1);
 
-% Folder Setup
-for index = 1:length(dates)
-date = dates(index);
-scanNums = scanNumbers{index};
-for scanNum = 1:length(scanNums)
-imageDirectory = baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + structName;
-beeStruct = load(imageDirectory);
-numImages = numel(beeStruct.adjusted_data_junecal);
-directoryResults = zeros(numImages,2);     % Image # | Insect Present 
-directoryResults(1:end,1) = (1:numImages);
-directoryData = cell(numImages,1);
+% Training Image Iteration
+parfor imageNum = 1:length(testingData)
+    image = -1.*testingData{1,imageNum}
 
-    % Image Iteration
-    images = struct2cell(beeStruct.adjusted_data_junecal);
-    parfor imageNum = 1:numImages
-        image = -1.*images{3,1,imageNum};
-        imageNum
+    % Preprocessing
+    image(image < 0) = 0;
+    smoothdata(image,1,'movmean',3);
 
-        % Preprocessing
-        image(image < 0) = 0;
-        smoothdata(image,1,'movmean',3);
-
-        % Column Iteration
-        beeCols = cell(1,size(image,2));
-        for col = 1:size(image,2)
-            tmpResults = gfpop(image(:,col),beeGraph,"mean");
-            if(any(tmpResults.states.contains("BEE")))
-                if(any(tmpResults.parameters(tmpResults.states.contains("BEE"))) > 2*mean(image(tmpResults.changepoints(tmpResults.states.contains("BEE")),:))) % Hard Target Verification
-                    beeCols{1,col} = tmpResults;
-                end
+    % Column Iteration
+    beeCols = cell(1,size(image,2));
+    for col = 1:size(image,2)
+        tmpResults = gfpop(image(:,col),beeGraph,"mean");
+        if(any(tmpResults.states.contains("BEE")))
+            if(any(tmpResults.parameters(tmpResults.states.contains("BEE"))) > 2*mean(image(tmpResults.changepoints(tmpResults.states.contains("BEE")),:))) % Hard Target Verification
+                beeCols{1,col} = tmpResults;
             end
         end
-
-        if(any(~cellfun(@isempty,beeCols)))
-            directoryData{imageNum} = beeCols;
-        end
-
     end
 
-    beeIndeces = ~cellfun(@isempty,directoryData);
-    directoryResults(beeIndeces,2) = 1;
-
-    % Saving Full Directory Structure
-    results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "colResultsOriginal_gfpop.mat","results");
+    if(any(~cellfun(@isempty,beeCols)))
+        directoryData{imageNum} = beeCols;
+    end
 
 end
-end
+
+beeIndeces = ~cellfun(@isempty,testingResultData);
+testingResultsLabel(beeIndeces,2) = 1;
+
+% Saving Full Directory Structure
+results = {testingResultsLabel,testingResultData,"Results | Data"};
+save("../../results/changepoint-results/colResultsOriginal_gfpop.mat","results");
+
 runtime = toc;
-save("colOriginalRuntime_gfpop.mat","runtime")
+save("../../results/changepoint-results/colOriginalRuntime_gfpop.mat","runtime")

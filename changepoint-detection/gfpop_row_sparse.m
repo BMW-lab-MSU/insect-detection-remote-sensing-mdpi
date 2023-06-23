@@ -1,3 +1,9 @@
+% gfpop rows with sparse coding
+
+% Runs through the LiDAR images after sparse coding preprocessing. This
+% means there is less verification of the changepoints since in theory the
+% hard targets that cause all of the issues have been removed.
+
 %% Graph Generation
 
 % Parameters
@@ -33,25 +39,16 @@ parfor imageNum = 1:length(testingData)
     smoothdata(image,2,'movmean',3);
 
     % Row Iteration
-    beeBoth = cell(2,size(image,1));
+    beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
-        if(any(tmpResultsRow.states.contains("BEE")))
-            beeCols = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
-            if(~isempty(beeCols))
-                for beeColumns = 1:length(beeCols)
-                    tmpResultsCol = gfpop(image(:,beeCols(beeColumns)),beeGraph,"mean");
-                    if(any(tmpResultsCol.states.contains("BEE")))
-                        beeBoth{1,row} = tmpResultsRow;
-                        beeBoth{2,row} = tmpResultsCol;
-                    end
-                end
-            end
+        tmpResults = gfpop(image(row,:),beeGraph,"mean");
+        if(any(tmpResults.states.contains("BEE")))
+            beeRows{1,row} = tmpResults;
         end
     end
 
-    if(any(~cellfun(@isempty,beeBoth)))
-        directoryData{imageNum,1} = beeBoth;
+    if(any(~cellfun(@isempty,beeRows)))
+        directoryData{imageNum} = beeRows;
     end
 
 end

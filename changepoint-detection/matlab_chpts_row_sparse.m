@@ -36,7 +36,7 @@ testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
 results = {testingResultsLabel,testingResultData,"Results | Data"};
-save("../../results/changepoint-results/rowResultsOriginal_matlab.mat","results");
+save("../../results/changepoint-results/rowResultsSparse_matlab.mat","results");
 
 runtime = toc;
-save("../../results/changepoint-results/rowOriginalRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/rowSparseRuntime_matlab.mat","runtime")
