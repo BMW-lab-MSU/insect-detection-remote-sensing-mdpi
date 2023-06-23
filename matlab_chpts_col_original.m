@@ -1,24 +1,7 @@
-% gfpop columns with original images
+% matlab findchangepts columns with original images
 
 % Runs through the LiDAR images with verification after detecting
 % changepoint.
-
-%% Graph Generation
-
-% Parameters
-B1 = .005;
-B2 = .005;
-
-% Edges
-edge1 = gfpopEdge("air","inc_to_bee","up",penalty=B1);
-edge2 = gfpopEdge("inc_to_bee","inc_to_bee","up");
-edge3 = gfpopEdge("inc_to_bee","BEE","up");
-edge4 = gfpopEdge("BEE","dec_from_bee","down",penalty=B2);
-edge5 = gfpopEdge("dec_from_bee","dec_from_bee","down");
-edge6 = gfpopEdge("dec_from_bee","air","down");
-
-% Graph
-beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=true);
 
 %% Bee Image Iteration
 tic
@@ -59,9 +42,9 @@ directoryData = cell(numImages,1);
         % Column Iteration
         beeCols = cell(1,size(image,2));
         for col = 1:size(image,2)
-            tmpResults = gfpop(image(:,col),beeGraph,"mean");
-            if(any(tmpResults.states.contains("BEE")))
-                if(any(tmpResults.parameters(tmpResults.states.contains("BEE"))) > 2*mean(image(tmpResults.changepoints(tmpResults.states.contains("BEE")),:))) % Hard Target Verification
+            tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.005);
+            if(~isempty(tmpResults))
+                if(any(image(tmpResults,col)) > 2*mean(image(tmpResults,:))) % Hard Target Verification
                     beeCols{1,col} = tmpResults;
                 end
             end
@@ -78,9 +61,9 @@ directoryData = cell(numImages,1);
 
     % Saving Full Directory Structure
     results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "colResultsOriginal_gfpop.mat","results");
+    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "colResultsOriginal_matlab.mat","results");
 
 end
 end
 runtime = toc;
-save("colOriginalRuntime_gfpop.mat","runtime")
+save("colOriginalRuntime_matlab.mat","runtime")

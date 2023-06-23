@@ -30,7 +30,7 @@ folderPrefix = "MSU-horticulture-farm-bees-";
 imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
 imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
 imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
-imageNum0729 = ["090758" "093945" "095958" "101924"];
+imageNum0729 = ["093945" "095958" "101924"];
 scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
 structName = "adjusted_data_junecal_volts";
 
@@ -77,9 +77,9 @@ directoryData = cell(numImages,1);
 
     % Saving Full Directory Structure
     results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "rowResultsOriginal.mat","results");
+    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "rowResultsOriginal_gfpop.mat","results");
 
 end
 end
 runtime = toc;
-save("rowOriginalRuntime.mat","runtime")
+save("rowOriginalRuntime_gfpop.mat","runtime")
