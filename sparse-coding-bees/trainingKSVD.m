@@ -1,20 +1,24 @@
-clc; clear figures; clear;
 rng(0,"twister");
+
 if(isempty(gcp('nocreate')))
     parpool('IdleTimeout',inf);
 end
-
-% Loading Data and Toolbox Directories
-addpath("/home/group/bradwhitaker/sparse-coding-toolboxes/ksvd");
-addpath("/home/group/bradwhitaker/sparse-coding-toolboxes/omp");
 
 % Global Training and Reconstruction Variables
 numSparse = 4;
 dSize = 2048;
 
 % 10% Non-Bee Training
-load("nonBee10PercentTraining.mat");
-[D,err] = trainKSVD(double(nonBee10PercentTraining),numSparse,dSize,200,'high');
-save("D" + string(dSize) + ".mat",D);
-save("err" + string(dSize) + ".mat",err);
-clear nonBee10Percent;
+load(trainingDir + "ksvdTrainingData.mat");
+
+% convert training data to a matrix instead of cell array
+data = cell2mat(ksvdTrainingData);
+
+[D,err] = trainKSVD(data,numSparse,dSize,200,'high');
+
+if ~exist(baseDir + "sparse-coding")
+    mkdir(baseDir, "sparse-coding");
+end
+
+save(baseDir + "sparse-coding" + "D" + string(dSize) + ".mat",'D', '-v7.3');
+save(baseDir + "sparse-coding" + "err" + string(dSize) + ".mat",'err', '-v7.3');
