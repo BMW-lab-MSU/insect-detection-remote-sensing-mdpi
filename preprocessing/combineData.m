@@ -42,7 +42,9 @@ for index = 1:length(dates)
             imageNum = imageNum + 1;
 
 
-            data{imageNum} = adjusted_data_junecal(scanNum).data;
+	    % conver data to single-precision to save RAM
+            data{imageNum} = single(adjusted_data_junecal(scanNum).data);
+
             rowLabels(imageNum) = labels.rowLabels(scanNum);
             imgLabels(imageNum) = labels.imageLabels(scanNum); 
 
