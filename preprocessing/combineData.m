@@ -17,7 +17,7 @@ metadata = struct('Day', string(), 'FolderName', string(), 'FileName', string(),
 
 data = {};
 rowLabels = {};
-imgLabels = [];
+imgLabels = false;
 
 %% Folder Setup
 imageNum = 0;
@@ -46,7 +46,7 @@ for index = 1:length(dates)
             data{imageNum} = single(adjusted_data_junecal(scanNum).data);
 
             rowLabels(imageNum) = labels.rowLabels(scanNum);
-            imgLabels(imageNum) = logical(labels.imageLabels(scanNum)); 
+            imgLabels(imageNum) = labels.imageLabels(scanNum); 
 
             metadata(imageNum).Day = date;
             metadata(imageNum).FolderName = folderPrefix + scanNums(scanNum);
