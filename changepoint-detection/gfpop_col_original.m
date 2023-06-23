@@ -1,4 +1,4 @@
-% gfpop rows with original images
+% gfpop columns with original images
 
 % Runs through the LiDAR images with verification after detecting
 % changepoint.
@@ -30,7 +30,7 @@ folderPrefix = "MSU-horticulture-farm-bees-";
 imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
 imageNum0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343"];
 imageNum0728 = ["112652" "120850" "123948" "124905" "131133" "133834" "135906" "141427" "143013" "144821"];
-imageNum0729 = ["090758" "093945" "095958" "101924"];
+imageNum0729 = ["093945" "095958" "101924"];
 scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
 structName = "adjusted_data_junecal_volts";
 
@@ -48,26 +48,27 @@ directoryData = cell(numImages,1);
 
     % Image Iteration
     images = struct2cell(beeStruct.adjusted_data_junecal);
-    for imageNum = 1:numImages
+    parfor imageNum = 1:numImages
         image = -1.*images{3,1,imageNum};
+        imageNum
 
         % Preprocessing
         image(image < 0) = 0;
-        smoothdata(image,2,'movmean',3);
+        smoothdata(image,1,'movmean',3);
 
-        % Row Iteration
-        beeRows = cell(1,size(image,1));
-        for row = 1:size(image,1)
-            tmpResults = gfpop(image(row,:),beeGraph,"mean");
+        % Column Iteration
+        beeCols = cell(1,size(image,2));
+        for col = 1:size(image,2)
+            tmpResults = gfpop(image(:,col),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                if(tmpResults.parameters(tmpResults.states.contains("BEE"))) > 2*mean(image(row,:)) % Hard Target Verification
-                    beeRows{1,row} = tmpResults;
+                if(any(tmpResults.parameters(tmpResults.states.contains("BEE"))) > 2*mean(image(tmpResults.changepoints(tmpResults.states.contains("BEE")),:))) % Hard Target Verification
+                    beeCols{1,col} = tmpResults;
                 end
             end
         end
 
-        if(~isempty(beeRows))
-            directoryData{imageNum} = beeRows;
+        if(any(~cellfun(@isempty,beeCols)))
+            directoryData{imageNum} = beeCols;
         end
 
     end
@@ -77,9 +78,9 @@ directoryData = cell(numImages,1);
 
     % Saving Full Directory Structure
     results = {directoryResults,directoryData,date+"-"+scanNums(scanNum),"Results | Data | Folder"};
-    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "rowResultsOriginal.mat","results");
+    save(baseDir + filesep + date + filesep + folderPrefix + scanNums(scanNum) + filesep + "colResultsOriginal_gfpop.mat","results");
 
 end
 end
 runtime = toc;
-save("rowOriginalRuntime.mat","runtime")
+save("colOriginalRuntime_gfpop.mat","runtime")

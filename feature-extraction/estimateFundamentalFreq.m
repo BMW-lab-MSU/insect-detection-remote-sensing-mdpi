@@ -1,21 +1,21 @@
-function fundamental = estimateFundamentalFreq(psd, opts)
-% estimateFundamentalFreq estimate the fundamental frequency in a PSD using the
+function fundamental = estimateFundamentalFreq(esd, opts)
+% estimateFundamentalFreq estimate the fundamental frequency in a ESD using the
 % harmonic product spectrum
 %
-%   fundamental = estimateFundamentalFreq(psd) estimates the fundamental
-%   frequency in the one-sided power spectral density magnitude, psd. 
+%   fundamental = estimateFundamentalFreq(esd) estimates the fundamental
+%   frequency in the one-sided energy spectral density magnitude, esd. 
 %
 %   See also harmonicProductSpectrum.
 
 % SPDX-License-Identifier: BSD-3-Clause
 arguments
-    psd (:,:) {mustBeNumeric}
+    esd (:,:) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
 end
 
-fundamental = zeros(height(psd), 1);
+fundamental = zeros(height(esd), 1);
 
-hps = harmonicProductSpectrum(psd, 3);
+hps = harmonicProductSpectrum(esd, 3);
 
 if opts.UseParallel
     nWorkers = gcp('nocreate').NumWorkers;
@@ -23,7 +23,7 @@ else
     nWorkers = 0;
 end
 
-parfor (i = 1:height(psd), nWorkers)
+parfor (i = 1:height(esd), nWorkers)
     [~, fundamentalTmp] = findpeaks(hps(i,:), 'NPeaks', 1, ...
         'SortStr', 'descend');
     
