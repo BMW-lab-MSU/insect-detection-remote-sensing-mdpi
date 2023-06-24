@@ -9,7 +9,7 @@ numSparse = 4;
 dSize = 2048;
 
 % 10% Non-Bee Training
-load(trainingDir + "ksvdTrainingData.mat");
+load(trainingDir + filesep + "ksvdTrainingData.mat");
 
 % convert training data to a matrix instead of cell array
 data = cell2mat(ksvdTrainingData);
