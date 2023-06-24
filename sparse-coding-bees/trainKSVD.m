@@ -5,7 +5,7 @@ function [Dtrain, err] = trainKSVD(data, numSparse, numAtoms, numIter,memUsage)
 
 
     %numAtoms specifies how many atoms the dictionary is going to use
-    D = odct2dict([ceil(sqrt(size(data,1))) ceil(sqrt(size(data,1)))], [numAtoms 1]); %Dictionary of size X x User Defined
+    D = odct2dict([sqrt(size(data,1)) sqrt(size(data,1))], [numAtoms 1]); %Dictionary of size X x User Defined
    
     params.data = data; %OMP and KSVD require double type
     params.Tdata = numSparse; %Number of sparse coefficients
