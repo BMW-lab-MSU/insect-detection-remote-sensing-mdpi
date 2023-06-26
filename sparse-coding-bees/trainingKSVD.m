@@ -12,7 +12,7 @@ dSize = 2048;
 load(trainingDir + filesep + "ksvdTrainingData.mat");
 
 % convert training data to a matrix instead of cell array
-data = cell2mat(ksvdTrainingData);
+data = vertcat(ksvdTrainingData{:}).';
 
 [D,err] = trainKSVD(data,numSparse,dSize,200,'high');
 
