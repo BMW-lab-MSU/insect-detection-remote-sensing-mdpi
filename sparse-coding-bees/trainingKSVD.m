@@ -1,9 +1,5 @@
 rng(0,"twister");
 
-if(isempty(gcp('nocreate')))
-    parpool('IdleTimeout',inf);
-end
-
 % Global Training and Reconstruction Variables
 numSparse = 4;
 dSize = 2048;
