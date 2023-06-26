@@ -20,5 +20,5 @@ if ~exist(baseDir + "sparse-coding")
     mkdir(baseDir, "sparse-coding");
 end
 
-save(baseDir + "sparse-coding" + "D" + string(dSize) + ".mat",'D', '-v7.3');
-save(baseDir + "sparse-coding" + "err" + string(dSize) + ".mat",'err', '-v7.3');
+save(baseDir + filsep + "sparse-coding" + filsep + "D" + string(dSize) + ".mat",'D', '-v7.3');
+save(baseDir + filsep + "sparse-coding" + filsep + "err" + string(dSize) + ".mat",'err', '-v7.3');
