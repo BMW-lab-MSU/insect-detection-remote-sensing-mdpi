@@ -1,10 +1,16 @@
-baseDir = "../data";
-rawDataDir = baseDir + filesep + "raw";
-combinedDataDir = baseDir + filesep + "combined";
-preprocessedDataDir = baseDir + filesep + "preprocessed";
-trainingDir = baseDir + filesep + "training";
-testingDir = baseDir + filesep + "testing";
-validationDir = baseDir + filesep + "validation";
-sparseCodingDir = baseDir +  filesep + "sparse-coding";
+%% Data directories
+baseDataDir = "../data";
+rawDataDir = baseDataDir + filesep + "raw";
+combinedDataDir = baseDataDir + filesep + "combined";
+preprocessedDataDir = baseDataDir + filesep + "preprocessed";
+trainingDataDir = baseDataDir + filesep + "training";
+testingDataDir = baseDataDir + filesep + "testing";
+validationDataDir = baseDataDir + filesep + "validation";
+sparseCodingDataDir = baseDataDir +  filesep + "sparse-coding";
 
 % TODO: constants for filenames?, e.g. TRAINING_DATA = "trainingData.mat"
+
+%% Results directories
+baseResultsDir = "../results";
+sparseCodingResultsDir = baseResultsDir + filesep + "sparse-coding";
+
