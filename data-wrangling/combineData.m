@@ -3,9 +3,6 @@ function [data, rowLabels, imgLabels, metadata] = combineData(dates, folderPrefi
 
 % TODO: argument validation
 
-N_ROWS = 178;
-N_COLS = 1024;
-
 % TODO make these (optional) arguments
 DATA_FILENAME = "adjusted_data_junecal_volts.mat";
 LABELS_FILENAME = "labels.mat";
