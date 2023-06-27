@@ -3,15 +3,16 @@
 % Set random number generator properties for reproducibility
 rng(0, 'twister');
 
-%% Load training data
-original = load(trainingDir + filesep + "trainingDataNoKSVD.mat");
-
-nImages = numel(original.trainingImgLabels);
 
 %% Split training data for KSVD training
 % KSVD will be trained on 10% of the training data, and that training data has to not contain insects.
 % The other 90% of the training data will be left alone
 KSVD_TRAIN_PCT = 0.1;
+
+% Load training data
+original = load(trainingDataDir + filesep + "trainingDataNoSparseCoding.mat");
+
+nImages = numel(original.trainingImgLabels);
 
 % find non-insect images
 nonInsectImgIdx = find(original.trainingImgLabels == false);
@@ -35,15 +36,44 @@ trainingRowLabels = original.trainingRowLabels(trainingDataIdx);
 trainingImgLabels = original.trainingImgLabels(trainingDataIdx);
 trainingMetadata = original.trainingMetadata(trainingDataIdx);
 
+%% Split validation data
+KSVD_VALIDATION_PCT = 0.1;
+
+% load validation data
+originalVal = load(validationDataDir + filesep + "validationDataNoSparseCoding.mat")
+
+holdoutPartition = cvpartition(orginalVal.validationImgLabels, ...
+    'Holdout', KSVD_VALIDATION_PCT, 'Stratify', true);
+
+validationData = originalVal.validationData(training(holdoutPartition));
+validationImgLabels = originalVal.validationImgLabels(training(holdoutPartition));
+validationRowLabels = originalVal.validationRowLabels(training(holdoutPartition));
+validationMetadata = originalVal.validationMetadata(training(holdoutPartition));
+
+ksvdValidationData = originalVal.validationData(test(holdoutPartition));
+ksvdValidationImgLabels = originalVal.validationImgLabels(test(holdoutPartition));
+ksvdValidationRowLabels = originalVal.validationRowLabels(test(holdoutPartition));
+ksvdValidationMetadata = originalVal.validationMetadata(test(holdoutPartition));
 
 %% Save data 
-if ~exist(trainingDir)
-    mkdir(baseDir, "training");
+if ~exist(trainingDataDir)
+    mkdir(baseDataDir, "training");
 end
-save(trainingDir + filesep + "ksvdTrainingData.mat", ...
+save(trainingDataDir + filesep + "ksvdTrainingData.mat", ...
     'ksvdTrainingData', 'ksvdTrainingRowLabels', ...
     'ksvdTrainingImgLabels', 'ksvdTrainingMetadata', '-v7.3');
 
-save(trainingDir + filesep + "trainingData.mat", ...
+save(trainingDataDir + filesep + "trainingData.mat", ...
     'trainingData', 'trainingRowLabels', ...
     'trainingImgLabels', 'trainingMetadata', '-v7.3');
+
+if ~exist(validationDataDir)
+    mkdir(baseDataDir, "validation");
+end
+save(validationDataDir + filesep + "ksvdValidationData.mat", ...
+    'ksvdValidationData', 'ksvdValidationRowLabels', ...
+    'ksvdValidationImgLabels', 'ksvdValidationMetadata', '-v7.3');
+
+save(validationDataDir + filesep + "validationData.mat", ...
+    'validationData', 'validationRowLabels', ...
+    'validationImgLabels', 'validationMetadata', '-v7.3');
