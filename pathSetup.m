@@ -1,4 +1,10 @@
 %% Path setup
-addpath('feature-extraction','figures','lib','preprocessing','training','testing','sparse-coding-bees')
+addpath('feature-extraction')
+addpath('lib')
+addpath('training')
+addpath('testing')
+addpath('sparse-coding-bees')
+addpath('preprocessing')
+addpath('data-wrangling')
 addpath('/home/group/bradwhitaker/sparse-coding-toolboxes/omp')
 addpath('/home/group/bradwhitaker/sparse-coding-toolboxes/ksvd')
