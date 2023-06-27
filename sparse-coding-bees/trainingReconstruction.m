@@ -1,29 +1,38 @@
-clc; clear figures; clear;
-rng(0,"twister");
+%% Setup
 if(isempty(gcp('nocreate')))
     parpool('IdleTimeout',inf);
 end
 
-% Loading Data and Toolbox Directories
-addpath("/home/group/bradwhitaker/sparse-coding-toolboxes/ksvd");
-addpath("/home/group/bradwhitaker/sparse-coding-toolboxes/omp");
-
 % Global Training and Reconstruction Variables
 numSparse = 4;
 dSize = 2048;
-load("D" + dSize + ".mat");
 
-% 90% Non-Bee Reconstruction
-load("nonBee90PercentTraining.mat");
-nonBeeReconstructions = generateDifferenceImages(double(nonBee90PercentTraining),numSparse,D);
-nonBeeError = norm(nonBeeReconstructions,'fro');
-save("nonBeeReconstructions_" + string(dSize) + ".mat","nonBeeReconstructions");
-save("nonBeeError_" + string(dSize) + ".mat","nonBeeError");
-clear nonBee90Percent;
+%% Load dictionary
+load(sparseCodingDataDir + filesep + "D" + dSize + ".mat");
 
-% Bee Reconstruction
-load("beeImagesTraining.mat");
-beeReconstructions = generateDifferenceImages(double(beeImagesTraining),numSparse,D);
-beeErr = norm(beeReconstructions,'fro');
-save("beeReconstructions_" + string(dSize) + ".mat","beeReconstructions");
-save("beeError_" + string(dSize) + ".mat","beeErr");
+%% Load training data
+load(trainingDataDir + filesep + "trainingData.mat", 'trainingData', 'trainingImgLabels');
+
+%% Generate difference images
+
+% preallocate cell array for difference images
+trainingDifferenceImages = cell(size(trainingData));
+
+parfor imageNum = 1:numel(trainingData)
+    trainingDifferenceImages{imageNum} = generateDifferenceImages(trainingData{imageNum},numSparse,D);
+end
+
+%% Compute reconstruction errors
+reconstructionErrors = cellfun(@(x) norm(x,'fro'), trainingDifferenceImages);
+
+nonBeeReconstructionErrors = reconstructionErrors(trainingImgLabels == 0);
+beeReconstructionErrors = reconstructionErrors(trainingImgLabels);
+
+%% Save results
+save(trainingDataDir + filesep + "trainingDifferenceImages.mat", 'trainingDifferenceImages', '-v7.3');
+
+if ~exist(sparseCodingResultsDir, 'dir')
+    mkdir(baseResultsDir,"sparse-coding")
+end
+save(sparseCodingResultsDir + filesep + "trainingReconstructionErrorsD" + string(dSize), ...
+    'reconstructionErrors', 'nonBeeReconstructionErrors', 'beeReconstructionErrors', '-v7.3');
