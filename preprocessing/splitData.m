@@ -43,23 +43,23 @@ validationMetadata = trainValMeta(test(holdoutPartition));
 
 
 %% Save training and testing data
-if ~exist(testingDir)
-    mkdir(baseDir, "testing");
+if ~exist(testingDataDir)
+    mkdir(baseDataDir, "testing");
 end
-save(testingDir + filesep + "testingData.mat", ...
+save(testingDataDir + filesep + "testingData.mat", ...
     'testingData', 'testingRowLabels', 'testingImgLabels', ...
     'testingMetadata', '-v7.3');
 
-if ~exist(trainingDir)
-    mkdir(baseDir, "training");
+if ~exist(trainingDataDir)
+    mkdir(baseDataDir, "training");
 end
-save(trainingDir + filesep + "trainingDataNoKSVD.mat", ...
+save(trainingDataDir + filesep + "trainingDataNoSparseCoding.mat", ...
     'trainingData', 'trainingRowLabels', 'trainingImgLabels', ...
     'trainingMetadata', 'holdoutPartition', '-v7.3');
 
-if ~exist(validationDir)
-    mkdir(baseDir, "validation");
+if ~exist(validationDataDir)
+    mkdir(baseDataDir, "validation");
 end
-save(validationDir + filesep + "valiationData.mat", ...
+save(validationDataDir + filesep + "valiationDataNoSparseCoding.mat", ...
     'validationData', 'validationRowLabels', 'validationImgLabels', ...
     'validationMetadata', 'holdoutPartition', '-v7.3');
