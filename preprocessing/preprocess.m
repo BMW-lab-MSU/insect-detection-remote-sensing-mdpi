@@ -12,8 +12,15 @@ end
 % This doesn't reduce all ringing artifacts, but it helps.
 % NOTE: this could be turned into a function later if we do more preprocessing and 
 %       want to make this more modular.
-juneData(juneData > 0) = 0;
-julyData(julyData > 0) = 0;
+
+for i = 1:numel(juneData)
+    juneData{i}(juneData{i} > 0) = 0;
+end
+
+for i = 1:numel(julyData)
+    julyData{i}(julyData{i} > 0) = 0;
+end
+
 
 %% Save data
 if ~exist(preprocessedDataDir)
