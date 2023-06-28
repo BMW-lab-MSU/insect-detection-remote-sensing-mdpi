@@ -61,7 +61,7 @@ for i = 1:crossvalPartition.NumTestSets
 
     if nAugment > 0
         % Create synthetic features
-        [synthFeatures, synthLabels] = dataAugmentation(trainingData, ...
+        [synthFeatures, synthLabels] = createSyntheticFeatures(trainingData, ...
             trainingLabels, nAugment, 'UseParallel', opts.UseParallel);
         trainingFeatures = vertcat(trainingFeatures, synthFeatures);
         trainingLabels = vertcat(trainingLabels, synthLabels);

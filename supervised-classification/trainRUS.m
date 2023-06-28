@@ -35,7 +35,7 @@ features = vertcat(trainingFeatures{:});
 labels = vertcat(trainingLabels{:});
 
 %% Create synthetic features
-[synthFeatures, synthLabels] = dataAugmentation(data, ...
+[synthFeatures, synthLabels] = createSyntheticFeatures(data, ...
     labels, nAugment, 'UseParallel', true);
 
 features = vertcat(features, synthFeatures);
