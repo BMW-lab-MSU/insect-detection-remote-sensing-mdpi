@@ -10,7 +10,7 @@ juneFolderTimestamps0623 = ["122126" "135615" "141253" "144154" "145241"];
 juneFolderTimestamps0624 = ["094752" "095001" "104012" "105017" "110409" "111746" "113017" "114343" "115816"];
 juneFolderTimestamps = {juneFolderTimestamps0623, juneFolderTimestamps0624};
 
-[juneData,juneRowLabels,juneImgLabels,juneMeta] = combineData(juneDays, ...
+[juneData,juneRowLabels,juneImgLabels,juneMetadata] = combineData(juneDays, ...
     FOLDER_PREFIX, juneFolderTimestamps, rawDataDir);
 
 %% Combine testing data
