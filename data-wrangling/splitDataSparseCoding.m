@@ -37,12 +37,13 @@ trainingImgLabels = original.trainingImgLabels(trainingDataIdx);
 trainingMetadata = original.trainingMetadata(trainingDataIdx);
 
 %% Split validation data
+% We are reserving a portion of the validation data for ksvd parameter selection
 KSVD_VALIDATION_PCT = 0.1;
 
 % load validation data
-originalVal = load(validationDataDir + filesep + "validationDataNoSparseCoding.mat")
+originalVal = load(validationDataDir + filesep + "validationDataNoSparseCoding.mat");
 
-holdoutPartition = cvpartition(orginalVal.validationImgLabels, ...
+holdoutPartition = cvpartition(originalVal.validationImgLabels, ...
     'Holdout', KSVD_VALIDATION_PCT, 'Stratify', true);
 
 validationData = originalVal.validationData(training(holdoutPartition));
@@ -77,3 +78,4 @@ save(validationDataDir + filesep + "ksvdValidationData.mat", ...
 save(validationDataDir + filesep + "validationData.mat", ...
     'validationData', 'validationRowLabels', ...
     'validationImgLabels', 'validationMetadata', '-v7.3');
+
