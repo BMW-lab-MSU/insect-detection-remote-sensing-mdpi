@@ -17,7 +17,7 @@ rowLabels = {};
 imgLabels = false;
 
 %% Folder Setup
-imageNum = 0;
+globalImageNum = 0;
 for index = 1:length(dates)
     date = dates(index);
     scanNums = folderTimestamps{index};
@@ -35,26 +35,26 @@ for index = 1:length(dates)
 
         numImages = numel(adjusted_data_junecal);
 
-        for image = 1:numImages
-            imageNum = imageNum + 1;
+        for scanImageNum = 1:numImages
+            globalImageNum = globalImageNum + 1;
 
 
-            data{imageNum} = adjusted_data_junecal(scanNum).data;
+            data{globalImageNum} = adjusted_data_junecal(scanImageNum).data;
 
-            rowLabels(imageNum) = labels.rowLabels(scanNum);
-            imgLabels(imageNum) = labels.imageLabels(scanNum); 
+            rowLabels(globalImageNum) = labels.rowLabels(scanImageNum);
+            imgLabels(globalImageNum) = labels.imageLabels(scanImageNum); 
 
-            metadata(imageNum).Day = date;
-            metadata(imageNum).FolderName = folderPrefix + scanNums(scanNum);
-            metadata(imageNum).Pan = adjusted_data_junecal(scanNum).pan;
-            metadata(imageNum).Tilt = adjusted_data_junecal(scanNum).tilt;
-            metadata(imageNum).Range = adjusted_data_junecal(scanNum).range;
-            metadata(imageNum).Timestamps = adjusted_data_junecal(scanNum).time;
+            metadata(globalImageNum).Day = date;
+            metadata(globalImageNum).FolderName = folderPrefix + scanNums(scanNum);
+            metadata(globalImageNum).Pan = adjusted_data_junecal(scanImageNum).pan;
+            metadata(globalImageNum).Tilt = adjusted_data_junecal(scanImageNum).tilt;
+            metadata(globalImageNum).Range = adjusted_data_junecal(scanImageNum).range;
+            metadata(globalImageNum).Timestamps = adjusted_data_junecal(scanImageNum).time;
             
             % the filename field is really <foldername>/<filename>, so we get rid of the 
             % the foldername here since we already have that information
-            tmp = split(adjusted_data_junecal(scanNum).filename, '/');
-            metadata(imageNum).FileName = string(tmp{2});
+            tmp = split(adjusted_data_junecal(scanImageNum).filename, '/');
+            metadata(globalImageNum).FileName = string(tmp{2});
         end
 
 
