@@ -12,7 +12,7 @@ classdef (Abstract) Classifier < handle
     methods
         function [labels,scores] = predict(obj,newData)
             
-            [labels,scores] = predict(obj.Model,newData)
+            [labels,scores] = predict(obj.Model,newData);
         end
     end
 
