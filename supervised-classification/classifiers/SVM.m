@@ -3,6 +3,7 @@ classdef SVM < Classifier
     properties (SetAccess = protected, GetAccess = public)
         Model
         Hyperparams
+        UseGPU
     end
 
     methods
@@ -13,11 +14,21 @@ classdef SVM < Classifier
             % manually in the function calls
             params = namedargs2cell(obj.Hyperparams);
 
-            obj.Model = compact(fitcsvm(trainingData, labels, params{:}));
+            % if we are training on a GPU, convert the data to a gpuArray
+            if obj.UseGPU && canUseGPU()
+                % we have to use convertvars to convert each table
+                % variable into a gpuArray.
+                data = convertvars(trainingData, [1:width(trainingData)], ...
+                    @(x) gpuArray(x));
+            else
+                data = trainingData;
+            end
+
+            obj.Model = compact(fitcsvm(data, labels, params{:}));
             
         end
 
-        function obj = SVM(params)
+        function obj = SVM(params,opts)
             arguments
                 % TODO: additional argument validation
                 % set default hyperparameters; these default values
@@ -32,6 +43,7 @@ classdef SVM < Classifier
                 params.Solver {mustBeMember(params.Solver,{'ISDA','L1QP','SMO'})} = 'SMO'
                 params.Cost = ones(2) - eye(2)
                 params.ScoreTransform = 'none'
+                opts.UseGPU = false;
             end
 
             % if the kernel isn't polynomial, we can't have the
@@ -41,6 +53,7 @@ classdef SVM < Classifier
             end
 
             obj.Hyperparams = params;
+            obj.UseGPU = opts.UseGPU;
         end
 
 
