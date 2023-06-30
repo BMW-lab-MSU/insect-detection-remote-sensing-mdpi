@@ -1,23 +1,21 @@
-classdef TreeEnsemble (Abstract) < Classifier
+classdef (Abstract) TreeEnsemble < Classifier
 
-    properties (SetAccess = private, GetAccess = public)
+    properties (SetAccess = protected, GetAccess = public)
         Model
+        UseGPU
     end
 
-    properties (Dependent)
+    properties (Dependent, SetAccess = protected, GetAccess = public)
         Hyperparams
     end
 
-    properties (Access = private)
-        TemplateTreeParams
+    properties (Abstract, Access = protected)
+        TreeParams
         EnsembleParams
-    end
-
-    properties (Abstract)
         MethodParams
     end
 
-    properties (Abstract,Constant)
+    properties (Abstract, Constant)
         AggregationMethod
     end
 
@@ -27,9 +25,9 @@ classdef TreeEnsemble (Abstract) < Classifier
             % convert hyperparameter structs to cell arrays of Name-Value
             % pairs, that way we don't have to type all the Name-Value pairs
             % manually in the function calls
-            treeParams = namedargs2cell(obj.TemplateTreeParams);
+            treeParams = namedargs2cell(obj.TreeParams);
             ensembleParams = namedargs2cell(obj.EnsembleParams);
-            methodsParams =  namedargs2cell(obj.MethodParams);
+            methodParams =  namedargs2cell(obj.MethodParams);
 
             % create template tree for base learners
             tree = templateTree('Reproducible', true, treeParams{:});
@@ -44,20 +42,14 @@ classdef TreeEnsemble (Abstract) < Classifier
                 data = trainingData;
             end
 
-            obj.model = compact(fitcensemble(data, labels, ...
-                Learners=tree, Method=obj.AggregationMethod, ...
-                ensembleParams{:}, methodParams{:}));
+            obj.Model = compact(fitcensemble(data, labels, ...
+                ensembleParams{:}, methodParams{:}, ...
+                Learners=tree, Method=obj.AggregationMethod));
             
         end
 
-        function [labels,scores] = predict(obj,newData)
-
-            [labels,scores] = predict(obj.Model,newData);
-
-        end
-
         function hyperparams = get.Hyperparams(obj)
-            hyperparams = mergeStructs(obj.TemplateTreeParams, ...
+            hyperparams = mergeStructs(obj.TreeParams, ...
                 obj.EnsembleParams, obj.MethodParams);
         end
 
