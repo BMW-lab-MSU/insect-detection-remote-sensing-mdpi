@@ -14,7 +14,7 @@ function out = mergeStructs(in)
     % TODO: we don't actually need the field names for the first struct.
     fields = cell(1,nStructs);
 
-    for strutNum = 1:nStructs
+    for structNum = 1:nStructs
         fields{structNum} = fieldnames(in{structNum});
     end
 
@@ -24,7 +24,7 @@ function out = mergeStructs(in)
     % in the first struct.
     for structNum = 2:nStructs
         for fieldNum = 1:numel(fields{structNum})
-            out.(fields{fieldNum}) = in{structNum}.(fields{fieldNum});
+            out.(fields{structNum}{fieldNum}) = in{structNum}.(fields{structNum}{fieldNum});
         end
     end
 end
