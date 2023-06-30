@@ -3,6 +3,7 @@ classdef StatsNeuralNetwork < Classifier
     properties (SetAccess = protected, GetAccess = public)
         Model
         Hyperparams
+        UseGPU = false
     end
 
     methods
