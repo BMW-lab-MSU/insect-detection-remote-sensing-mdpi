@@ -35,7 +35,7 @@ classdef TreeEnsemble (Abstract) < Classifier
             tree = templateTree('Reproducible', true, treeParams{:});
 
             % if we are training on a GPU, convert the data to a gpuArray
-            if obj.UseGPU
+            if obj.UseGPU && canUseGPU()
                 % we have to use convertvars to convert each table
                 % variable into a gpuArray.
                 data = convertvars(trainingData, [1:width(trainingData)], ...
