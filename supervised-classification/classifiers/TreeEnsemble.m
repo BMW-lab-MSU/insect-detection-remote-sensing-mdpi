@@ -27,11 +27,12 @@ classdef TreeEnsemble (Abstract) < Classifier
             % convert hyperparameter structs to cell arrays of Name-Value
             % pairs, that way we don't have to type all the Name-Value pairs
             % manually in the function calls
-            treeParamsCell = namedargs2cell(obj.TemplateTreeParams);
-            ensembleParamsCell = namedargs2cell(obj.EnsembleParams)
+            treeParams = namedargs2cell(obj.TemplateTreeParams);
+            ensembleParams = namedargs2cell(obj.EnsembleParams);
+            methodsParams =  namedargs2cell(obj.MethodParams);
 
             % create template tree for base learners
-            tree = templateTree('Reproducible', true, treeParamsCell{:});
+            tree = templateTree('Reproducible', true, treeParams{:});
 
             % if we are training on a GPU, convert the data to a gpuArray
             if obj.UseGPU
@@ -45,7 +46,7 @@ classdef TreeEnsemble (Abstract) < Classifier
 
             obj.model = compact(fitcensemble(data, labels, ...
                 Learners=tree, Method=obj.AggregationMethod, ...
-                ensembleParamsCell{:}));
+                ensembleParams{:}, methodParams{:}));
             
         end
 
@@ -56,9 +57,8 @@ classdef TreeEnsemble (Abstract) < Classifier
         end
 
         function hyperparams = get.Hyperparams(obj)
-            tmp = mergeStructs(obj.TemplateTreeParams, ...
-                obj.EnsembleParams)
-            hyperparams = mergeStructs
+            hyperparams = mergeStructs(obj.TemplateTreeParams, ...
+                obj.EnsembleParams, obj.MethodParams);
         end
 
     end
