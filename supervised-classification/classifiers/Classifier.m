@@ -3,11 +3,15 @@ classdef (Abstract) Classifier < handle
     properties (Abstract, SetAccess = protected, GetAccess = public)
         Model
         Hyperparams
-        UseGPU = false
+        UseGPU
     end
     
     methods (Abstract)
         fit(obj,trainingData,labels)
+    end
+
+    methods (Abstract,Static)
+        params = getDefaultParameters()
     end
 
     methods

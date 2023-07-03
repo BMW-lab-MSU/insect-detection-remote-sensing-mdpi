@@ -6,6 +6,19 @@ classdef SVM < Classifier
         UseGPU
     end
 
+    methods (Static)
+        function params = getDefaultParameters()
+            params.BoxConstraint = 1;
+            params.KernelFunction = 'linear';
+            params.KernelScale = 1;
+            params.PolynomialOrder = 2;
+            params.Standardize = false ;
+            params.Solver = 'SMO';
+            params.Cost = ones(2) - eye(2);
+            params.ScoreTransform = 'none';
+        end
+    end
+
     methods
         function fit(obj,trainingData,labels)
 

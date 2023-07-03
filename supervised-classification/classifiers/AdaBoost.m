@@ -10,6 +10,19 @@ classdef AdaBoost < TreeEnsemble
         AggregationMethod = "AdaBoostM1"
     end
 
+    methods (Static)
+        function params = getDefaultParameters()
+            params.MaxNumSplits = 10;
+            params.MinLeafSize = 1;
+            params.NumVariablesToSample = 'all';
+            params.SplitCriterion = 'gdi';
+            params.NumLearningCycles = 100;
+            params.Cost = ones(2) - eye(2);
+            params.ScoreTransform = 'none';
+            params.LearnRate = 1;
+        end
+    end
+
     methods
         function obj = AdaBoost(treeParams,ensembleParams,params,opts)
             arguments

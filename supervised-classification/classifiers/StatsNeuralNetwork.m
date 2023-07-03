@@ -6,6 +6,16 @@ classdef StatsNeuralNetwork < Classifier
         UseGPU = false
     end
 
+    methods (Static)
+        function params = getDefaultParameters()
+            params.LayerSizes = 10;
+            params.Standardize = true;
+            params.Lambda = 0;
+            params.Activations = 'relu';
+            params.Cost = ones(2) - eye(2);
+            params.ScoreTransform = 'none';
+        end
+    end
     methods
         function fit(obj,trainingData,labels)
 
@@ -25,9 +35,9 @@ classdef StatsNeuralNetwork < Classifier
                 % are the same as MATLAB's default values as of 2023a.
                 % This doesn't include  all possible parameters; just the ones
                 % that are commonly used and/or optimizable in fitcensemble.
-                params.LayerSizes = 10;
+                params.LayerSizes = 10
                 params.Standardize = true
-                params.Lambda
+                params.Lambda = 0
                 params.Activations {mustBeMember(params.Activations,{'relu','tanh','sigmoid','none'})} = 'relu'
                 params.Cost = ones(2) - eye(2)
                 params.ScoreTransform = 'none'
