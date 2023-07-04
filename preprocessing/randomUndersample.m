@@ -7,11 +7,11 @@ function remove = randomUndersample(labels, undersampleClass, opts)
 %   modified in-place with this function, MATLAB would create copies of the
 %   matrices, which would result in extra memory usage.
 %
-%   remove = randomUndersample(labels, undersample_class) returns indices for
-%   a random subset of 75% of the labels corresponding to the undersample_class
+%   remove = randomUndersample(labels, undersampleClass) returns indices for
+%   a random subset of 75% of the labels corresponding to the undersampleClass
 %   label.
 %
-%   remove = randomUndersample(labels, undersample_class, ...
+%   remove = randomUndersample(labels, undersampleClass, ...
 %   'UndersamplingRatio', ratio) undersamples the undersample_class by ratio,
 %   which must be between 0 and 1.
 
@@ -19,7 +19,7 @@ function remove = randomUndersample(labels, undersampleClass, opts)
 
 arguments
     labels (1,:) 
-    undersampleClass (1,1)
+    undersampleClass (1,1) = 0
     opts.UndersamplingRatio (1,1) double {mustBeInRange(opts.UndersamplingRatio, 0, 1)} = 0.75
     opts.Reproducible (1,1) logical = false
     opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
