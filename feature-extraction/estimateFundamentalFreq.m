@@ -25,7 +25,11 @@ for i = 1:numel(fundamental)
     if ~isempty(idx)
         fundamental(i) = idx;
     else
-        fundamental(i) = 0;
+        % when a peak isn't found, set the fundamental location to 1,
+        % which corresponds to a frequency bin of 0. Alternatively, we could
+        % possibly set this to NaN instead, though that might require changes
+        % in other functions.
+        fundamental(i) = 1;
     end
 end
 
