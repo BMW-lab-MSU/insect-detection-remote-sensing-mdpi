@@ -9,10 +9,10 @@ rng(0, 'twister');
 % train, then test the models during the next data collection campaign.
 
 % load training data
-load(preprocessedDataDir + filesep + "2022-06-preprocessed")
+load(preprocessedDataDir + filesep + "2022-06-preprocessed-filtered")
 
 % load testing data
-load(preprocessedDataDir + filesep + "2022-07-preprocessed")
+load(preprocessedDataDir + filesep + "2022-07-preprocessed-filtered")
 
 %% Partition training data into train and validations sets
 VALIDATION_PCT = 0.2;
@@ -39,21 +39,21 @@ testingMetadata = julyMetadata;
 if ~exist(testingDataDir)
     mkdir(baseDataDir, "testing");
 end
-save(testingDataDir + filesep + "testingData.mat", ...
+save(testingDataDir + filesep + "testingDataFiltered.mat", ...
     'testingData', 'testingRowLabels', 'testingImgLabels', ...
     'testingMetadata', '-v7.3');
 
 if ~exist(trainingDataDir)
     mkdir(baseDataDir, "training");
 end
-save(trainingDataDir + filesep + "trainingData.mat", ...
+save(trainingDataDir + filesep + "trainingDataFiltered.mat", ...
     'trainingData', 'trainingRowLabels', 'trainingImgLabels', ...
     'trainingMetadata', 'holdoutPartition', '-v7.3');
 
 if ~exist(validationDataDir)
     mkdir(baseDataDir, "validation");
 end
-save(validationDataDir + filesep + "validationData.mat", ...
+save(validationDataDir + filesep + "validationDataFiltered.mat", ...
     'validationData', 'validationRowLabels', 'validationImgLabels', ...
     'validationMetadata', 'holdoutPartition', '-v7.3');
 
