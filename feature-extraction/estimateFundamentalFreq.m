@@ -18,10 +18,15 @@ hps = harmonicProductSpectrum(psd, 3);
 
 [maximaIndicator] = islocalmax(hps,2,"FlatSelection","center","MaxNumExtrema",1);
 
-[row, fundamentalLocTmp] = find(maximaIndicator);
+fundamental = zeros(height(esd),1,"like",esd);
 
-[~,sortIdx] = sort(row);
-
-fundamental = fundamentalLocTmp(sortIdx);
+for i = 1:numel(fundamental)
+    idx = find(maximaIndicator(i,:));
+    if ~isempty(idx)
+        fundamental(i) = idx;
+    else
+        fundamental(i) = 1;
+    end
+end
 
 end
