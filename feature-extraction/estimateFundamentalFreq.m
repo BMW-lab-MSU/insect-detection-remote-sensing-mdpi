@@ -1,5 +1,5 @@
-function fundamental = estimateFundamentalFreq(esd, opts)
-% estimateFundamentalFreq estimate the fundamental frequency in a ESD using the
+function fundamental = estimateFundamentalFreq(psd)
+% estimateFundamentalFreq estimate the fundamental frequency in a PSD using the
 % harmonic product spectrum
 %
 %   fundamental = estimateFundamentalFreq(esd) estimates the fundamental
@@ -9,28 +9,19 @@ function fundamental = estimateFundamentalFreq(esd, opts)
 
 % SPDX-License-Identifier: BSD-3-Clause
 arguments
-    esd (:,:) {mustBeNumeric}
-    opts.UseParallel (1,1) logical = false
+    psd (:,:) {mustBeNumeric}
 end
 
-fundamental = zeros(height(esd), 1);
+% TODO: nHarmonics should be an optional input parameter
+hps = harmonicProductSpectrum(psd, 3);
 
-hps = harmonicProductSpectrum(esd, 3);
 
-if opts.UseParallel
-    nWorkers = gcp('nocreate').NumWorkers;
-else
-    nWorkers = 0;
-end
+[maximaIndicator] = islocalmax(hps,2,"FlatSelection","center","MaxNumExtrema",1);
 
-parfor (i = 1:height(esd), nWorkers)
-    [~, fundamentalTmp] = findpeaks(hps(i,:), 'NPeaks', 1, ...
-        'SortStr', 'descend');
-    
-    % if we don't find a fundamental frequency, then we keep it set at 0.
-    if ~isempty(fundamentalTmp)
-        fundamental(i) = fundamentalTmp;
-    end
-end
+[row, fundamentalLocTmp] = find(maximaIndicator);
+
+[~,sortIdx] = sort(row);
+
+fundamental = fundamentalLocTmp(sortIdx);
 
 end
