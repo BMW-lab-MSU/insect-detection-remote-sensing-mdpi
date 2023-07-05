@@ -1,4 +1,4 @@
-function fundamental = estimateFundamentalFreq(psd)
+function fundamental = estimateFundamentalFreq(esd)
 % estimateFundamentalFreq estimate the fundamental frequency in a PSD using the
 % harmonic product spectrum
 %
@@ -9,11 +9,11 @@ function fundamental = estimateFundamentalFreq(psd)
 
 % SPDX-License-Identifier: BSD-3-Clause
 arguments
-    psd (:,:) {mustBeNumeric}
+    esd (:,:) {mustBeNumeric}
 end
 
 % TODO: nHarmonics should be an optional input parameter
-hps = harmonicProductSpectrum(psd, 3);
+hps = harmonicProductSpectrum(esd, 3);
 
 
 [maximaIndicator] = islocalmax(hps,2,"FlatSelection","center","MaxNumExtrema",1);
@@ -25,7 +25,7 @@ for i = 1:numel(fundamental)
     if ~isempty(idx)
         fundamental(i) = idx;
     else
-        fundamental(i) = 1;
+        fundamental(i) = 0;
     end
 end
 
