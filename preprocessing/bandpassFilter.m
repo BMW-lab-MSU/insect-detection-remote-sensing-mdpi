@@ -14,7 +14,7 @@ end
 % Convert filter into second-order-sections for stability
 sos = zp2sos(z,p,k);
 
-% Transpose the data. bandpass filters columns, but we need to filter rows.
+% Transpose the data. MATLAB filters columns, but we need to filter rows.
 d = x.';
 
 tmp = sosfilt(sos,d);
