@@ -12,21 +12,21 @@ beehiveDataSetup;
 
 % Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData",...
-    "trainingLabels");
+    "trainingRowLabels");
 load(trainingDataDir + filesep + "trainingFeatures");
 
 % Load in the validation data
 load(validationDataDir + filesep + "validationData","validationData",...
-    "validationLabels");
+    "validationRowLabels");
 load(validationDataDir + filesep + "validationFeatures");
 
 % Undersample/oversampling the data
 [~,labels,features] = rowDataSampling(undersampleRatio,nOversample,...
-    trainingData,trainingLabels,trainingFeatures,UseParallel=opts.UserParallel);
+    trainingData,trainingRowLabels,trainingFeatures,UseParallel=opts.UseParallel);
 
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,features,labels,...
-    validationFeatures,validationLabels,UseParallel=opts.UseParallel);
+    validationFeatures,validationRowLabels,UseParallel=opts.UseParallel);
 
 % Save results so we can do parameter selection later
 filename = string(class(classifierType)) ...
