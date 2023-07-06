@@ -19,6 +19,7 @@ end
 
 newData = data;
 newLabels = labels;
+newFeatures = features;
 
 % Undersample by removing rows from the majority class
 parfor(imageNum = 1:numel(data), nWorkers)
@@ -30,17 +31,21 @@ end
 
 % Oversampling
 if isempty(features)
-    % Create synthesic insect time series rows
-    [synthData,synthLabels] = createSyntheticData(newData,newLabels,...
-        nOversample,UseParallel=opts.UseParallel);
+    parfor(imageNum = 1:numel(data), nWorkers)
+        % Create synthesic insect time series rows
+        [synthData,synthLabels] = createSyntheticData(newData{imageNum},...
+            newLabels{imageNum},nOversample);
 
-        newData = vertcat(newData,synthFeatures);
-        newLabels = vertcat(newLabels,synthLabels);
+        newData{imageNum} = vertcat(newData{imageNum},synthData);
+        newLabels{imageNum} = vertcat(newLabels{imageNum},synthLabels);
+    end
 else
-    % Create synthetic insect features
-    [synthFeatures,synthLabels] = createSyntheticFeatures(newData,newLabels,...
-        nOversample,UseParallel=opts.UseParallel);
+    parfor(imageNum = 1:numel(data), nWorkers)
+        % Create synthetic insect features
+        [synthFeatures,synthLabels] = createSyntheticFeatures(newData{imageNum},...
+            newLabels{imageNum},nOversample);
     
-        newFeatures = vertcat(features,synthFeatures);
-        newLabels = vertcat(newLabels,synthLabels);
+        newFeatures{imageNum} = vertcat(newFeatures{imageNum},synthFeatures);
+        newLabels{imageNum} = vertcat(newLabels{imageNum},synthLabels);
+    end
 end
