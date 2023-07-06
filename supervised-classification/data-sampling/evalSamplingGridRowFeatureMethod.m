@@ -7,6 +7,9 @@ arguments
     opts.UseParallel = false
 end
 
+% Set up data paths
+beehiveDataSetup;
+
 % Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData",...
     "trainingLabels");
