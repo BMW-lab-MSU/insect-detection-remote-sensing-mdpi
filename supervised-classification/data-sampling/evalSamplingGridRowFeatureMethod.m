@@ -9,11 +9,13 @@ end
 
 % Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData",...
-    "trainingFeatures","trainingLabels");
+    "trainingLabels");
+load(trainingDataDir + filesep + "trainingFeatures");
 
 % Load in the validation data
 load(validationDataDir + filesep + "validationData","validationData",...
-    "validationFeatures","validationLabels");
+    "validationLabels");
+load(validationDataDir + filesep + "validationFeatures");
 
 % Undersample/oversampling the data
 [~,labels,features] = rowDataSampling(undersampleRatio,nOversample,...
@@ -21,14 +23,13 @@ load(validationDataDir + filesep + "validationData","validationData",...
 
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,features,labels,...
-    validationDAta,validationLabels,UseParallel=opts.UseParallel);
+    validationFeatures,validationLabels,UseParallel=opts.UseParallel);
 
 % Save results so we can do parameter selection later
-filename = string(class(classifierType)) + "Undersample" + undersampleRatio + ...
-    "Oversample" + nOversample;
+filename = string(class(classifierType)) ...
+    + "Undersample" + undersampleRatio +  "Oversample" + nOversample;
 
 save(trainingResultsDir + filesep + "data-sampling" + filesep + filename,...
-    "objective","userdata",'-v7.3');
     "objective","userdata",'-v7.3');
 
 end
