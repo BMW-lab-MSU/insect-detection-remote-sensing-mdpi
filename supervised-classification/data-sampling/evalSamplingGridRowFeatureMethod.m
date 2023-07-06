@@ -7,6 +7,12 @@ arguments
     opts.UseParallel = false
 end
 
+if opts.UseParallel
+    if isempty(gcp('nocreate'))
+        parpool();
+    end
+end
+
 % Set up data paths
 beehiveDataSetup;
 
