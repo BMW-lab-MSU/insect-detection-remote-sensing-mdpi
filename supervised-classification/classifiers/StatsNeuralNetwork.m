@@ -17,14 +17,17 @@ classdef StatsNeuralNetwork < Classifier
         end
     end
     methods
-        function fit(obj,trainingData,labels)
+        function fit(obj,trainingData,trainingLabels)
+
+            data = StatsNeuralNetwork.formatData(trainingData);
+            labels = StatsNeuralNetwork.formatLabels(trainingLabels);
 
             % convert hyperparameter structs to cell arrays of Name-Value
             % pairs, that way we don't have to type all the Name-Value pairs
             % manually in the function calls
             params = namedargs2cell(obj.Hyperparams);
 
-            obj.Model = compact(fitcnet(trainingData, labels, params{:}));
+            obj.Model = compact(fitcnet(data, labels, params{:}));
             
         end
 

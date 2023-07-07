@@ -20,7 +20,10 @@ classdef (Abstract) TreeEnsemble < Classifier
     end
 
     methods
-        function fit(obj,trainingData,labels)
+        function fit(obj,trainingData,trainingLabels)
+
+            formattedData = TreeEnsemble.formatData(trainingData);
+            labels = TreeEnsemble.formatLabels(trainingLabels);
 
             % convert hyperparameter structs to cell arrays of Name-Value
             % pairs, that way we don't have to type all the Name-Value pairs
@@ -29,17 +32,17 @@ classdef (Abstract) TreeEnsemble < Classifier
             ensembleParams = namedargs2cell(obj.EnsembleParams);
             methodParams =  namedargs2cell(obj.MethodParams);
 
-            % create template tree for base learners
+            % create reproducible template tree for base learners
             tree = templateTree('Reproducible', true, treeParams{:});
 
             % if we are training on a GPU, convert the data to a gpuArray
             if obj.UseGPU && canUseGPU()
                 % we have to use convertvars to convert each table
                 % variable into a gpuArray.
-                data = convertvars(trainingData, [1:width(trainingData)], ...
+                data = convertvars(formattedData, 1:width(formattedData), ...
                     @(x) gpuArray(x));
             else
-                data = trainingData;
+                data = formattedData;
             end
 
             obj.Model = compact(fitcensemble(data, labels, ...

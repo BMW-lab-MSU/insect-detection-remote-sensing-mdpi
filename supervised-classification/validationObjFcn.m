@@ -42,7 +42,8 @@ fit(classifier,trainingData,trainingLabels);
 predLabels = predict(classifier,validationData);
 
 % Compute performance metrics
-confusionMatrix = confusionmat(validationLabels, predLabels);
+trueLabels = classifier.formatLabels(validationLabels);
+confusionMatrix = confusionmat(trueLabels, predLabels);
 
 [accuracy, precision, recall, f2, f3, mcc] = analyzeConfusion(confusionMatrix);
 objective = -mcc;

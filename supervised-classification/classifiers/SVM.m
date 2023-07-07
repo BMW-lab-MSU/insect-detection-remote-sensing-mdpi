@@ -1,4 +1,4 @@
-classdef SVM < Classifier
+classdef SVM < StatsToolboxClassifier
 
     properties (SetAccess = protected, GetAccess = public)
         Model
@@ -20,7 +20,10 @@ classdef SVM < Classifier
     end
 
     methods
-        function fit(obj,trainingData,labels)
+        function fit(obj,trainingData,trainingLabels)
+
+            formattedData = SVM.formatData(trainingData);
+            labels = SVM.formatLabels(trainingLabels);
 
             % convert hyperparameter structs to cell arrays of Name-Value
             % pairs, that way we don't have to type all the Name-Value pairs
@@ -31,10 +34,10 @@ classdef SVM < Classifier
             if obj.UseGPU && canUseGPU()
                 % we have to use convertvars to convert each table
                 % variable into a gpuArray.
-                data = convertvars(trainingData, [1:width(trainingData)], ...
+                data = convertvars(formattedData, 1:width(formattedData), ...
                     @(x) gpuArray(x));
             else
-                data = trainingData;
+                data = formattedData;
             end
 
             obj.Model = compact(fitcsvm(data, labels, params{:}));
