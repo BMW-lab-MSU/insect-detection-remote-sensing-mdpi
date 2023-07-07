@@ -23,7 +23,7 @@ newLabels = labels;
 newFeatures = features;
 
 % Undersample by removing rows from the majority class
-parfor(imageNum = 1:numel(data), nWorkers)
+for imageNum = 1:numel(data)
     idxRemove = randomUndersample(newLabels{imageNum},opts.MajorityLabel,...
         UndersamplingRatio=undersampleRatio,Reproducible=true);
     newData{imageNum}(idxRemove,:) = [];
