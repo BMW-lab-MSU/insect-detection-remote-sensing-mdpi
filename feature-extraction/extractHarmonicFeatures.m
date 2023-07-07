@@ -43,7 +43,7 @@ harmonicHeightRatio = nan(nRows, nHarmonicCombinations, 'like', esd);
 harmonicWidthRatio = nan(nRows, nHarmonicCombinations, 'like', esd);
 harmonicProminenceRatio = nan(nRows, nHarmonicCombinations, 'like', esd);
 
-fundamental = estimateFundamentalFreq(esd, 'UseParallel', opts.UseParallel);
+fundamental = estimateFundamentalFreq(esd);
 
 if opts.UseParallel
     nWorkers = gcp('nocreate').NumWorkers;
