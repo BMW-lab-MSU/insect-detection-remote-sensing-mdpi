@@ -27,6 +27,7 @@ parfor(imageNum = 1:numel(data), nWorkers)
     idxRemove = randomUndersample(newLabels{imageNum},opts.MajorityLabel,...
         UndersamplingRatio=undersampleRatio,Reproducible=true);
     newData{imageNum}(idxRemove,:) = [];
+    newFeatures{imageNum}(idxRemove,:) = [];
     newLabels{imageNum}(idxRemove) = [];
 end
 
