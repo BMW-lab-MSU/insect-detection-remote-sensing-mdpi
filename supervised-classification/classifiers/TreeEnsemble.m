@@ -1,4 +1,4 @@
-classdef (Abstract) TreeEnsemble < Classifier
+classdef (Abstract) TreeEnsemble < StatsToolboxClassifier
 
     properties (SetAccess = protected, GetAccess = public)
         Model

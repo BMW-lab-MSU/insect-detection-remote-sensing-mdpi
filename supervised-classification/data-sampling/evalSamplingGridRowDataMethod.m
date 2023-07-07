@@ -5,6 +5,7 @@ arguments
     undersampleRatio (1,1) double
     nOversample (1,1) {mustBeInteger}
     opts.UseParallel = false
+    opts.UseGPU = false
 end
 
 % Load in the training data
@@ -19,7 +20,8 @@ load(validationDataDir + filesep + "validationData","validationData","validation
 
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,data,labels,...
-    validationDAta,validationLabels,UseParallel=opts.UseParallel);
+    validationDAta,validationLabels,UseParallel=opts.UseParallel,...
+    UseGPU=opts.UseGPU);
 
 % Save results so we can do parameter selection later
 filename = string(class(classifierType)) + "Undersample" + undersampleRatio + ...

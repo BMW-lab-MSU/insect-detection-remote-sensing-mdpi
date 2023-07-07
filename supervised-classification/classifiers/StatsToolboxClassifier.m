@@ -24,13 +24,18 @@ classdef (Abstract) StatsToolboxClassifier < Classifier
             if obj.UseGPU && canUseGPU()
                 % we have to use convertvars to convert each table
                 % variable into a gpuArray.
-                data = convertvars(formattedData, 1:width(trainingData), ...
+                data = convertvars(formattedData, 1:width(formattedData), ...
                     @(x) gpuArray(x));
             else
                 data = formattedData;
             end
 
             [labels,scores] = predict(obj.Model,data);
+
+            if obj.UseGPU && canUseGPU()
+                labels = gather(labels);
+                scores = gather(scores);
+            end
         end
     end
 

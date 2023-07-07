@@ -11,6 +11,7 @@ arguments
     params.Static = {}
     params.Optimizable = []
     opts.UseParallel (1,1) logical = false
+    opts.UseGPU (1,1) logical = false
 end
 
 statset('UseParallel', opts.UseParallel);
@@ -26,6 +27,8 @@ if ~isempty(params.Optimizable)
     classifierArgs = horzcat(classifierArgs, ...
         namedargs2cell(table2struct(params.Optimizable)));
 end
+
+classifierArgs = horzcat(classifierArgs, {'UseGPU'}, opts.UseGPU);
 
 % Construct classifier
 if isempty(classifierArgs)
