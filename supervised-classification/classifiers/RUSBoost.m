@@ -18,11 +18,11 @@ classdef RUSBoost < TreeEnsemble
         function params = getDefaultParameters()
             params.MaxNumSplits = 10;
             params.MinLeafSize = 1;
-            params.NumVariablesToSample = 'all';
-            params.SplitCriterion = 'gdi';
+            params.NumVariablesToSample = "all";
+            params.SplitCriterion = "gdi";
             params.NumLearningCycles = 100;
             params.Cost = ones(2) - eye(2);
-            params.ScoreTransform = 'none';
+            params.ScoreTransform = "none";
             params.LearnRate = 1;
         end
     end
@@ -37,11 +37,11 @@ classdef RUSBoost < TreeEnsemble
                 % that are commonly used and/or optimizable in fitcensemble.
                 treeParams.MaxNumSplits = 10
                 treeParams.MinLeafSize = 1
-                treeParams.NumVariablesToSample = 'all'
-                treeParams.SplitCriterion {mustBeMember(treeParams.SplitCriterion,{'gdi','deviance','twoing'})} = 'gdi'
+                treeParams.NumVariablesToSample = "all"
+                treeParams.SplitCriterion {mustBeMember(treeParams.SplitCriterion,["gdi","deviance","twoing"])} = "gdi"
                 ensembleParams.NumLearningCycles = 100
                 ensembleParams.Cost = ones(2) - eye(2)
-                ensembleParams.ScoreTransform = 'none'
+                ensembleParams.ScoreTransform = "none"
                 params.LearnRate = 1
                 opts.UseGPU = false;
             end

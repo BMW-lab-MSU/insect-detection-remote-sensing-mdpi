@@ -15,9 +15,9 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
             params.LayerSizes = 10;
             params.Standardize = true;
             params.Lambda = 0;
-            params.Activations = 'relu';
+            params.Activations = "relu";
             params.Cost = ones(2) - eye(2);
-            params.ScoreTransform = 'none';
+            params.ScoreTransform = "none";
         end
     end
 
@@ -46,9 +46,9 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
                 params.LayerSizes = 10
                 params.Standardize = true
                 params.Lambda = 0
-                params.Activations {mustBeMember(params.Activations,{'relu','tanh','sigmoid','none'})} = 'relu'
+                params.Activations {mustBeMember(params.Activations,["relu","tanh","sigmoid","none"])} = "relu"
                 params.Cost = ones(2) - eye(2)
-                params.ScoreTransform = 'none'
+                params.ScoreTransform = "none"
             end
 
             obj.Hyperparams = params;

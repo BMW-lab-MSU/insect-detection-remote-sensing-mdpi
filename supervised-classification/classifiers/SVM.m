@@ -13,13 +13,13 @@ classdef SVM < StatsToolboxClassifier
     methods (Static)
         function params = getDefaultParameters()
             params.BoxConstraint = 1;
-            params.KernelFunction = 'linear';
+            params.KernelFunction = "linear";
             params.KernelScale = 1;
             params.PolynomialOrder = 2;
             params.Standardize = false ;
-            params.Solver = 'SMO';
+            params.Solver = "SMO";
             params.Cost = ones(2) - eye(2);
-            params.ScoreTransform = 'none';
+            params.ScoreTransform = "none";
         end
     end
 
@@ -56,20 +56,20 @@ classdef SVM < StatsToolboxClassifier
                 % This doesn't include all possible parameters; just the ones
                 % that are commonly used and/or optimizable in fitcensemble.
                 params.BoxConstraint = 1
-                params.KernelFunction {mustBeMember(params.KernelFunction,{'linear','gaussian','rbf','polynomial'})} = 'linear'
+                params.KernelFunction {mustBeMember(params.KernelFunction,["linear","gaussian","rbf","polynomial"])} = "linear"
                 params.KernelScale = 1
                 params.PolynomialOrder = 2
                 params.Standardize = false 
-                params.Solver {mustBeMember(params.Solver,{'ISDA','L1QP','SMO'})} = 'SMO'
+                params.Solver {mustBeMember(params.Solver,["ISDA","L1QP","SMO"])} = "SMO"
                 params.Cost = ones(2) - eye(2)
-                params.ScoreTransform = 'none'
+                params.ScoreTransform = "none"
                 opts.UseGPU = false;
             end
 
             % if the kernel isn't polynomial, we can't have the
             % the PolynomialOrder parameter
-            if ~strcmpi(params.KernelFunction,'polynomial')
-                params = rmfield(params,'PolynomialOrder');
+            if ~strcmpi(params.KernelFunction,"polynomial")
+                params = rmfield(params,"PolynomialOrder");
             end
 
             obj.Hyperparams = params;
