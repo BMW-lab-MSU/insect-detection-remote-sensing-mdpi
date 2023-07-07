@@ -11,7 +11,7 @@ classdef RUSBoost < TreeEnsemble
     end
 
     properties (SetAccess = immutable, GetAccess = public)
-        Name = "RUSBooost"
+        Name = "RUSBoost"
     end
 
     methods (Static)
