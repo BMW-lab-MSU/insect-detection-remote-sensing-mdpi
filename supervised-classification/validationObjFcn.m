@@ -28,7 +28,12 @@ if ~isempty(params.Optimizable)
         namedargs2cell(table2struct(params.Optimizable)));
 end
 
-classifierArgs = horzcat(classifierArgs, {'UseGPU'}, opts.UseGPU);
+if opts.UseGPU
+    % NOTE: not all classifiers support GPU acceleration; the ones that don't
+    %       support GPU acceleration don't have a UseGPU argument, so these
+    %       classifiers will raise an error if UseGPU is passed in. 
+    classifierArgs = horzcat(classifierArgs, {'UseGPU'}, opts.UseGPU);
+end
 
 % Construct classifier
 if isempty(classifierArgs)
