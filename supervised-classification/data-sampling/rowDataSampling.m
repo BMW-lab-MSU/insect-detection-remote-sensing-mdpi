@@ -1,11 +1,12 @@
 function [newData,newLabels,newFeatures] = rowDataSampling(undersampleRatio,...
-    nOversample,data,labels,features,opts)
+    nOversample,data,labels,timestamps,features,opts)
 
 arguments
     undersampleRatio
     nOversample
     data
     labels
+    timestamps
     features = []
     opts.MajorityLabel = 0
     opts.UseParallel = false
@@ -25,7 +26,7 @@ newFeatures = features;
 parfor(imageNum = 1:numel(data), nWorkers)
     idxRemove = randomUndersample(newLabels{imageNum},opts.MajorityLabel,...
         UndersamplingRatio=undersampleRatio,Reproducible=true);
-    newData{imageNum}(idxRemove) = [];
+    newData{imageNum}(idxRemove,:) = [];
     newLabels{imageNum}(idxRemove) = [];
 end
 
@@ -41,9 +42,12 @@ if isempty(features)
     end
 else
     parfor(imageNum = 1:numel(data), nWorkers)
+        avgSamplingFrequency = averagePRF(timestamps{imageNum});
+
         % Create synthetic insect features
-        [synthFeatures,synthLabels] = createSyntheticFeatures(newData{imageNum},...
-            newLabels{imageNum},nOversample);
+        [synthFeatures,synthLabels] = ...
+            createSyntheticFeatures(newData{imageNum},newLabels{imageNum},...
+                nOversample,avgSamplingFrequency);
     
         newFeatures{imageNum} = vertcat(newFeatures{imageNum},synthFeatures);
         newLabels{imageNum} = vertcat(newLabels{imageNum},synthLabels);
