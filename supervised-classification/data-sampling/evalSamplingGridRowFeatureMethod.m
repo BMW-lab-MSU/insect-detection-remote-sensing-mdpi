@@ -40,6 +40,10 @@ load(validationDataDir + filesep + "validationFeatures");
 filename = string(class(classifierType)) ...
     + "Undersample" + undersampleRatio +  "Oversample" + nOversample;
 
+if ~exist(trainingResultsDir + filesep + "data-sampling")
+    mkdir(trainingResultsDir,"data-sampling");
+end
+
 save(trainingResultsDir + filesep + "data-sampling" + filesep + filename,...
     "objective","userdata",'-v7.3');
 
