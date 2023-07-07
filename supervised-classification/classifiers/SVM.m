@@ -56,7 +56,7 @@ classdef SVM < StatsToolboxClassifier
                 % This doesn't include all possible parameters; just the ones
                 % that are commonly used and/or optimizable in fitcensemble.
                 params.BoxConstraint = 1
-                params.KernelFunction {mustBeMember(params.KernelFunction,["linear","gaussian","rbf","polynomial"])} = "linear"
+                params.KernelFunction (1,1) string {mustBeMember(params.KernelFunction,["linear","gaussian","rbf","polynomial"])} = "linear"
                 params.KernelScale = 1
                 params.PolynomialOrder = 2
                 params.Standardize = false 
@@ -74,7 +74,17 @@ classdef SVM < StatsToolboxClassifier
 
             obj.Hyperparams = params;
             obj.UseGPU = opts.UseGPU;
-            obj.Name = params.KernelFunction + "SVM";
+
+            % Capitalize the kernel function so the classifier name
+            % is TitleCase, following the ClassName naming convention.
+            kernelFunction = params.KernelFunction;
+            kernelFunction{1}(1) = upper(kernelFunction{1}(1));
+
+            if ~strcmpi(params.KernelFunction,"polynomial")
+                obj.Name = kernelFunction + "SVM";
+            else
+                obj.Name = kernelFunction + params.PolynomialOrder + "SVM";
+            end
         end
 
 
