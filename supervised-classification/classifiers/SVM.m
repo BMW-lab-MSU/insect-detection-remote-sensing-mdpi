@@ -6,6 +6,10 @@ classdef SVM < StatsToolboxClassifier
         UseGPU
     end
 
+    properties (SetAccess = immutable, GetAccess = public)
+        Name
+    end
+
     methods (Static)
         function params = getDefaultParameters()
             params.BoxConstraint = 1;
@@ -70,6 +74,7 @@ classdef SVM < StatsToolboxClassifier
 
             obj.Hyperparams = params;
             obj.UseGPU = opts.UseGPU;
+            obj.Name = params.KernelFunction + "SVM";
         end
 
 

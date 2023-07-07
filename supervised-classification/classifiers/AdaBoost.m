@@ -10,6 +10,10 @@ classdef AdaBoost < TreeEnsemble
         AggregationMethod = "AdaBoostM1"
     end
 
+    properties (SetAccess = immutable, GetAccess = public)
+        Name = "AdaBoost"
+    end
+
     methods (Static)
         function params = getDefaultParameters()
             params.MaxNumSplits = 10;

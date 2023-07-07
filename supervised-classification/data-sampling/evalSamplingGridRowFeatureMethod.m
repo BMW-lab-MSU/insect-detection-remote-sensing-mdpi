@@ -37,8 +37,8 @@ load(validationDataDir + filesep + "validationFeatures");
     UseGPU=opts.UseGPU);
 
 % Save results so we can do parameter selection later
-filename = string(class(classifierType)) ...
-    + "Undersample" + undersampleRatio +  "Oversample" + nOversample;
+filename = userdata.Classifier.Name + "Undersample" + undersampleRatio + ...
+    "Oversample" + nOversample + ".mat";
 
 if ~exist(trainingResultsDir + filesep + "data-sampling")
     mkdir(trainingResultsDir,"data-sampling");

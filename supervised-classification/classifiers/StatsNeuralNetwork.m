@@ -6,6 +6,10 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
         UseGPU = false
     end
 
+    properties (SetAccess = immutable, GetAccess = public)
+        Name = "StatsNeuralNetwork"
+    end
+
     methods (Static)
         function params = getDefaultParameters()
             params.LayerSizes = 10;

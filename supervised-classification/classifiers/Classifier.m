@@ -5,6 +5,10 @@ classdef (Abstract) Classifier < handle
         Hyperparams
         UseGPU
     end
+
+    properties (Abstract, SetAccess = immutable, GetAccess = public)
+        Name
+    end
     
     methods (Abstract)
         fit(obj,trainingData,trainingLabels)

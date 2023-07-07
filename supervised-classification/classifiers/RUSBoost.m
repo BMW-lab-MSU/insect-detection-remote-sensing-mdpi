@@ -10,6 +10,10 @@ classdef RUSBoost < TreeEnsemble
         AggregationMethod = "RUSBoost"
     end
 
+    properties (SetAccess = immutable, GetAccess = public)
+        Name = "RUSBooost"
+    end
+
     methods (Static)
         function params = getDefaultParameters()
             params.MaxNumSplits = 10;
