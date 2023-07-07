@@ -1,4 +1,4 @@
-classdef StatsNeuralNetwork < Classifier
+classdef StatsNeuralNetwork < StatsToolboxClassifier
 
     properties (SetAccess = protected, GetAccess = public)
         Model
@@ -16,6 +16,7 @@ classdef StatsNeuralNetwork < Classifier
             params.ScoreTransform = 'none';
         end
     end
+
     methods
         function fit(obj,trainingData,trainingLabels)
 
@@ -48,8 +49,6 @@ classdef StatsNeuralNetwork < Classifier
 
             obj.Hyperparams = params;
         end
-
-
     end
     
 end
