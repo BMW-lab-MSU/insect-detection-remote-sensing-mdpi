@@ -7,8 +7,8 @@
 %% Graph Generation
 
 % Parameters
-B1 = .005;
-B2 = .005;
+B1 = .01;
+B2 = .01;
 
 % Edges
 edge1 = gfpopEdge("air","inc_to_bee","up",penalty=B1);
@@ -23,16 +23,16 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 
 %% Bee Image Iteration
 tic
-load("../../data/testing/testingDifferenceImages.mat");
+load("../../data/testing/testingDataFiltered.mat");
 
-numImages = length(testingDifferenceImages);
+numImages = length(testingData);
 testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
 testingResultsLabel(1:end,1) = (1:numImages);
 testingResultData = cell(numImages,1);
 
 % Training Image Iteration
-parfor imageNum = 1:length(testingDifferenceImages)
-    image = -1.*testingDifferenceImages{1,imageNum}
+parfor imageNum = 1:length(testingData)
+    image = -1.*testingData{1,imageNum}
     
     % Row Iteration
     beeRows = cell(1,size(image,1));
@@ -57,4 +57,4 @@ results = {testingResultsLabel,testingResultData,"Results | Data"};
 save("../../results/changepoint-results/rowResultsFiltered_gfpop.mat","results",'-v7.3');
 
 runtime = toc;
-save("../../results/changepoint-results/rowFilteredRuntime_gfpop.mat","runtime")
+save("../../results/changepoint-results/runtimes/rowFilteredRuntime_gfpop.mat","runtime")

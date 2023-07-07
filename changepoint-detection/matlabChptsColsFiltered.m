@@ -1,20 +1,20 @@
 %% Bee Image Iteration
 tic
-load("../../data/testing/testingDifferenceImages.mat");
+load("../../data/testing/testingDataFiltered.mat");
 
-numImages = length(testingDifferenceImages);
+numImages = length(testingData);
 testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
 testingResultsLabel(1:end,1) = (1:numImages);
 testingResultData = cell(numImages,1);
 
 % Training Image Iteration
-parfor imageNum = 1:length(testingDifferenceImages)
-    image = -1.*testingDifferenceImages{1,imageNum};
+parfor imageNum = 1:length(testingData)
+    image = -1.*testingData{1,imageNum};
 
     % Column Iteration
     beeCols = cell(1,size(image,2));
     for col = 1:size(image,2)
-        tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.005);
+        tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.01);
         if(~isempty(tmpResults))
             beeCols{1,col} = tmpResults;
         end
@@ -34,4 +34,4 @@ results = {testingResultsLabel,testingResultData,"Results | Data"};
 save("../../results/changepoint-results/colResultsFiltered_matlab.mat","results",'-v7.3');
 
 runtime = toc;
-save("../../results/changepoint-results/colFilteredRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/runtimes/colFilteredRuntime_matlab.mat","runtime")

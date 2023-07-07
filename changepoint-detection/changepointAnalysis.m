@@ -1,30 +1,56 @@
-load("../../data/testing/testingData.mat")
+load("../../data/testing/testingData.mat","testingImgLabels");
 
 baseDir = "../../results/changepoint-results/";
+%%
 load(baseDir + "rowResultsOriginal_matlab.mat");
-[rowOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"MatRowOrig");
+[rowOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
 load(baseDir + "colResultsOriginal_matlab.mat");
-[colOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"MatColOrig");
+[colOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
 load(baseDir + "bothResultsOriginal_matlab.mat");
-[bothOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"MatBothOrig");
-
-load(baseDir + "rowResultsSparse_matlab.mat");
-[rowOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"MatRowSpar");
-load(baseDir + "colResultsSparse_matlab.mat");
-[colOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"MatColSpar");
-load(baseDir + "bothResultsSparse_matlab.mat");
-[bothOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"MatBothSpar");
-
+[bothOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+load(baseDir + "rowResultsFiltered_matlab.mat");
+[rowFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+load(baseDir + "colResultsFiltered_matlab.mat");
+[colFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+load(baseDir + "bothResultsFiltered_matlab.mat");
+[bothFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
 load(baseDir + "rowResultsOriginal_gfpop.mat");
-[rowSparseMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"GfpopRowOrig");
+[rowOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
 load(baseDir + "colResultsOriginal_gfpop.mat");
-[colSparseMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"GfpopColOrig");
+[colOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
 load(baseDir + "bothResultsOriginal_gfpop.mat");
-[bothSparseMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"GfpopBothOrig");
+[bothOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+load(baseDir + "rowResultsFiltered_gfpop.mat");
+[rowFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+load(baseDir + "colResultsFiltered_gfpop.mat");
+[colFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+load(baseDir + "bothResultsFiltered_gfpop.mat");
+[bothFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+%%
+figure(1); clf;
+subplot(241); confusionchart(rowFilteredGfpop); title("gfpop Filtered Rows");
+subplot(242); confusionchart(colFilteredGfpop); title("gfpop Filtered Cols");
+subplot(243); confusionchart(rowFilteredMat); title("matlab Filtered Rows");
+subplot(244); confusionchart(colFilteredMat); title("matlab Filtered Cols");
+subplot(245); confusionchart(rowOriginalGfpop); title("gfpop Original Rows");
+subplot(246); confusionchart(colOriginalGfpop); title("gfpop Original Cols");
+subplot(247); confusionchart(rowOriginalMat); title("matlab Original Rows");
+subplot(248); confusionchart(colOriginalMat); title("matlab Original Cols");
 
-load(baseDir + "rowResultsSparse_gfpop.mat");
-[rowSparseGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"GfpopRowSpar");
-load(baseDir + "colResultsSparse_gfpop.mat");
-[colSparseGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"GfpopColSpar");
-load(baseDir + "bothResultsSparse_gfpop.mat");
-[bothSparseGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels,"GfpopBothSpar");
+figure(2); clf;
+subplot(221); confusionchart(bothFilteredGfpop); title("gfpop Filtered Both");
+subplot(222); confusionchart(bothFilteredMat); title("matlab Filtered Both");
+subplot(223); confusionchart(bothOriginalGfpop); title("gfpop Original Both");
+subplot(224); confusionchart(bothOriginalMat); title("matlab Original Both");
+

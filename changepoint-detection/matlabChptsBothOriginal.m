@@ -14,16 +14,21 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeBoth = cell(2,size(image,1));
     for row = 1:size(image,1)
-        tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
+        tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.01);
         if(~isempty(tmpResultsRow))
-            if(any(image(row,tmpResultsRow)) > 2*mean(image(row,:)))
-                tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.005);
-                if(~isempty(tmpResultsCol))
-                    if(any(abs(tmpResultsCol-row) < 4))
-                        beeBoth{1,row} = tmpResultsRow;
-                        beeBoth{2,row} = tmpResultsCol;
+            if(any(image(row,tmpResultsRow)) < 2*mean(image,'all')) % Hard Target Verification
+                columns = tmpResultsRow:tmpResultsRow+10;
+                confirmedColumns = zeros(1,length(columns));
+                for col = 1:length(columns)
+                    testCol = columns(col);
+                    tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.01);
+                    if(~isempty(tmpResultsCol))
+                        if(abs(row - tmpResultsCol) < 5)
+                            confirmedColumns(col) = 1;
+                        end
                     end
                 end
+                beeBoth{row} = confirmedColumns;
             end
         end
     end
@@ -42,4 +47,4 @@ results = {testingResultsLabel,testingResultData,"Results | Data"};
 save("../../results/changepoint-results/bothResultsOriginal_matlab.mat","results",'-v7.3');
 
 runtime = toc;
-save("../../results/changepoint-results/bothOriginalRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/runtimes/bothOriginalRuntime_matlab.mat","runtime")

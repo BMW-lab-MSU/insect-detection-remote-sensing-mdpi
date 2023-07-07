@@ -1,7 +1,6 @@
-function [confMat,accuracy,recall] = analyzeResults(predicted,true,matrixTitle)
+function [confMat,accuracy,recall] = analyzeResults(predicted,true)
 
-    figure();
-    confMat = confusionchart(true,predicted); title(matrixTitle);
+    confMat = confusionmat(true,predicted);
     accuracy = 0;
     recall = 0;
 

@@ -1,0 +1,4 @@
+load("../../data/training/trainingDataFiltered.mat","trainingData","trainingImgLabels");
+%%
+img = trainingData{1};
+imagesc(img);

@@ -14,9 +14,9 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
+        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.01);
         if(~isempty(tmpResults))
-            if(any(image(row,tmpResults)) > 2*mean(image(row,:))) % Hard Target Verification
+            if(any(image(row,tmpResults)) < 2*mean(image,'all')) % Hard Target Verification
                 beeRows{1,row} = tmpResults;
             end
         end
@@ -36,4 +36,4 @@ results = {testingResultsLabel,testingResultData,"Results | Data"};
 save("../../results/changepoint-results/rowResultsOriginal_matlab.mat","results",'-v7.3');
 
 runtime = toc;
-save("../../results/changepoint-results/rowOriginalRuntime_matlab.mat","runtime")
+save("../../results/changepoint-results/runtimes/rowOriginalRuntime_matlab.mat","runtime")
