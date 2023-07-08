@@ -14,9 +14,9 @@ parfor imageNum = 1:length(testingData)
     % Column Iteration
     beeCols = cell(1,size(image,2));
     for col = 1:size(image,2)
-        tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.01);
+        tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResults))
-            if(any(image(tmpResults,col)) < 2*mean(image,'all')) % Hard Target Verification
+            if(any(mean(image(tmpResults,:))) < 10*mean(image,'all')) % Hard Target Verification
                 beeCols{1,col} = tmpResults;
             end
         end

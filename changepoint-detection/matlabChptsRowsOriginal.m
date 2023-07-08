@@ -14,9 +14,9 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.01);
+        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResults))
-            if(any(image(row,tmpResults)) < 2*mean(image,'all')) % Hard Target Verification
+            if(any(mean(image(row,:))) < 10*mean(image,'all')) % Hard Target Verification
                 beeRows{1,row} = tmpResults;
             end
         end

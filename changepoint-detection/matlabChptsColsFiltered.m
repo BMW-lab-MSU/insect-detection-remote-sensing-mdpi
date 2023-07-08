@@ -14,7 +14,7 @@ parfor imageNum = 1:length(testingData)
     % Column Iteration
     beeCols = cell(1,size(image,2));
     for col = 1:size(image,2)
-        tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.01);
+        tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResults))
             beeCols{1,col} = tmpResults;
         end

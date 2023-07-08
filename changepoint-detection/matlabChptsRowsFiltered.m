@@ -14,7 +14,7 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.01);
+        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResults))
             beeRows{1,row} = tmpResults;
         end

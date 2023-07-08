@@ -7,8 +7,8 @@
 %% Graph Generation
 
 % Parameters
-B1 = .01;
-B2 = .01;
+B1 = .005;
+B2 = .005;
 
 % Edges
 edge1 = gfpopEdge("air","inc_to_bee","up",penalty=B1);

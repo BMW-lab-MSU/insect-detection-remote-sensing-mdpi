@@ -1,8 +1,8 @@
 %% Graph Generation
 
 % Parameters
-B1 = .01;
-B2 = .01;
+B1 = .005;
+B2 = .005;
 
 % Edges
 edge1 = gfpopEdge("air","inc_to_bee","up",penalty=B1);
@@ -32,7 +32,7 @@ parfor imageNum = 1:length(testingData)
     beeBoth = cell(1,size(image,1));
     for row = 1:size(image,1)
         tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
-        if(any(tmpResultsRow.parameters(tmpResultsRow.states.contains("BEE"))) < 2*mean(image,'all'))% Hard Target Verification
+        if(any(tmpResultsRow.parameters(tmpResultsRow.states.contains("BEE"))) < 10*mean(image,'all'))% Hard Target Verification
             if(any(tmpResultsRow.states.contains("BEE")))
                 columns = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
                 confirmedColumns = zeros(1,length(columns));

@@ -14,14 +14,14 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeBoth = cell(2,size(image,1));
     for row = 1:size(image,1)
-        tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.01);
+        tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
         if(any(tmpResultsRow) > 1.2*mean(image(row,:)))% Hard Target Verification
             if(~isempty(tmpResultsRow))
                 columns = tmpResultsRow:tmpResultsRow+10;
                 confirmedColumns = zeros(1,length(columns));
                 for col = 1:length(columns)
                     testCol = columns(col);
-                    tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.01);
+                    tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.005);
                     if(~isempty(tmpResultsCol))
                         if(abs(row - tmpResultsCol) < 5)
                             confirmedColumns(col) = 1;
@@ -31,7 +31,7 @@ parfor imageNum = 1:length(testingData)
                 beeBoth{row} = confirmedColumns;
             end
         end
-        % tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.01);
+        % tmpResultsRow = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
         % if(~isempty(tmpResultsRow))
         %     tmpResultsCol = findchangepts(image(row,tmpResultsRow),'Statistic','mean','MinThreshold',.0025);
         %     if(~isempty(tmpResultsCol))
