@@ -29,23 +29,25 @@ arguments
     X (:,:) {mustBeNumeric}
     avgSamplingFrequency (1,1) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
+    opts.NHarmonics = 3
+    opts.FilterPassband = [50 1200]
+    opts.FilterOrder = 10
 end
-
-% TODO: nHarmonics should be an input parameter at the top of extractFeatures
-nHarmonics = 3;
 
 fftSize = width(X);
 
-esd = abs(fft(X, [], 2)).^2;
+filtered = bandpassFilter(X,opts.FilterOrder,opts.FilterPassband,...
+    avgSamplingFrequency);
+
+esd = abs(fft(filtered, [], 2)).^2;
 
 % Only look at the positive frequencies
 esd = esd(:,1:end/2);
 
-% Normalize by the DC component
-esd = esd./esd(:,1);
-
 esdStats = extractEsdStats(esd);
-harmonicFeatures = extractHarmonicFeatures(esd, nHarmonics, avgSamplingFrequency, fftSize, 'UseParallel', opts.UseParallel);
+
+harmonicFeatures = extractHarmonicFeatures(esd,opts.NHarmonics,...
+    avgSamplingFrequency,fftSize,'UseParallel', opts.UseParallel);
 
 features = [esdStats, harmonicFeatures];
 end

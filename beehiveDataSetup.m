@@ -11,4 +11,6 @@ validationDataDir = baseDataDir + filesep + "validation";
 
 %% Results directories
 baseResultsDir = "../results";
+trainingResultsDir = baseResultsDir + filesep + "training";
 
+% TODO: precreate directories?
