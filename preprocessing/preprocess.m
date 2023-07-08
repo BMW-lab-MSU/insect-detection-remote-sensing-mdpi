@@ -14,11 +14,13 @@ end
 %       want to make this more modular.
 
 for i = 1:numel(juneData)
-    juneData{i}(juneData{i} > 0) = 0;
+    imgMean = mean(juneData{i},"all");
+    juneData{i}(juneData{i} > 0) = imgMean;
 end
 
 for i = 1:numel(julyData)
-    julyData{i}(julyData{i} > 0) = 0;
+    imgMean = mean(julyData{i},"all");
+    julyData{i}(julyData{i} > 0) = imgMean;
 end
 
 %% Save data
@@ -32,7 +34,8 @@ save(preprocessedDataDir + filesep + "2022-07-preprocessed.mat", ...
     'julyData', 'julyRowLabels', 'julyImgLabels', ...
     'julyMetadata', '-v7.3');
 
-%% Bandpass filter the data
+%% Highpass filter the data
+% TODO: udpate comment after this works or doesn't...
 % The passband is set to 50--1200 Hz. Honeybee wingbeat frequencies are 
 % typically between 100 and 500 Hz, usually on the lower end of the range.
 % We want to pass at least the 3rd harmonic for the bees, so the upper
@@ -40,21 +43,21 @@ save(preprocessedDataDir + filesep + "2022-07-preprocessed.mat", ...
 % The bee signals we've looked at have fundamentals between 100--200 Hz.
 %
 % We use a Butterworth filter so we have a maximally flat passband.
-passband = [50,1200];
-filterOrder = 20;
+cutoff = 50;
+filterOrder = 4;
 
 parfor i = 1:numel(juneData)
     % Compute the average PRF for the image so we can scale the passband
     % frequencies into normalized frequencies.
     fs = averagePRF(juneMetadata(i).Timestamps);
 
-    juneData{i} = bandpassFilter(juneData{i},filterOrder,passband,fs);
+    juneData{i} = highpassFilter(juneData{i},filterOrder,cutoff,fs);
 end
 
 parfor i = 1:numel(julyData)
     fs = averagePRF(julyMetadata(i).Timestamps);
 
-    julyData{i} = bandpassFilter(julyData{i},filterOrder,passband,fs);
+    julyData{i} = highpassFilter(julyData{i},filterOrder,cutoff,fs);
 end
 
 %% Save data
