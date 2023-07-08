@@ -1,9 +1,10 @@
-function evalSamplingGridRowFeatureMethod(classifierType,undersampleRatio,nOversample,opts)
+function evalSamplingGridRowFeatureMethod(classifierType,undersampleRatio,nOversample,params,opts)
 
 arguments
     classifierType function_handle
     undersampleRatio (1,1) double
     nOversample (1,1) {mustBeInteger}
+    params.ClassifierParams = {}
     opts.UseParallel = false
     opts.UseGPU = false
 end
@@ -34,7 +35,7 @@ load(validationDataDir + filesep + "validationFeatures");
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,features,labels,...
     validationFeatures,validationRowLabels,UseParallel=opts.UseParallel,...
-    UseGPU=opts.UseGPU);
+    UseGPU=opts.UseGPU,Static=params.ClassifierParams);
 
 % Save results so we can do parameter selection later
 filename = userdata.Classifier.Name + "Undersample" + undersampleRatio + ...
