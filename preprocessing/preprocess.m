@@ -8,20 +8,38 @@ for filename = filenames
 end
 
 %% Threshold data to reduce PMT ringing
-% PMT rigning manifests as data > 0 volts, so we can threshold all positive values to 0.
-% This doesn't reduce all ringing artifacts, but it helps.
+% PMT rigning manifests as data > 0 volts, so we can threshold all positive
+% values to help reduce ringing. We threshold positive voltages to the mean of
+% the row they are in, which should eliminate most of the ringing and make it
+% blend in with the rest of the row. This doesn't reduce all ringing artifacts,
+% but it helps.
 % NOTE: this could be turned into a function later if we do more preprocessing and 
 %       want to make this more modular.
 
-for i = 1:numel(juneData)
-    imgMean = mean(juneData{i},"all");
-    juneData{i}(juneData{i} > 0) = imgMean;
+for imageNum = 1:numel(juneData)
+    for rowNum = 1:height(juneData{imageNum})
+        rowMean = mean(juneData{imageNum}(rowNum,:));
+
+        % Find the columns that have positive voltage values, if any
+        positiveVoltageIndicator = juneData{imageNum}(rowNum,:) > 0;
+
+        % Set all positive voltages equal to the row mean
+        juneData{imageNum}(rowNum,positiveVoltageIndicator) = rowMean;
+    end
 end
 
-for i = 1:numel(julyData)
-    imgMean = mean(julyData{i},"all");
-    julyData{i}(julyData{i} > 0) = imgMean;
+for imageNum = 1:numel(julyData)
+    for rowNum = 1:height(julyData{imageNum})
+        rowMean = mean(julyData{imageNum}(rowNum,:));
+
+        % Find the columns that have positive voltage values, if any
+        positiveVoltageIndicator = julyData{imageNum}(rowNum,:) > 0;
+
+        % Set all positive voltages equal to the row mean
+        julyData{imageNum}(rowNum,positiveVoltageIndicator) = rowMean;
+    end
 end
+
 
 %% Save data
 if ~exist(preprocessedDataDir)
