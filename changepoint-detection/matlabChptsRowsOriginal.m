@@ -14,12 +14,15 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
-        if(~isempty(tmpResults))
-            if(any(mean(image(row,:))) < 10*mean(image,'all')) % Hard Target Verification
-                beeRows{1,row} = tmpResults;
+        % if(mean(image(row,:)) < 7.5*mean(image,"all"))
+            tmpResults = findchangepts(image(row,:),'Statistic','mean','MinThreshold',.005);
+            if(~isempty(tmpResults))
+                beeCols = tmpResults;
+                if(any(image(row,beeCols) > 1.5*mean(image(row,:)))) %&& (any(mean(image(row,:))) < 7.5*mean(image,'all')))
+                    beeRows{1,row} = tmpResults;
+                end
             end
-        end
+        % end
     end
 
     if(any(~cellfun(@isempty,beeRows)))

@@ -16,8 +16,11 @@ parfor imageNum = 1:length(testingData)
     for col = 1:size(image,2)
         tmpResults = findchangepts(image(:,col),'Statistic','mean','MinThreshold',.005);
         if(~isempty(tmpResults))
-            if(any(mean(image(tmpResults,:))) < 10*mean(image,'all')) % Hard Target Verification
-                beeCols{1,col} = tmpResults;
+            beeRows = tmpResults;
+            if(any(image(beeRows,col) > 1.5*mean(image(beeRows,:))))
+                % if(any(mean(image(beeRows,:))) < 7.5*mean(image,'all'))
+                    beeCols{1,col} = tmpResults;
+                % end
             end
         end
     end

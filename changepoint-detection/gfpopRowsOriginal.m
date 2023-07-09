@@ -36,10 +36,13 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        tmpResults = gfpop(image(row,:),beeGraph,"mean");
-        if(any(tmpResults.states.contains("BEE")))
-            if(mean(image(row,:))) < 10*mean(image,'all') % Hard Target Verification
-                beeRows{1,row} = tmpResults;
+        if(mean(image(row,:)) < 7.5*mean(image,"all"))
+            tmpResults = gfpop(image(row,:),beeGraph,"mean");
+            if(any(tmpResults.states.contains("BEE")))
+                beeCols = tmpResults.changepoints(tmpResults.states == "BEE");
+                if(any(image(row,beeCols) > 1.5*mean(image(row,:)))) %&& (any(mean(image(row,:))) < 7.5*mean(image,'all')))
+                    beeRows{1,row} = tmpResults;
+                end
             end
         end
     end
