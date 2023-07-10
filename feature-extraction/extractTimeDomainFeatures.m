@@ -8,6 +8,7 @@ function features = extractTimeDomainFeatures(X)
 %   The extracted features are:
 %       'RowMeanMinusImageMean' - The mean of the obvservation minus the mean
 %                                 of the entire image
+%       'Range'                 - The range of each row
 %       'StdDev'                - The standard deviation of each row
 %       'MaxFirstDiff'          - The maximum absolute first difference in each row
 %       'MaxSecondDiff'         - The maximum absolute second difference in each row
@@ -28,6 +29,8 @@ function features = extractTimeDomainFeatures(X)
 rowMean = mean(X, 2);
 absMean = mean(abs(X),2);
 imageMean = mean(X(:));
+
+rowRange = range(X,2);
 
 rowStd = std(X, 0, 2);
 
@@ -61,12 +64,13 @@ med = median(X,2);
 
 features = table;
 features.RowMeanMinusImageMean = rowMean - imageMean;
+features.Range = rowRange;
 features.StdDev = rowStd;
 features.MaxFirstDiff = maxFirstDiff;
 features.MaxSecondDiff = maxSecondDiff;
 features.RMS = rootMeanSqaure;
 features.ImpulseFactor = impulseFactor;
-faetures.CrestFactor = crestFactor;
+features.CrestFactor = crestFactor;
 features.ShapeFactor = shapeFactor;
 features.Median = med;
 features.MAD = medianAbsDev;
