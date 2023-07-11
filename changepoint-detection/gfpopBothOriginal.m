@@ -31,46 +31,27 @@ parfor imageNum = 1:length(testingData)
     % Row Iteration
     beeBoth = cell(1,size(image,1));
     for row = 1:size(image,1)
-        if(mean(image(row,:)) < 7.5*mean(image,"all"))
+        if(range(image(row,:) > mean(image(row,:))))
             tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
             if(any(tmpResultsRow.states.contains("BEE")))
-                columns = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
-                confirmedColumns = zeros(1,length(columns));
-                for col = 1:length(columns)
-                    testCol = columns(col);
-                    colRanges = testCol-2:testCol+2;
-                    colRanges(colRanges < 1) = 1;
-                    colRanges(colRanges > 1024) = 1024;
-                    for column = 1:length(colRanges)
-                        testColumn = colRanges(column);
-                        tmpResultsCol = gfpop(image(:,testColumn),beeGraph,"mean");
+                if(numel(tmpResultsRow.changepoints(tmpResultsRow.states == "BEE")) < 5)
+                    columnsFromRow = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
+                    for colIndex = 1:numel(columnsFromRow)
+                        col = columnsFromRow(colIndex);
+                        tmpResultsCol = gfpop(image(:,col),beeGraph,"mean");
                         if(any(tmpResultsCol.states.contains("BEE")))
-                            if(abs(row - tmpResultsCol.changepoints(tmpResultsCol.states == "BEE")) < 5)
-                                confirmedColumns(col) = 1;
+                            rowsFromCol = tmpResultsCol.changepoints(tmpResultsCol.states == "BEE");
+                            for rowIndex = 1:numel(rowsFromCol)
+                                tmpRow = rowsFromCol(rowIndex);
+                                if(norm(double([row col]) - double([tmpRow col])) < 4)
+                                    beeBoth{row} = {tmpResultsRow,tmpResultsCol};
+                                end
                             end
                         end
                     end
                 end
-                beeBoth{row} = confirmedColumns;
             end
         end
-        % tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
-        % if(any(tmpResultsRow.parameters(tmpResultsRow.states.contains("BEE"))) > 1.2*mean(image(row,:)))% Hard Target Verification
-        %     if(any(tmpResultsRow.states.contains("BEE")))
-        %         beeCols = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
-        %         if(~isempty(beeCols))
-        %             for beeColumns = 1:length(beeCols)
-        %                 tmpResultsCol = gfpop(image(:,beeCols(beeColumns)),beeGraph,"mean");
-        %                 if(any(tmpResultsCol.states.contains("BEE")))
-        %                     if(any(abs(tmpResultsCol.changepoints(tmpResultsCol.states == "BEE") - row) < 4))
-        %                         beeBoth{1,row} = tmpResultsRow;
-        %                         beeBoth{2,row} = tmpResultsCol;
-        %                     end
-        %                 end
-        %             end
-        %         end
-        %     end
-        % end
     end
 
     if(any(~cellfun(@isempty,beeBoth)))

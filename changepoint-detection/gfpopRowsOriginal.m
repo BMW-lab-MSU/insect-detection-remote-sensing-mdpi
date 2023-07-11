@@ -31,17 +31,18 @@ testingResultData = cell(numImages,1);
 
 % Training Image Iteration
 parfor imageNum = 1:length(testingData)
-    image = -1.*testingData{1,imageNum}
+    image = -1.*testingData{1,imageNum};
 
     % Row Iteration
     beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
-        if(mean(image(row,:)) < 7.5*mean(image,"all"))
+        if(range(image(row,:) > mean(image(row,:))))
             tmpResults = gfpop(image(row,:),beeGraph,"mean");
             if(any(tmpResults.states.contains("BEE")))
-                beeCols = tmpResults.changepoints(tmpResults.states == "BEE");
-                if(any(image(row,beeCols) > 1.5*mean(image(row,:)))) %&& (any(mean(image(row,:))) < 7.5*mean(image,'all')))
-                    beeRows{1,row} = tmpResults;
+                if(numel(tmpResults.changepoints(tmpResults.states == "BEE")) < 5)
+                    if(any(tmpResults.parameters(tmpResults.states == "BEE") > mean(image(row,:))))
+                        beeRows{1,row} = tmpResults;
+                    end
                 end
             end
         end

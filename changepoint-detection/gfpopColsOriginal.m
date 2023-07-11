@@ -33,16 +33,28 @@ testingResultData = cell(numImages,1);
 parfor imageNum = 1:length(testingData)
     image = -1.*testingData{1,imageNum}
 
+    validRows = zeros(1,size(image,1));
+    % Row Validation
+    for rowCheck = 1:size(image,1)
+        if(range(image(rowCheck,:) > mean(image(rowCheck,:))))
+            validRows(rowCheck) = 1;
+        end
+    end
+    validIndeces = find(validRows);
+
     % Column Iteration
     beeCols = cell(1,size(image,2));
     for col = 1:size(image,2)
         tmpResults = gfpop(image(:,col),beeGraph,"mean");
         if(any(tmpResults.states.contains("BEE")))
             beeRows = tmpResults.changepoints(tmpResults.states == "BEE");
-            if(any(image(beeRows,col) > 1.5*mean(image(beeRows,:))))
-                % if(any(mean(image(beeRows,:))) < 7.5*mean(image,'all'))
+            beeRowsChecked = beeRows(ismember(beeRows,validIndeces));
+            counter = 1;
+            for rowIndex = 1:numel(beeRowsChecked)
+                row = beeRowsChecked(rowIndex);
+                if(image(row,col) > mean(image(row,:)))
                     beeCols{1,col} = tmpResults;
-                % end
+                end
             end
         end
     end

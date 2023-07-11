@@ -5,8 +5,8 @@ load("../../data/training/trainingData.mat","trainingData","trainingImgLabels");
 %% Graph Generation
 
 % Parameters
-B1 = .001;
-B2 = .001;
+B1 = .0025;
+B2 = .0025;
 
 % Edges
 edge1 = gfpopEdge("air","inc_to_bee","up",penalty=B1);
@@ -18,48 +18,82 @@ edge6 = gfpopEdge("dec_from_bee","air","down");
 
 % Graph
 beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=true);
-
 %%
-% img = 1;
-% figure(1);
-% subplot(211); imagesc(-1.*trainingData{img},[-0.02 0.06]); title("Original");
-% subplot(212); imagesc(-1.*trainingDataFiltered{img},[-0.02 0.06]); title("Filtered");
 
-%%
-testImg = -1.*trainingData{2756};
-rowResults = cell(1,178);
-confirmedBees = {};
+imgNum = 1996;
+testImg = -1.*trainingData{imgNum};
+testImg(testImg < 0) = mean(testImg,"all");
+figure(1); clf; imagesc(testImg); hold on; drawnow;
+testImg = movmean(testImg,2,1);
 for row = 1:size(testImg,1)
-    tmpResultsRow = gfpop(testImg(row,:),beeGraph,"mean");
-        if(any(tmpResultsRow.parameters(tmpResultsRow.states.contains("BEE"))) > 1.2*mean(testImg(row,:)))% Hard Target Verification
-            if(any(tmpResultsRow.states.contains("BEE")))
-                columns = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
-                confirmedColumns = zeros(1,length(columns));
-                for col = 1:length(columns)
-                    testCol = columns(col);
-                    colRanges = testCol-2:testCol+2;
-                    colRanges(colRanges < 0) = 1;
-                    colRanges(colRanges > 1024) = 1024;
-                    for column = 1:length(colRanges)
-                        testColumn = colRanges(column);
-                        tmpResultsCol = gfpop(testImg(:,testColumn),beeGraph,"mean");
-                        if(any(tmpResultsCol.states.contains("BEE")))
-                            if(abs(row - tmpResultsCol.changepoints(tmpResultsCol.states == "BEE")) < 5)
-                                confirmedColumns(col) = 1;
-                            end
-                        end
-                    end
+    if(range(testImg(row,:) > 2*mean(testImg(row,:))))
+        tmpResultsMatlab = findchangepts(testImg(row,:),'Statistic','mean','MinThreshold',.0025);
+        if(~isempty(tmpResultsMatlab))
+            if(numel(tmpResultsMatlab) < 5)
+                if(any(testImg(row,tmpResultsMatlab:tmpResultsMatlab+10) > mean(testImg(row,:))))
+                    scatter(tmpResultsMatlab,row,'rx');
                 end
-                beeBoth{row} = confirmedColumns;
             end
         end
+    
+        tmpResultsgfpop = gfpop(testImg(row,:),beeGraph,"mean");
+        if(any(tmpResultsgfpop.states.contains("BEE")))
+            if(numel(tmpResultsgfpop.changepoints(tmpResultsgfpop.states == "BEE")) < 5)
+                if(any(tmpResultsgfpop.parameters(tmpResultsgfpop.states == "BEE") > mean(testImg(row,:))))
+                    scatter(tmpResultsgfpop.changepoints(tmpResultsgfpop.states == "BEE"),row,'ro');
+                end
+            end
+        end
+    end
 end
-% figure(1);
-% imagesc(testImg); hold on;
-% scatter(confirmedBees{1}(1),confirmedBees{1}(2),'rx');
 
-%%
-% row = 1;
-% figure(2);
-% subplot(211); plot(-1.*trainingData{img}(row,:)); title('Original');
-% subplot(212); plot(-1.*trainingDataFiltered{img}(row,:)); title('Filtered');
+testImg = -1.*trainingData{imgNum};
+testImg(testImg < 0) = mean(testImg,"all");
+testImg = movmean(testImg,2,2);
+
+beeRowsgfpop = zeros(size(testImg,1),1);
+beeRowsMatlab = zeros(size(testImg,1),1);
+
+for col = 1:size(testImg,2)
+        tmpResultsMatlab = findchangepts(testImg(:,col),'Statistic','mean','MinThreshold',.0025);
+        if(~isempty(tmpResultsMatlab))
+            checkedRows ={};
+            counter = 1;
+            for rowIndex = 1:numel(tmpResultsMatlab)
+                row = tmpResultsMatlab(rowIndex);
+                if(range(testImg(row,:) > 2*mean(testImg(row,:))))
+                    if(testImg(row,col) > mean(testImg(row,:)))
+                        % scatter(col,row,'gx');
+                        checkedRows{counter} = row;
+                        counter = counter + 1;
+                    end
+                end
+            end
+        end
+        beeRowsMatlab(cell2mat(checkedRows)) =  beeRowsMatlab(cell2mat(checkedRows)) + 1;
+    
+        tmpResultsgfpop = gfpop(testImg(:,col),beeGraph,"mean");
+        if(any(tmpResultsgfpop.states.contains("BEE")))
+            checkedRows ={};
+            counter = 1;
+            beeRowsTmp = tmpResultsgfpop.changepoints(tmpResultsgfpop.states == "BEE");
+            for rowIndex = 1:numel(beeRowsTmp)
+                row = beeRowsTmp(rowIndex);
+                if(range(testImg(row,:) > 2*mean(testImg(row,:))))
+                    if(testImg(row,col) > mean(testImg(row,:)))
+                        % scatter(col,row,'go');
+                        checkedRows{counter} = row;
+                        counter = counter + 1;
+                    end
+                end
+            end
+        end
+        beeRowsgfpop(cell2mat(checkedRows)) = beeRowsgfpop(cell2mat(checkedRows)) + 1;
+
+
+end
+
+beeRowsgfpop(beeRowsgfpop > 256) = 0;
+gfpoprows = find(beeRowsgfpop)
+beeRowsMatlab(beeRowsMatlab > 256) = 0;
+matlabrows = find(beeRowsMatlab)
