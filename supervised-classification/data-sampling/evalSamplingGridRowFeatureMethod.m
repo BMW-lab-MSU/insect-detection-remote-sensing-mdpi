@@ -24,8 +24,7 @@ load(trainingDataDir + filesep + "trainingData","trainingData",...
 load(trainingDataDir + filesep + "trainingFeatures");
 
 % Load in the validation data
-load(validationDataDir + filesep + "validationData","validationData",...
-    "validationRowLabels");
+load(validationDataDir + filesep + "validationData","validationRowLabels");
 load(validationDataDir + filesep + "validationFeatures");
 
 % Undersample/oversampling the data
