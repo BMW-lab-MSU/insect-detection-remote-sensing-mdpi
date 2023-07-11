@@ -32,6 +32,6 @@ if ~exist(trainingResultsDir + filesep + "data-sampling")
 end
 
 save(trainingResultsDir + filesep + "data-sampling" + filesep + filename,...
-    "objective","userdata",'-v7.3');
+    "objective","userdata","undersampleRatio","nOversample",'-v7.3');
 
 end
