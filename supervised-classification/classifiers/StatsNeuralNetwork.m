@@ -47,7 +47,8 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
                 params.Standardize = true
                 params.Lambda = 0
                 params.Activations {mustBeMember(params.Activations,["relu","tanh","sigmoid","none"])} = "relu"
-                params.FalseNegativeCost = 1
+                params.FalseNegativeCost = []
+                params.Cost = ones(2) - eye(2)
                 params.ScoreTransform = "none"
             end
 

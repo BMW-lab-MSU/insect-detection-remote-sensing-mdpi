@@ -61,7 +61,8 @@ classdef SVM < StatsToolboxClassifier
                 params.PolynomialOrder = 2
                 params.Standardize = false 
                 params.Solver {mustBeMember(params.Solver,["ISDA","L1QP","SMO"])} = "SMO"
-                params.FalseNegativeCost = 1
+                params.FalseNegativeCost = []
+                params.Cost = ones(2) - eye(2)
                 params.ScoreTransform = "none"
                 opts.UseGPU = false;
             end
