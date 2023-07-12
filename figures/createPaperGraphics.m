@@ -117,7 +117,7 @@ edgeAlpha = .15;
 % Figure and Layout Settings
 fig2 = figure(2); clf;
 t2 = tiledlayout(fig2,1,2,"TileSpacing","tight","Padding","compact");
-t2.Title.String = "Transit Time and Harmonic Frequency Histogram"; t2.Title.FontName = imgFontName;
+t2.Title.String = "Transit Time and Fundamental Frequency Histogram"; t2.Title.FontName = imgFontName;
 t2.YLabel.String = "Count"; t2.YLabel.FontName = imgFontName; t2.YLabel.FontSize = imgFontSize;
 
 % Transit Time Settings
@@ -132,8 +132,8 @@ h1 = histogram(transitTimes); h1.EdgeColor = edgeColor; h1.FaceColor = faceColor
 p6 = nexttile; hold on;
 p6.FontName = imgFontName; p6.FontSize = imgFontSize;
 p6.YLabel.String = "Row Count";
-p6.XLabel.String = "Estimated Harmonic Frequency [Hz]";
+p6.XLabel.String = "Est. Fundamental Frequency [Hz]";
 p6.XLim = [0 901];
 h2 = histogram(cell2mat(harmonicRowCount)); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
 
-exportgraphics(fig2,"transitHarmonicHistograms.pdf","ContentType","vector");
+exportgraphics(fig2,"transitFrequenciesHistograms.pdf","ContentType","vector");
