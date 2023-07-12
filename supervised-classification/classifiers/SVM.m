@@ -61,7 +61,7 @@ classdef SVM < StatsToolboxClassifier
                 params.PolynomialOrder = 2
                 params.Standardize = false 
                 params.Solver {mustBeMember(params.Solver,["ISDA","L1QP","SMO"])} = "SMO"
-                params.Cost = ones(2) - eye(2)
+                params.FalseNegativeCost = 1
                 params.ScoreTransform = "none"
                 opts.UseGPU = false;
             end
@@ -71,6 +71,8 @@ classdef SVM < StatsToolboxClassifier
             if ~strcmpi(params.KernelFunction,"polynomial")
                 params = rmfield(params,"PolynomialOrder");
             end
+
+            params = obj.createCostMatrix(params);
 
             obj.Hyperparams = params;
             obj.UseGPU = opts.UseGPU;

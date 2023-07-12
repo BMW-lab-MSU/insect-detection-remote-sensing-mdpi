@@ -21,6 +21,9 @@ classdef (Abstract) Classifier < handle
         formattedLabels = formatLabels(labels)
     end
 
+    methods (Abstract,Static,Access=protected)
+        costMatrix = createCostMatrix(falseNegativeCost)
+    end
 
     % TODO: we could add a private method here that handles the if obj.UseGPU stuff
 

@@ -40,11 +40,13 @@ classdef AdaBoost < TreeEnsemble
                 treeParams.NumVariablesToSample = "all"
                 treeParams.SplitCriterion {mustBeMember(treeParams.SplitCriterion,["gdi","deviance","twoing"])} = "gdi"
                 ensembleParams.NumLearningCycles = 100
-                ensembleParams.Cost = ones(2) - eye(2)
+                ensembleParams.FalseNegativeCost = 1
                 ensembleParams.ScoreTransform = "none"
                 params.LearnRate = 1
                 opts.UseGPU = false;
             end
+
+            ensembleParams = obj.createCostMatrix(ensembleParams);
 
             obj.TreeParams = treeParams;
             obj.EnsembleParams = ensembleParams;

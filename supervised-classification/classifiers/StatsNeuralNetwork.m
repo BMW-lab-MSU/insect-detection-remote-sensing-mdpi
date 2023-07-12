@@ -47,9 +47,11 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
                 params.Standardize = true
                 params.Lambda = 0
                 params.Activations {mustBeMember(params.Activations,["relu","tanh","sigmoid","none"])} = "relu"
-                params.Cost = ones(2) - eye(2)
+                params.FalseNegativeCost = 1
                 params.ScoreTransform = "none"
             end
+
+            params = obj.createCostMatrix(params);
 
             obj.Hyperparams = params;
         end

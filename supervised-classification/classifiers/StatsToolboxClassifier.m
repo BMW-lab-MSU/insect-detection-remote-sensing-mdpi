@@ -39,4 +39,16 @@ classdef (Abstract) StatsToolboxClassifier < Classifier
         end
     end
 
+    methods (Static,Access=protected)
+        function params = createCostMatrix(params)
+            % The "fitc" functions expect a cost matrix, but our constructors take only the
+            % false negative cost because we can't have the full cost matrix be an
+            % optimizableVariable for bayesopt. Create the cost matrix and remove the false
+            % negative cost field so the "fitc" functions are happy.
+            params.Cost = [0 1; params.FalseNegativeCost 0];
+            
+            params = rmfield(params, "FalseNegativeCost");
+        end
+    end
+
 end
