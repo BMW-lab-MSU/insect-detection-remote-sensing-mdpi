@@ -29,14 +29,20 @@ end
 % Find the parameters that minimized the objective function
 [objective,minIdx] = min([results.objective]);
 
+% Get the classifier's hyperparameters; we will want to know these later during
+% hyperparmaeter tuning, that way we can save these "default" hyperparameters if
+% they gave a better result than any of the hyperparameter settings that
+% bayesopt explored.
+classifierParams = results(minIdx).userdata.Classifier.Hyperparams;
+
 % Save the best parameters
-params.UndersampleRatio = results(minIdx).undersampleRatio;
-params.NOversample = results(minIdx).nOversample;
+samplingParams.UndersampleRatio = results(minIdx).undersampleRatio;
+samplingParams.NOversample = results(minIdx).nOversample;
 
 disp(objective)
-disp(params)
+disp(samplingParams)
 
 save(resultsDir + filesep + classifierName + "BestParams",...
-    "params","objective","-v7.3");
+    "samplingParams","objective","classifierParams","-v7.3");
 
 end
