@@ -43,12 +43,20 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
                 % are the same as MATLAB's default values as of 2023a.
                 % This doesn't include  all possible parameters; just the ones
                 % that are commonly used and/or optimizable in fitcensemble.
+                params.NumLayers = 1
                 params.LayerSizes = 10
                 params.Standardize = true
                 params.Lambda = 0
                 params.Activations {mustBeMember(params.Activations,["relu","tanh","sigmoid","none"])} = "relu"
                 params.FalseNegativeCost = 1
                 params.ScoreTransform = "none"
+            end
+
+            % Validate that LayerSizes specifies the same number of layers as NumLayers
+            if ~(numel(params.LayerSizes) == params.NumLayers)
+                eid = 'StatsNeuralNetwork:layerSizeMismatch';
+                msg = 'Number of elements in LayerSizes must match NumLayers argument';
+                throwAsCaller(MException(eid,msg))
             end
 
             params = obj.createCostMatrix(params);
