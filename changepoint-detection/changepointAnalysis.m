@@ -77,9 +77,9 @@ subplot(121); confusionchart(bothOriginalGfpopRows); title("gfpop Original Both 
 subplot(122); confusionchart(bothOriginalMatRows); title("matlab Original Both - Rows");
 %%
 finalImageResults = {rowOriginalGfpop,colOriginalGfpop,bothOriginalGfpop,rowOriginalMat,colOriginalMat,bothOriginalMat;
-                     "Rows gfpop - Images","Columns gfpop - Images","Both gfpop - Images","Rows Matlab - Images","Columns Matlab - Images","Both Matlab - Images"};
+                     "Rows gfpop","Columns gfpop","Both gfpop","Rows Matlab","Columns Matlab","Both Matlab"};
 save("../../results/changepoint-results/finalImageResults.mat","finalImageResults","-v7.3");
 
 finalRowResults = {rowOriginalGfpopRows,colOriginalGfpopRows,bothOriginalGfpopRows,rowOriginalMatRows,colOriginalMatRows,bothOriginalMatRows;
-                     "Rows gfpop - Rows","Columns gfpop - Rows","Both gfpop - Rows","Rows Matlab - Rows","Columns Matlab - Rows","Both Matlab - Rows"};
+                     "Rows gfpop","Columns gfpop","Both gfpop","Rows Matlab","Columns Matlab","Both Matlab"};
 save("../../results/changepoint-results/finalRowResults.mat","finalRowResults","-v7.3");
