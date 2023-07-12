@@ -55,6 +55,8 @@ t1.YLabel.String = "True"; t1.YLabel.FontName = paperFontName; t1.YLabel.FontSiz
     c6.YLabel = ""; c6.XLabel = "";
     c6.FontName = paperFontName; c6.FontSize = paperFontSize;
 
+    exportgraphics(fig1,"changepointImageMatrices.pdf","ContentType","vector");
+
 % Figure 2 : Row Results
 fig2 = figure(2);
 t2 = tiledlayout(fig2,2,3,"TileSpacing","compact","Padding","tight");
@@ -103,6 +105,9 @@ t2.YLabel.String = "True";
     c12.Title = finalRowResults{2,6};
     c12.YLabel = ""; c12.XLabel = "";
     c12.FontName = paperFontName; c12.FontSize = paperFontSize;
+
+    exportgraphics(fig1,"changepointRowMatrices.pdf","ContentType","vector");
+
 
 %%
 
