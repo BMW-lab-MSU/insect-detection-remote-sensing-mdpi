@@ -106,7 +106,7 @@ t2.YLabel.String = "True";
     c12.YLabel = ""; c12.XLabel = "";
     c12.FontName = paperFontName; c12.FontSize = paperFontSize;
 
-    exportgraphics(fig1,"changepointRowMatrices.pdf","ContentType","vector");
+    exportgraphics(fig2,"changepointRowMatrices.pdf","ContentType","vector");
 
 
 %%
