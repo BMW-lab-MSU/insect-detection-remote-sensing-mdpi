@@ -105,7 +105,7 @@ exportgraphics(fig1,"beeExamples.pdf","ContentType","vector");
 % Transit Time and Frequency Histograms
 
 % Load Data
-load("../../code/transit-frequency-analysis/beeHarmonicEstimateCount.mat");
+load("../../code/transit-frequency-analysis/harmonicRowCount.mat");
 load("../../code/transit-frequency-analysis/beeTransitTimes.mat")
 
 % General Variables
@@ -133,8 +133,7 @@ p6 = nexttile; hold on;
 p6.FontName = imgFontName; p6.FontSize = imgFontSize;
 p6.YLabel.String = "Row Count";
 p6.XLabel.String = "Estimated Harmonic Frequency [Hz]";
-p6.YLim = [0 1250];
-p6.XLim = [61 900];
-h2 = histogram(totalHarmonicCount); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
+p6.XLim = [0 901];
+h2 = histogram(cell2mat(harmonicRowCount)); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
 
 exportgraphics(fig2,"transitHarmonicHistograms.pdf","ContentType","vector");
