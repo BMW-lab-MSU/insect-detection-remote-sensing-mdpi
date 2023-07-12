@@ -16,13 +16,13 @@ wingImgNum = 221;
 blipImgNum = 154;
 hardImgNum = 32;
 
-load("bee-lidar-data\msu-bee-hives\2022-06-24\MSU-horticulture-farm-bees-095001\adjusted_data_junecal_volts.mat");
+load("../../data/raw/2022-06-24/MSU-horticulture-farm-bees-095001/adjusted_data_junecal_volts.mat");
 bodyImg = adjusted_data_junecal(bodyImgNum).data;
 wingImg = adjusted_data_junecal(wingImgNum).data;
 blipImg = adjusted_data_junecal(blipImgNum).data;
 imgTime = adjusted_data_junecal(blipImgNum).time;
 
-load("bee-lidar-data\msu-bee-hives\2022-06-24\MSU-horticulture-farm-bees-111746\adjusted_data_junecal_volts.mat");
+load("../../data/raw/2022-06-24/MSU-horticulture-farm-bees-111746/adjusted_data_junecal_volts.mat");
 hardImg = adjusted_data_junecal(hardImgNum).data;
 clear adjusted_data_junecal;
 %%
@@ -99,12 +99,14 @@ cbar.FontName = 'Times New Roman';
 cmap = colormap(brewermap([],'Blues'));
 colormap(flipud(cmap));
 
+exportgraphics(fig1,"beeExamples.pdf","ContentType","vector");
+
 %%
 % Transit Time and Frequency Histograms
 
 % Load Data
-genericTimes = randn(1,5000);
-genericFreqs = randn(1,5000);
+load("../../code/transit-frequency-analysis/beeHarmonicEstimateCount.mat");
+load("../../code/transit-frequency-analysis/beeTransitTimes.mat")
 
 % General Variables
 faceColor = [0 .5 1];
@@ -121,13 +123,18 @@ t2.YLabel.String = "Count"; t2.YLabel.FontName = imgFontName; t2.YLabel.FontSize
 % Transit Time Settings
 p5 = nexttile; hold on;
 p5.FontName = imgFontName; p5.FontSize = imgFontSize; 
+p5.YLabel.String = "Bee Count";
 p5.XLabel.String = "Transit Time [ms]"; 
-p5.YLim = [0 450];
-h1 = histogram(genericTimes); h1.EdgeColor = edgeColor; h1.FaceColor = faceColor; h1.EdgeAlpha = edgeAlpha; h1.FaceAlpha = faceAlpha;
+p5.XLim = [0 .31];
+h1 = histogram(transitTimes); h1.EdgeColor = edgeColor; h1.FaceColor = faceColor; h1.EdgeAlpha = edgeAlpha; h1.FaceAlpha = faceAlpha;
 
 % Harmonics Settings
 p6 = nexttile; hold on;
-p6.FontName = imgFontName; p6.FontSize = imgFontSize; p6.YTickMode = "manual"; p6.YTick = []; 
+p6.FontName = imgFontName; p6.FontSize = imgFontSize;
+p6.YLabel.String = "Row Count";
 p6.XLabel.String = "Estimated Harmonic Frequency [Hz]";
-p6.YLim = [0 450];
-h2 = histogram(genericFreqs); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
+p6.YLim = [0 1250];
+p6.XLim = [61 900];
+h2 = histogram(totalHarmonicCount); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
+
+exportgraphics(fig2,"transitHarmonicHistograms.pdf","ContentType","vector");
