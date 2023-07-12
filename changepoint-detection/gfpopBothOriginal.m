@@ -24,9 +24,12 @@ testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present
 testingResultsLabel(1:end,1) = (1:numImages);
 testingResultData = cell(numImages,1);
 
+testingRowLabelPredicted = cell(numImages,1);
+
 % Training Image Iteration
 parfor imageNum = 1:length(testingData)
     image = -1.*testingData{1,imageNum};
+    rowsPredicted = zeros(1,size(image,1));
 
     % Row Iteration
     beeBoth = cell(1,size(image,1));
@@ -45,6 +48,7 @@ parfor imageNum = 1:length(testingData)
                                 tmpRow = rowsFromCol(rowIndex);
                                 if(norm(double([row col]) - double([tmpRow col])) < 4)
                                     beeBoth{row} = {tmpResultsRow,tmpResultsCol};
+                                    rowsPredicted(row) = 1;
                                 end
                             end
                         end
@@ -53,6 +57,8 @@ parfor imageNum = 1:length(testingData)
             end
         end
     end
+
+    testingRowLabelPredicted{imageNum,1} = rowsPredicted;
 
     if(any(~cellfun(@isempty,beeBoth)))
         testingResultData{imageNum,1} = beeBoth;
@@ -64,8 +70,5 @@ beeIndeces = ~cellfun(@isempty,testingResultData);
 testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
-results = {testingResultsLabel,testingResultData,"Results | Data"};
+results = {testingResultsLabel,testingRowLabelPredicted,testingResultData,"Img Results | Row Results | Data"};
 save("../../results/changepoint-results/bothResultsOriginal_gfpop.mat","results",'-v7.3');
-
-runtime = toc;
-save("../../results/changepoint-results/runtimes/bothOriginalRuntime_gfpop.mat","runtime")
