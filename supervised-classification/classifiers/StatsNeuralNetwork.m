@@ -7,7 +7,7 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
     end
 
     properties (SetAccess = immutable, GetAccess = public)
-        Name = "StatsNeuralNetwork"
+        Name
     end
 
     methods (Static)
@@ -73,6 +73,9 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
                 params.Cost = ones(2) - eye(2)
                 params.ScoreTransform = "none"
             end
+
+            nLayers = numel(params.LayerSizes);
+            obj.Name = "StatsNeuralNetwork" + nLayers + "Layer";
 
             params = obj.createCostMatrix(params);
 
