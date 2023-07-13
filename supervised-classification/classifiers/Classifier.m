@@ -21,6 +21,12 @@ classdef (Abstract) Classifier < handle
         formattedLabels = formatLabels(labels)
     end
 
+    methods (Static)
+        function formattedParams = formatOptimizableParams(optimizableParams)
+            formattedParams = table2struct(optimizableParams);
+        end
+    end
+
     methods (Abstract,Static,Access=protected)
         costMatrix = createCostMatrix(falseNegativeCost)
     end
