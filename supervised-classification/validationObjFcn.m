@@ -24,8 +24,21 @@ if ~isempty(params.Static)
 end
 
 if ~isempty(params.Optimizable)
-    classifierArgs = horzcat(classifierArgs, ...
-        namedargs2cell(table2struct(params.Optimizable)));
+
+    % optimizableVariables can only be scalars. However, some of the classifier
+    % parmaeters are vectors, such as the layer sizes, as this is more generic
+    % and scalable. Consequently, some classifiers need to format/combine
+    % the optimizable variables in a way that works with their constructor.
+    % Some classifiers don't need to do any formatting, and won't modify
+    % the optimizableVariables. bayesopt turns optimizable variables tin
+    % tables, which are not compatible with the Name-Value pairs the
+    % constructors need; all classifiers will turn the table into a struct,
+    % which can then be converted into a cell array of Name-Value pairs that
+    % the constructors can use.
+    optimizableParams = ...
+        classifierConstructor().formatOptimizableParams(params.Optimizable);
+
+    classifierArgs = horzcat(classifierArgs,namedargs2cell(optimizableParams));
 end
 
 if opts.UseGPU

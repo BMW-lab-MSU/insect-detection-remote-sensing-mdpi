@@ -19,6 +19,28 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
             params.Cost = ones(2) - eye(2);
             params.ScoreTransform = "none";
         end
+
+        function formattedParams = formatOptimizableParams(optimizableParams)
+            formattedParams = table2struct(optimizableParams);
+
+            fieldNames = fields(formattedParams);
+
+            nLayers = nnz(contains(fieldNames,"LayerSize"));
+
+            layerSizes = zeros(1,nLayers);
+
+            for layerNum = 1:nLayers
+                field = "LayerSize" + layerNum;
+
+                % Add the layer size into the layers array
+                layerSizes(layerNum) = formattedParams.(field);
+
+                % Remove LayerSize<layerNum> field from parameters structure
+                formattedParams = rmfield(formattedParams,field);
+            end
+
+            formattedParams.LayerSizes = layerSizes;
+        end
     end
 
     methods
