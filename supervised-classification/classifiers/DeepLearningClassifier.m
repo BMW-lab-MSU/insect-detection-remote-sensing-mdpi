@@ -1,23 +1,29 @@
 classdef (Abstract) DeepLearningClassifier < Classifier
+    
+    properties (SetAccess=protected, GetAccess=public)
+        Layers
+        Model
+        Hyperparams
+        UseGPU=true
+    end
+
+    properties (Abstract,Access=protected)
+        Params
+        TrainingParams
+        TrainingOptions
+    end
+
 
     methods
+        function hyperparams = get.Hyperparams(obj)
+            hyperparams = mergeStructs(obj.Params,obj.TrainingParams);
+        end
+
         function [labels,scores] = predict(obj,data)
 
             formattedData = obj.formatData(data);
 
-            % if we are using a GPU, convert the data to a gpuArray
-            if obj.UseGPU && canUseGPU()
-                data = gpuArray(formattedData);
-            else
-                data = formattedData;
-            end
-
-            [labels,scores] = classify(obj.Model,data);
-
-            if obj.UseGPU && canUseGPU()
-                labels = gather(labels);
-                scores = gather(scores);
-            end
+            [labels,scores] = classify(obj.Model,formattedData);
 
             % Convert labels from categorical to logical
             labels = labels == "true";
@@ -28,14 +34,7 @@ classdef (Abstract) DeepLearningClassifier < Classifier
             formattedData = obj.formatData(trainingData);
             labels = obj.formatLabels(trainingLabels);
 
-            % if we are training on a GPU, convert the data to a gpuArray
-            if obj.UseGPU && canUseGPU()
-                data = gpuArray(formattedData);
-            else
-                data = formattedData;
-            end
-
-            obj.Model = trainNetwork(data,labels,obj.Layers,obj.TrainingOptions);
+            obj.Model = trainNetwork(formattedData,labels,obj.Layers,obj.TrainingOptions);
         end
     end
 
