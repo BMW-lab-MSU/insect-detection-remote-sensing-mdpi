@@ -24,9 +24,6 @@ classdef (Abstract) DeepLearningClassifier < Classifier
             formattedData = obj.formatData(data);
 
             [labels,scores] = classify(obj.Model,formattedData);
-
-            % Convert labels from categorical to logical
-            labels = labels == "true";
         end
 
         function fit(obj,trainingData,trainingLabels)
