@@ -1,12 +1,22 @@
-function evalSamplingGridRowDataMethod(classifierType,undersampleRatio,nOversample,opts)
+function evalSamplingGridRowDataMethod(classifierType,undersampleRatio,nOversample,params,opts)
 
 arguments
     classifierType function_handle
     undersampleRatio (1,1) double
     nOversample (1,1) {mustBeInteger}
+    params.ClassifierParams = {}
     opts.UseParallel = false
     opts.UseGPU = false
 end
+
+if opts.UseParallel
+    if isempty(gcp('nocreate'))
+        parpool();
+    end
+end
+
+% Set up data paths
+beehiveDataSetup;
 
 % Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData","trainingLabels");
