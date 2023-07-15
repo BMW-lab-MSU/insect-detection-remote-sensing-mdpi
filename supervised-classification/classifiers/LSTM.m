@@ -25,7 +25,7 @@ classdef LSTM < DeepLearning1dClassifier
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
-            % bayesopt using tables instead of structs, but we need to use
+            % bayesopt uses tables instead of structs, but we need to use
             % structs so we can convert Name-Value pairs into a cell array
             % that we can pass to the classifier constructor
             formattedParams = table2struct(optimizableParams);
@@ -33,6 +33,14 @@ classdef LSTM < DeepLearning1dClassifier
             fieldNames = fields(formattedParams);
 
             nLayers = nnz(contains(fieldNames,"LayerSize"));
+
+            if nLayers == 0
+                % We aren't optimizing the layer sizes, so there's nothing else
+                % to do. The rest of this function would still work, but we
+                % might as well return early instead of having LayerSizes
+                % be empty.
+                return;
+            end
 
             layerSizes = zeros(1,nLayers);
 
