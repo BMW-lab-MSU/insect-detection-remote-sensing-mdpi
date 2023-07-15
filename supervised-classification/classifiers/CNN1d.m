@@ -25,7 +25,7 @@ classdef CNN1d < DeepLearning1dClassifier
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
-            % bayesopt using tables instead of structs, but we need to use
+            % bayesopt uses tables instead of structs, but we need to use
             % structs so we can convert Name-Value pairs into a cell array
             % that we can pass to the classifier constructor
             formattedParams = table2struct(optimizableParams);
@@ -34,6 +34,24 @@ classdef CNN1d < DeepLearning1dClassifier
 
             nFilterSizeParams = nnz(contains(fieldNames,"FilterSize"))
             nFiltersParams = nnz(contains(fieldNames,"NFilters"));
+
+            optimizingFilterSize = logical(nFilterSizeParams);
+            optimizingNFilters = logical(nFiltersParams);
+
+            % If no filter parameters were passed in, there's nothing more to do
+            if ~optimizingFilterSize && ~optimizingNFilters
+                return
+            end
+
+            if ~optimizingFilterSize
+                filterSize = CNN1d.getDefaultParameters().FilterSize;
+                nFilterSizeParams = 1;
+            end
+
+            if ~optimizingNFilters
+                nFilters = CNN1d.getDefaultParameters().NFilters;
+                nFiltersParams = 1;
+            end
 
             % Determine how many layers the network will have. Either
             % 1. NFilters and FilterSize have the same number of elements,
@@ -49,66 +67,98 @@ classdef CNN1d < DeepLearning1dClassifier
             if nFiltersParams == nFilterSizeParams
                 nLayers = nFiltersParams;
 
-                filterSize = zeros(1,nLayers);
-                nFilters = zeros(1,nLayers);
+                % Create FilterSize argument
+                if optimizingFilterSize
+                    filterSize = zeros(1,nLayers);
+                    for layerNum = 1:nLayers
+                        filterSize(layerNum) = formattedParams.("FilterSize" + layerNum);
 
-                % Create the FilterSize and NFilter arrays
-                for layerNum = 1:nLayers
-                    filterSize(layerNum) = formattedParams.("FilterSize" + layerNum);
-                    nFilters(layerNum) = formattedParams.("NFilters" + layerNum);
-
-                    % Remove individual FilterSize and NFilters field since
-                    % they are combined into arrays
-                    formattedParams = rmfield(formattedParams,"FilterSize" + layerNum);
-                    formattedParams = rmfield(formattedParams,"NFilters" + layerNum);
+                        % We don't want the old fields anymore since the
+                        % constructor doesn't accept them
+                        formattedParams = rmfield(formattedParams,"FilterSize" + layerNum);
+                    end
+                else
+                    filterSize = repelem(filterSize,nLayers);
                 end
+
+                % Create NFilters argument
+                if optimizingNFilters
+                    nFilters = zeros(1,nLayers);
+                    for layerNum = 1:nLayers
+                        nFilters(layerNum) = formattedParams.("NFilters" + layerNum);
+
+                        % We don't want the old fields anymore since the
+                        % constructor doesn't accept them
+                        formattedParams = rmfield(formattedParams,"NFilters" + layerNum);
+                    end
+                else
+                    nFilters = repelem(nFilters,nLayers);
+                end
+
 
             elseif nFiltersParams == 1
                 nLayers = nFilterSizeParams;
 
                 filterSize = zeros(1,nLayers);
-                nFilters = zeros(1,1);
 
-                nFiltersFieldName = fieldNames(find(contains(fieldNames,"NFilters")));
+                % Create NFilters argument
+                if optimizingNFilters
+                    nFiltersFieldName = fieldNames(contains(fieldNames,"NFilters"));
 
-                % Create the FilterSize and NFilter arrays
-                for layerNum = 1:nLayers
-                    filterSize(layerNum) = formattedParams.("FilterSize" + layerNum);
-                    nFilters(layerNum) = formattedParams.(nFiltersFieldName);
+                    nFilters = repelem(formattedParams.(nFiltersFieldName),nLayers);
 
-                    % Remove individual FilterSize fields
-                    formattedParams = rmfield(formattedParams,"FilterSize" + layerNum);
+                    formattedParams = rmfield(formattedParams,nFiltersFieldName);
+                else
+                    nFilters = repelem(nFilters,nLayers);
                 end
 
-                formattedParams = rmfield(formattedParams,nFiltersFieldName);
+                % Create FilterSize argument.
+                % FilterSize will always have more than one optimizable variable
+                % in this case. If it only had 1, both FilterSize and NFilters
+                % would have had 1 and would have been handled in the first if
+                % statment.
+                for layerNum = 1:nLayers
+                    filterSize(layerNum) = formattedParams.("FilterSize" + layerNum);
+
+                    formattedParams = rmfield(formattedParams,"FilterSize" + layerNum);
+                end
 
             elseif nFilterSizeParams == 1
                 nLayers = nFiltersParams;
 
-                filterSize = zeros(1,1);
                 nFilters = zeros(1,nLayers);
 
-                filterSizeFieldName = fieldNames(find(contains(fieldNames,"FilterSize")));
+                % Create FilterSize argument
+                if optimizingFilterSize
+                    filterSizeFieldName = fieldNames(contains(fieldNames,"FilterSize"));
 
-                % Create the FilterSize and NFilter arrays
+                    filterSize = repelem(formattedParams.(filterSizeFieldName));
+
+                    formattedParams = rmfield(formattedParams,filterSizeFieldName);
+                else
+                    filterSize = repelem(filterSize,nLayers);
+                end
+
+                % Create Nfilters argument.
+                % Nfilters will always have more than one optimizable variable
+                % in this case. If it only had 1, both FilterSize and NFilters
+                % would have had 1 and would have been handled in the first if
+                % statment.
                 for layerNum = 1:nLayers
                     nFilters(layerNum) = formattedParams.("NFilters" + layerNum);
-                    filterSize(layerNum) = formattedParams.(filterSizeFieldName);
 
-                    % Remove individual NFilters fields
                     formattedParams = rmfield(formattedParams,"NFilters" + layerNum);
                 end
 
-                formattedParams = rmfield(formattedParams,filterSizeFieldName);
-
             else
-                error("Number of FilterSize and NFilters parameters are ",...
-                    + "inconsistent and don't define a valid number of ",...
-                    + "layers. They must be the same size, or one of ",...
+                error("Number of FilterSize and NFilters parameters are "...
+                    + "inconsistent and don't define a valid number of "...
+                    + "layers. They must be the same size, or one of "...
                     + "them must have only 1 element.");
             end
 
-            formattedParams.LayerSizes = layerSizes;
+            formattedParams.FitlerSize = filterSize;
+            formattedParams.NFilters = nFilters;
         end
     end
 
