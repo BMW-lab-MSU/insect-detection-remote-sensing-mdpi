@@ -22,7 +22,7 @@ beehiveDataSetup;
 load(trainingDataDir + filesep + "trainingData","trainingData","trainingRowLabels");
 
 % Load in the validation data
-load(validationDataDir + filesep + "validationData","validationData","validationLabels");
+load(validationDataDir + filesep + "validationData","validationData","validationRowLabels");
 
 % Undersample/oversampling the data
 [data,labels,~] = rowDataSampling(undersampleRatio,nOversample,...
@@ -30,7 +30,7 @@ load(validationDataDir + filesep + "validationData","validationData","validation
 
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,data,labels,...
-    validationData,validationLabels,UseParallel=opts.UseParallel,...
+    validationData,validationRowLabels,UseParallel=opts.UseParallel,...
     UseGPU=opts.UseGPU);
 
 % Save results so we can do parameter selection later
