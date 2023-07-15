@@ -26,7 +26,7 @@ load(validationDataDir + filesep + "validationData","validationData","validation
 
 % Undersample/oversampling the data
 [data,labels,~] = rowDataSampling(undersampleRatio,nOversample,...
-    trainingData,trainingRowLabels,UseParallel=opts.UserParallel);
+    trainingData,trainingRowLabels,UseParallel=opts.UseParallel);
 
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,data,labels,...
