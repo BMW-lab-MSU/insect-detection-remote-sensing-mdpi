@@ -20,7 +20,9 @@ end
 
 newData = data;
 newLabels = labels;
-newFeatures = features;
+if ~isempty(features)
+    newFeatures = features;
+end
 
 % Undersample by removing rows from the majority class
 for imageNum = 1:numel(data)
@@ -29,7 +31,7 @@ for imageNum = 1:numel(data)
     newData{imageNum}(idxRemove,:) = [];
     newLabels{imageNum}(idxRemove) = [];
 
-    if ~isempty(newFeatures)
+    if ~isempty(features)
         newFeatures{imageNum}(idxRemove,:) = [];
     end
 end
