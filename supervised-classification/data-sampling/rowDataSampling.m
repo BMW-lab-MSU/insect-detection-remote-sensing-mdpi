@@ -27,8 +27,11 @@ for imageNum = 1:numel(data)
     idxRemove = randomUndersample(newLabels{imageNum},opts.MajorityLabel,...
         UndersamplingRatio=undersampleRatio,Reproducible=true);
     newData{imageNum}(idxRemove,:) = [];
-    newFeatures{imageNum}(idxRemove,:) = [];
     newLabels{imageNum}(idxRemove) = [];
+
+    if ~isempty(newFeatures)
+        newFeatures{imageNum}(idxRemove,:) = [];
+    end
 end
 
 % Oversampling
