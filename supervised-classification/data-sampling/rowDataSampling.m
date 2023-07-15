@@ -20,9 +20,7 @@ end
 
 newData = data;
 newLabels = labels;
-if ~isempty(features)
-    newFeatures = features;
-end
+newFeatures = features;
 
 % Undersample by removing rows from the majority class
 for imageNum = 1:numel(data)
