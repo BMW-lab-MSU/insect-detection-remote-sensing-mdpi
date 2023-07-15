@@ -19,14 +19,14 @@ end
 beehiveDataSetup;
 
 % Load in the training data
-load(trainingDataDir + filesep + "trainingData","trainingData","trainingLabels");
+load(trainingDataDir + filesep + "trainingData","trainingData","trainingRowLabels");
 
 % Load in the validation data
 load(validationDataDir + filesep + "validationData","validationData","validationLabels");
 
 % Undersample/oversampling the data
 [data,labels,~] = rowDataSampling(undersampleRatio,nOversample,...
-    trainingData,trainingLabels,UseParallel=opts.UserParallel);
+    trainingData,trainingRowLabels,UseParallel=opts.UserParallel);
 
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,data,labels,...
