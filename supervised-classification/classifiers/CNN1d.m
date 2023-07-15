@@ -12,8 +12,8 @@ classdef CNN1d < DeepLearning1dClassifier
 
     methods (Static)
         function params = getDefaultParameters()
-            params.FilterSize=20;
-            params.NFilters=20;
+            params.FilterSize=10;
+            params.NFilters=10;
             params.DropoutProbability=0.2;
             params.SequenceLength=1024;
             params.NClasses=2;
