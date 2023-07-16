@@ -36,6 +36,8 @@ load(validationDataDir + filesep + "validationFeatures");
     validationFeatures,validationRowLabels,UseParallel=opts.UseParallel,...
     UseGPU=opts.UseGPU,Static=params.ClassifierParams);
 
+disp("objective = " + objective);
+
 % Save results so we can do parameter selection later
 filename = userdata.Classifier.Name + "Undersample" + undersampleRatio + ...
     "Oversample" + nOversample + ".mat";
