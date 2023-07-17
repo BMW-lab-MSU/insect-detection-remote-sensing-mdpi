@@ -77,7 +77,7 @@ classdef LSTM < DeepLearning1dClassifier
 
             nLayers = numel(params.LayerSizes);
 
-            obj.Name = "LSTM" + nLayers + "Layers";
+            obj.Name = "LSTM" + nLayers + "Layer";
 
             params = obj.createCostMatrix(params);
 

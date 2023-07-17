@@ -187,7 +187,7 @@ classdef CNN1d < DeepLearning1dClassifier
                 error("NFilters and FilterSize must be the same size");
             end
 
-            obj.Name = "CNN1d" + nLayers + "Layers";
+            obj.Name = "CNN1d" + nLayers + "Layer";
 
             params = obj.createCostMatrix(params);
 

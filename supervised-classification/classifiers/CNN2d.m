@@ -266,7 +266,7 @@ classdef CNN2d < DeepLearning2dClassifier
                 error("NFilters and FilterSize must be the same size");
             end
 
-            obj.Name = "CNN2d" + nLayers + "Layers";
+            obj.Name = "CNN2d" + nLayers + "Layer";
 
             params = obj.createCostMatrix(params);
 
