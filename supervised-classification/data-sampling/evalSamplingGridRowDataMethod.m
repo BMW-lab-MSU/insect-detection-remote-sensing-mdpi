@@ -32,7 +32,7 @@ load(validationDataDir + filesep + "validationData","validationData","validation
 % Train and evaluate the classifier with the given data sampling parameters
 [objective,~,userdata] = validationObjFcn(classifierType,data,labels,...
     validationData,validationRowLabels,UseParallel=opts.UseParallel,...
-    UseGPU=opts.UseGPU);
+    UseGPU=opts.UseGPU,Static=params.ClassifierParams);
 
 disp("objective = " + objective);
 
