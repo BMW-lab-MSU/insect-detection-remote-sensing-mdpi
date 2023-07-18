@@ -1,6 +1,6 @@
-function createStatsNeuralNetwork1LayerHyperparamSearchRange()
+function createStatsNeuralNetwork3LayerHyperparamSearchRange()
 
-CLASSIFIER_NAME = "StatsNeuralNetwork1Layer";
+CLASSIFIER_NAME = "StatsNeuralNetwork3Layer";
 
 % Set up data paths
 beehiveDataSetup;
@@ -14,6 +14,8 @@ nObservations = numel(vertcat(trainingRowLabels{:}));
 % Create the optimizable variables that will be used by bayesopt
 optimizableParams = [
     optimizableVariable("LayerSize1",[5,100],Type="integer",Transform="log"),...
+    optimizableVariable("LayerSize2",[5,100],Type="integer",Transform="log"),...
+    optimizableVariable("LayerSize3",[5,100],Type="integer",Transform="log"),...
     optimizableVariable("Lambda",1/nObservations * [1e-5,1],Transform="log"),...
     optimizableVariable("Activations", ["relu", "tanh", "sigmoid"]),...
     optimizableVariable("FalseNegativeCost",[1 10],Type="integer")
