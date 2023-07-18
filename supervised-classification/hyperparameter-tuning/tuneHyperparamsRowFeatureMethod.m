@@ -1,7 +1,7 @@
-function tuneHyperparamsRowFeatureMethod(classifierType,opts)
+function tuneHyperparamsRowFeatureMethod(classifierName,opts)
 
 arguments
-    classifierType function_handle
+    classifierName (1,1) string
     opts.UseParallel = false
     opts.UseGPU = false
     opts.NIterations = 15
@@ -18,9 +18,6 @@ end
 
 % Set up data paths
 beehiveDataSetup;
-
-% Get the classifier name by constructing (and throwing away) an object.
-classifierName = classifierType().Name;
 
 % Load in the best data sampling parameters for the classifier
 load(samplingResultsDir + filesep + classifierName + "BestParams",...
