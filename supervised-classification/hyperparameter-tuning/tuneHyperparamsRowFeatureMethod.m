@@ -1,7 +1,8 @@
-function tuneHyperparamsRowFeatureMethod(classifierName,opts)
+function tuneHyperparamsRowFeatureMethod(classifierName,classifierType,opts)
 
 arguments
     classifierName (1,1) string
+    classifierType (1,1) function_handle
     opts.UseParallel = false
     opts.UseGPU = false
     opts.NIterations = 15
