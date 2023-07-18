@@ -18,7 +18,7 @@ classdef CNN1d < DeepLearning1dClassifier
             params.SequenceLength=1024;
             params.NClasses=2;
             params.ClassNames=categorical([false,true]);
-            params.FalseNegativeCost=1;
+            params.Cost=[1 1];
             params.MaxEpochs=5;
             params.InitialLearnRate=0.01;
             params.MiniBatchSize=2048;
@@ -32,7 +32,7 @@ classdef CNN1d < DeepLearning1dClassifier
 
             fieldNames = fields(formattedParams);
 
-            nFilterSizeParams = nnz(contains(fieldNames,"FilterSize"))
+            nFilterSizeParams = nnz(contains(fieldNames,"FilterSize"));
             nFiltersParams = nnz(contains(fieldNames,"NFilters"));
 
             optimizingFilterSize = logical(nFilterSizeParams);
@@ -172,7 +172,8 @@ classdef CNN1d < DeepLearning1dClassifier
                 params.SequenceLength=1024
                 params.NClasses=2
                 params.ClassNames=categorical([false,true])
-                params.FalseNegativeCost=1
+                params.FalseNegativeCost=[]
+                params.Cost=[1 1]
                 trainingOpts.MaxEpochs=5
                 trainingOpts.InitialLearnRate=0.01
                 trainingOpts.MiniBatchSize=2048
