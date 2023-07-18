@@ -157,7 +157,7 @@ classdef CNN1d < DeepLearning1dClassifier
                     + "them must have only 1 element.");
             end
 
-            formattedParams.FitlerSize = filterSize;
+            formattedParams.FilterSize = filterSize;
             formattedParams.NFilters = nFilters;
         end
     end
