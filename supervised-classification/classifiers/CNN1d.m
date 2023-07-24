@@ -19,7 +19,7 @@ classdef CNN1d < DeepLearning1dClassifier
             params.NClasses=2;
             params.ClassNames=categorical([false,true]);
             params.Cost=[1 1];
-            params.MaxEpochs=5;
+            params.MaxEpochs=20;
             params.InitialLearnRate=0.01;
             params.MiniBatchSize=2048;
         end
