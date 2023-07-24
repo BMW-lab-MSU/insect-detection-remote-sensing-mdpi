@@ -12,7 +12,7 @@ classdef CNN2d < DeepLearning2dClassifier
 
     methods (Static)
         function params = getDefaultParameters()
-            params.FilterSize=[3 3];
+            params.FilterSize=[16 2];
             params.NFilters=20;
             params.DropoutProbability=0.2;
             params.ImageSize=[178,1024];
@@ -245,7 +245,7 @@ classdef CNN2d < DeepLearning2dClassifier
 
         function obj = CNN2d(params,trainingOpts,opts)
             arguments
-                params.FilterSize=[3 3]
+                params.FilterSize=[16 2]
                 params.NFilters=20
                 params.DropoutProbability=0.2
                 params.ImageSize=[178,1024];
