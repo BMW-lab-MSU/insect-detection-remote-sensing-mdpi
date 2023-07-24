@@ -1,6 +1,6 @@
 function createLSTM1LayerHyperparamSearchRange()
 
-CLASSIFIER_NAME = "CNN1d1Layer";
+CLASSIFIER_NAME = "LSTM1Layer";
 
 % Set up data paths
 beehiveDataSetup;
