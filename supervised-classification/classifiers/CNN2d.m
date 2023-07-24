@@ -114,7 +114,7 @@ classdef CNN2d < DeepLearning2dClassifier
                     if nFilterHeightParams == nFilterWidthParams
                         filterSize = zeros(nFilterHeightParams,2);
 
-                        for layerNum = 1:numel(filterSize)
+                        for layerNum = 1:height(filterSize)
                             filterHeight = formattedParams.("FilterHeight" + layerNum);
                             filterWidth = formattedParams.("FilterWidth" + layerNum);
                             filterSize(layerNum,:) = [filterHeight,filterWidth];
@@ -129,7 +129,7 @@ classdef CNN2d < DeepLearning2dClassifier
 
                         filterWidthFieldName = fieldNames(find(contains(fieldNames,"FilterWidth")));
 
-                        for layerNum = 1:numel(filterSize)
+                        for layerNum = 1:height(filterSize)
                             filterHeight = formattedParams.("FilterHeight" + layerNum);
                             filterWidth = formattedParams.(filterWidthFieldName);
                             filterSize(layerNum,:) = [filterHeight,filterWidth];
@@ -144,7 +144,7 @@ classdef CNN2d < DeepLearning2dClassifier
 
                         filterHeightFieldName = fieldNames(find(contains(fieldNames,"FilterHeight")));
 
-                        for layerNum = 1:numel(filterSize)
+                        for layerNum = 1:height(filterSize)
                             filterHeight = formattedParams.(filterHeightFieldName);
                             filterWidth = formattedParams.("FilterWidth" + layerNum);
                             filterSize(layerNum,:) = [filterHeight,filterWidth];
