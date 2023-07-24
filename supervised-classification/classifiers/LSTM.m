@@ -17,8 +17,8 @@ classdef LSTM < DeepLearning1dClassifier
             params.SequenceLength=1024
             params.NClasses=2
             params.ClassNames=categorical([false,true])
-            params.FalseNegativeCost=1
-            params.MaxEpochs=5
+            params.Cost=[1 1];
+            params.MaxEpochs=10
             params.GradientThreshold=1
             params.InitialLearnRate=0.01
             params.MiniBatchSize=2048
@@ -67,8 +67,9 @@ classdef LSTM < DeepLearning1dClassifier
                 params.SequenceLength=1024
                 params.NClasses=2
                 params.ClassNames=categorical([false,true])
-                params.FalseNegativeCost=1
-                trainingOpts.MaxEpochs=5
+                params.FalseNegativeCost=[]
+                params.Cost=[1 1]
+                trainingOpts.MaxEpochs=10
                 trainingOpts.GradientThreshold=1
                 trainingOpts.InitialLearnRate=0.01
                 trainingOpts.MiniBatchSize=2048
