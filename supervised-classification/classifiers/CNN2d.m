@@ -15,10 +15,10 @@ classdef CNN2d < DeepLearning2dClassifier
             params.FilterSize=[3 3];
             params.NFilters=20;
             params.DropoutProbability=0.2;
-            params.ImageSize=[178,1024];;
+            params.ImageSize=[178,1024];
             params.NClasses=2;
             params.ClassNames=categorical([false,true]);
-            params.FalseNegativeCost=1;
+            params.Cost=[1 1];
             params.MaxEpochs=20;
             params.InitialLearnRate=0.01;
             params.MiniBatchSize=64;
@@ -251,7 +251,8 @@ classdef CNN2d < DeepLearning2dClassifier
                 params.ImageSize=[178,1024];
                 params.NClasses=2
                 params.ClassNames=categorical([false,true])
-                params.FalseNegativeCost=1
+                params.FalseNegativeCost=[]
+                params.Cost=[1 1]
                 trainingOpts.MaxEpochs=20
                 trainingOpts.InitialLearnRate=0.01
                 trainingOpts.MiniBatchSize=64
