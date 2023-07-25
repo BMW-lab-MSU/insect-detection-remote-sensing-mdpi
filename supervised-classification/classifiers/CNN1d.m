@@ -47,11 +47,26 @@ classdef CNN1d < DeepLearning1dClassifier
                 return
             end
 
+            % If FilterSize and NFilters don't have numbers after them,
+            % then we don't need to format those parameters
+            if nFilterSizeParams == 1 && nFiltersParams == 1
+                filterSizeFieldName = fieldNames(contains(fieldNames,"FilterSize"));
+                nFiltersFieldName = fieldNames(contains(fieldNames,"NFilters"));
+                filterSizeIsNumberless = strcmp(filterSizeFieldName,"FilterSize")
+                nFiltersIsNumberless = strcmp(nFiltersFieldName,"NFilters")
+
+                if filterSizeIsNumberless && nFiltersIsNumberless
+                    return
+                end
+            end
+
+            % Use the default filter size if we aren't optimizing it
             if ~optimizingFilterSize
                 filterSize = CNN1d.getDefaultParameters().FilterSize;
                 nFilterSizeParams = 1;
             end
 
+            % Use the default number of filters if we aren't optimizing it
             if ~optimizingNFilters
                 nFilters = CNN1d.getDefaultParameters().NFilters;
                 nFiltersParams = 1;

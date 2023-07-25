@@ -65,6 +65,19 @@ classdef CNN2d < DeepLearning2dClassifier
                 return
             end
 
+            % If FilterSize and NFilters don't have numbers after them,
+            % then we don't need to format those parameters
+            if nFilterSizeParams == 1 && nFiltersParams == 1
+                filterSizeFieldName = fieldNames(contains(fieldNames,"FilterSize"));
+                nFiltersFieldName = fieldNames(contains(fieldNames,"NFilters"));
+                filterSizeIsNumberless = strcmp(filterSizeFieldName,"FilterSize")
+                nFiltersIsNumberless = strcmp(nFiltersFieldName,"NFilters")
+
+                if filterSizeIsNumberless && nFiltersIsNumberless
+                    return
+                end
+            end
+
             if optimizingFilterSize
                 % FilterSize must be specified by itself without FilterHeight/Width.
                 if nFilterSizeParams > 0 && (nFilterHeightParams > 0 || nFilterWidthParams > 0)

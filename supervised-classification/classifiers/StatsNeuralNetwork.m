@@ -31,6 +31,15 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
 
             nLayers = nnz(contains(fieldNames,"LayerSize"));
 
+            layerSizeFieldName = fieldNames(contains(fieldNames,"LayerSize"));
+
+            % If the layer size field name is LayerSizes, then we don't have
+            % to format the parameters at all because LayerSizes is the field
+            % name that the constructor expects
+            if nLayers == 1 && strcmp(layerSizeFieldName,"LayerSizes")
+                return
+            end
+
             layerSizes = zeros(1,nLayers);
 
             for layerNum = 1:nLayers
