@@ -16,5 +16,6 @@ samplingResultsDir = trainingResultsDir + filesep + "data-sampling";
 default2dCNNResultsDir = trainingResultsDir + filesep + "default-params";
 hyperparameterResultsDir = trainingResultsDir + filesep + "hyperparameter-tuning";
 finalClassifierDir = trainingResultsDir + filesep + "classifiers";
+testingResultsDir = baseResultsDir + filesep + "testing";
 
 % TODO: precreate directories?
