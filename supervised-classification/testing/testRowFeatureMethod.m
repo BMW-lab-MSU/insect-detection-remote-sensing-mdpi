@@ -31,10 +31,10 @@ results.Row.F2 = f2;
 results.Row.MCC = mcc;
 
 % Compute the image results
-[imageConf, imageTrue, imagePred]  = imageConfusion(results.Row.PredLabels,...
-    testingRowLabels);
+[imageConf,imageTrue,imagePred]  = ...
+    imageConfusion(results.Row.PredictedLabels,results.Row.TrueLabels);
 results.Image.Confusion = imageConf;
-results.Image.PredLabels = imagePred;
+results.Image.PredictedLabels = imagePred;
 results.Image.TrueLabels = imageTrue;
 
 [a, p, r, f2, mcc] = analyzeConfusion(results.Image.Confusion);
