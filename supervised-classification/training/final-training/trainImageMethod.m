@@ -29,14 +29,16 @@ load(validationDataDir + filesep + "validationData",...
     "validationData","validationImgLabels");
 
 % Combine the training and validation data into one set for training
-data = vertcat(trainingData,validationData);
-labels = vertcat(trainingImgLabels,validationImgLabels);
+data = horzcat(trainingData,validationData);
+labels = horzcat(trainingImgLabels,validationImgLabels);
 
 % Free up some memory
 clear "trainingData" "validationData" "trainingImgLabels" "validationImgLabels";
 
 % Assmeble the classifier's hyperparameter arguments
-classifierArgs = namedargs2cell(hyperparams);
+params = classifierConstructor().formatOptimizableParams(hyperparams);
+
+classifierArgs = namedargs2cell(params);
 
 if opts.UseGPU
     % NOTE: not all classifiers support GPU acceleration; the ones that don't
@@ -46,7 +48,7 @@ if opts.UseGPU
 end
 
 % Construct the classifier
-classifier = classifierConstructor(classifierArgs);
+classifier = classifierConstructor(classifierArgs{:});
 
 % Train the classifier
 fit(classifier,data,labels);

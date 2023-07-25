@@ -37,10 +37,10 @@ load(validationDataDir + filesep + "validationData",...
 load(validationDataDir + filesep + "validationFeatures","validationFeatures");
 
 % Combine the training and validation data into one set for training
-combinedData = vertcat(trainingData,validationData);
-combinedFeatures = vertcat(trainingFeatures,validationFeatures);
-combinedLabels = vertcat(trainingRowLabels,validationRowLabels);
-combinedMetadata = vertcat({trainingMetadata.Timestamps},...
+combinedData = horzcat(trainingData,validationData);
+combinedFeatures = horzcat(trainingFeatures,validationFeatures);
+combinedLabels = horzcat(trainingRowLabels,validationRowLabels);
+combinedMetadata = horzcat({trainingMetadata.Timestamps},...
     {validationMetadata.Timestamps});
 
 % Free up some memory
@@ -56,7 +56,9 @@ clear "trainingData" "trainingMetadata" "validationData" "validationMetadata" "v
 clear "combinedData" "combinedMetadata" "combinedFeatures" "combinedLabels"
 
 % Assmeble the classifier's hyperparameter arguments
-classifierArgs = namedargs2cell(hyperparams);
+params = classifierConstructor().formatOptimizableParams(hyperparams);
+
+classifierArgs = namedargs2cell(params);
 
 if opts.UseGPU
     % NOTE: not all classifiers support GPU acceleration; the ones that don't
@@ -66,7 +68,7 @@ if opts.UseGPU
 end
 
 % Construct the classifier
-classifier = classifierConstructor(classifierArgs);
+classifier = classifierConstructor(classifierArgs{:});
 
 % Train the classifier
 fit(classifier,features,labels);
