@@ -21,7 +21,11 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
-            formattedParams = table2struct(optimizableParams);
+            if isa(optimizableParams,"table")
+                formattedParams = table2struct(optimizableParams);
+            else
+                formattedParams = optimizableParams;
+            end
 
             fieldNames = fields(formattedParams);
 

@@ -28,7 +28,11 @@ classdef CNN1d < DeepLearning1dClassifier
             % bayesopt uses tables instead of structs, but we need to use
             % structs so we can convert Name-Value pairs into a cell array
             % that we can pass to the classifier constructor
-            formattedParams = table2struct(optimizableParams);
+            if isa(optimizableParams,"table")
+                formattedParams = table2struct(optimizableParams);
+            else
+                formattedParams = optimizableParams;
+            end
 
             fieldNames = fields(formattedParams);
 

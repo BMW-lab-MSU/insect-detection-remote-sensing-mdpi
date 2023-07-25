@@ -23,7 +23,11 @@ classdef (Abstract) Classifier < handle
 
     methods (Static)
         function formattedParams = formatOptimizableParams(optimizableParams)
-            formattedParams = table2struct(optimizableParams);
+            if isa(optimizableParams,"table")
+                formattedParams = table2struct(optimizableParams);
+            else
+                formattedParams = optimizableParams;
+            end
         end
     end
 
