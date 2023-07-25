@@ -33,11 +33,11 @@ disp("originalObjective = " + originalObjective);
 % Load in the optimizable hyperparameters for the classifier
 load(trainingDataDir + filesep + classifierName + "HyperparameterSearchValues");
 
-% Load in the training data and features
+% Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData",...
     "trainingRowLabels","trainingMetadata");
 
-% Load in the validation features
+% Load in the validation data
 load(validationDataDir + filesep + "validationData",...
     "validationData","validationRowLabels");
 
