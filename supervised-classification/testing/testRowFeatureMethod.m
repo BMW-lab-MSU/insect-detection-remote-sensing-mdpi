@@ -14,7 +14,7 @@ load(finalClassifierDir + filesep + classifierName,"classifier");
 load(testingDataDir + filesep + "testingFeatures","testingFeatures");
 load(testingDataDir + filesep + "testingData","testingRowLabels");
 
-results.Row.TrueLabels = testingRowLabels;
+results.Row.TrueLabels = classifier.formatLabels(testingRowLabels);
 
 % Predict the row labels
 results.Row.PredictedLabels = predict(classifier,testingFeatures);
