@@ -11,6 +11,8 @@ if opts.UseParallel
     if isempty(gcp('nocreate'))
         parpool();
     end
+
+    statset(UseParallel=opts.UseParallel);
 end
 
 % Set up data paths
