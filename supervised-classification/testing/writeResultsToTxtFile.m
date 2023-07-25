@@ -20,7 +20,7 @@ fprintf(fd,"F2 = %.3f\n",results.Row.F2);
 fprintf(fd,"MCC = %.3f\n",results.Row.MCC);
 fprintf(fd,"Accuracy = %.3f\n",results.Row.Accuracy);
 
-fprintf("\n\n");
+fprintf(fd,"\n\n");
 
 fprintf(fd,"Image results:\n");
 
