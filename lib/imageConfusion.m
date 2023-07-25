@@ -1,4 +1,4 @@
-function [confmat,trueImageLabels,predImageLabels] = imageConfusion(pred, target, partition)
+function [confmat,trueImageLabels,predImageLabels] = imageConfusion(pred, target)
 
 % SPDX-License-Identifier: BSD-3-Clause
 
