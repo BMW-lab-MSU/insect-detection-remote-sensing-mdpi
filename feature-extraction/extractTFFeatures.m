@@ -6,7 +6,6 @@ end
 
 [rows,columns] = size(X);
 
-% TODO: camelCase
 maxMean = zeros(rows,1,'like',X);
 maxStd = zeros(rows,1,'like',X);
 avgMean = zeros(rows,1,'like',X);
