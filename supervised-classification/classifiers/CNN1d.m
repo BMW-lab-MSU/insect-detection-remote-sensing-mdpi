@@ -52,8 +52,8 @@ classdef CNN1d < DeepLearning1dClassifier
             if nFilterSizeParams == 1 && nFiltersParams == 1
                 filterSizeFieldName = fieldNames(contains(fieldNames,"FilterSize"));
                 nFiltersFieldName = fieldNames(contains(fieldNames,"NFilters"));
-                filterSizeIsNumberless = strcmp(filterSizeFieldName,"FilterSize")
-                nFiltersIsNumberless = strcmp(nFiltersFieldName,"NFilters")
+                filterSizeIsNumberless = strcmp(filterSizeFieldName,"FilterSize");
+                nFiltersIsNumberless = strcmp(nFiltersFieldName,"NFilters");
 
                 if filterSizeIsNumberless && nFiltersIsNumberless
                     return
