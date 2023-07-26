@@ -1,5 +1,11 @@
 function [confmat,trueImageLabels,predImageLabels] = imageConfusion(pred, target)
 
+if isa(pred,"categorical")
+    % Convert from categorical to logical so we can use any() later
+    pred = pred == "true";
+    target = target == "true";
+end
+
 % SPDX-License-Identifier: BSD-3-Clause
 
 nImages = numel(pred)/178;
