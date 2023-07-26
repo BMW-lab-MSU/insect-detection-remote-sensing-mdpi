@@ -8,7 +8,7 @@ end
 
 fd = fopen(dir + filesep + classifierName + "Results.txt", "w");
 
-if contains(fieldnames(results),"Row")
+if any(contains(fieldnames(results),"Row"))
 
     fprintf(fd,"Row results:\n");
 
