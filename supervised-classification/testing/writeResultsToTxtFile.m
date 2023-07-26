@@ -6,7 +6,7 @@ arguments
     dir (1,1) string
 end
 
-fd = fopen(dir + filesep + classifierName + ".txt", "w");
+fd = fopen(dir + filesep + classifierName + "Results.txt", "w");
 
 if contains(fieldnames(results),"Row")
 
