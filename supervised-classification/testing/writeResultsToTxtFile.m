@@ -8,19 +8,23 @@ end
 
 fd = fopen(dir + filesep + classifierName + ".txt", "w");
 
-fprintf(fd,"Row results:\n");
+if contains(fieldnames(results),"Row")
 
-fprintf(fd,"Confusion\n");
-fprintf(fd,"\t%6u\t%6u\n",results.Row.Confusion(1,1),results.Row.Confusion(1,2));
-fprintf(fd,"\t%6u\t%6u\n",results.Row.Confusion(2,1),results.Row.Confusion(2,2));
+    fprintf(fd,"Row results:\n");
 
-fprintf(fd,"Precision = %.3f\n",results.Row.Precision);
-fprintf(fd,"Recall = %.3f\n",results.Row.Recall);
-fprintf(fd,"F2 = %.3f\n",results.Row.F2);
-fprintf(fd,"MCC = %.3f\n",results.Row.MCC);
-fprintf(fd,"Accuracy = %.3f\n",results.Row.Accuracy);
+    fprintf(fd,"Confusion\n");
+    fprintf(fd,"\t%6u\t%6u\n",results.Row.Confusion(1,1),results.Row.Confusion(1,2));
+    fprintf(fd,"\t%6u\t%6u\n",results.Row.Confusion(2,1),results.Row.Confusion(2,2));
 
-fprintf(fd,"\n\n");
+    fprintf(fd,"Precision = %.3f\n",results.Row.Precision);
+    fprintf(fd,"Recall = %.3f\n",results.Row.Recall);
+    fprintf(fd,"F2 = %.3f\n",results.Row.F2);
+    fprintf(fd,"MCC = %.3f\n",results.Row.MCC);
+    fprintf(fd,"Accuracy = %.3f\n",results.Row.Accuracy);
+
+    fprintf(fd,"\n\n");
+
+end
 
 fprintf(fd,"Image results:\n");
 
