@@ -1,4 +1,5 @@
 %% Path setup
+addpath('.')
 addpath("feature-extraction")
 addpath("lib")
 addpath("preprocessing")
@@ -11,3 +12,4 @@ addpath("supervised-classification/training/cnn2d-default-training")
 addpath("supervised-classification/training/hyperparameter-tuning")
 addpath("supervised-classification/training/final-training")
 addpath("supervised-classification/testing")
+addpath('figures')
