@@ -13,7 +13,7 @@ load(finalClassifierDir + filesep + classifierName,"classifier");
 % Load in the testing data and labels
 load(testingDataDir + filesep + "testingData","testingImgLabels","testingData");
 
-results.Image.TrueLabels = classifier.formatLabels(testingRowLabels);
+results.Image.TrueLabels = classifier.formatLabels(testingImgLabels);
 
 % Predict the image labels
 results.Image.PredictedLabels = predict(classifier,testingData);
