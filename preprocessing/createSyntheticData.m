@@ -15,6 +15,15 @@ end
 N_VARIATIONS = 6;
 
 insectIdx = find(labels == 1);
+
+% Return early is there aren't any insects in the data;
+% we can't create synthetic insects if no insects are available :)
+if isempty(insectIdx)
+    synthData = [];
+    synthLabels = logical.empty;
+    return
+end
+
 nInsects = numel(insectIdx);
 insectData = data(insectIdx,:);
 
