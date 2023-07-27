@@ -12,16 +12,16 @@ classdef LSTM < DeepLearning1dClassifier
 
     methods (Static)
         function params = getDefaultParameters()
-            params.LayerSizes=10
-            params.DropoutProbability=0.2
-            params.SequenceLength=1024
-            params.NClasses=2
-            params.ClassNames=categorical([false,true])
-            params.Cost=[1 1];
-            params.MaxEpochs=20
-            params.GradientThreshold=1
-            params.InitialLearnRate=0.01
-            params.MiniBatchSize=2048
+            params.LayerSizes=10;
+            params.DropoutProbability=0.2;
+            params.SequenceLength=1024;
+            params.NClasses=2;
+            params.ClassNames=categorical([false,true]);
+            params.Cost=[1 1];;
+            params.MaxEpochs=20;
+            params.GradientThreshold=1;
+            params.InitialLearnRate=0.01;
+            params.MiniBatchSize=2048;
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
