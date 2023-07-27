@@ -22,7 +22,7 @@ for indexDay = 1:length(dates)
     date = dates(indexDay);
     scanNums = scanNumbers{indexDay};
 
-    for indexScan = 1:length(scanNums)-1
+    for indexScan = 1:length(scanNums)
         filePath = baseDir + filesep + date + filesep + folderPrefix + scanNums(indexScan);
         load(filePath + filesep + dataFilename);
 
@@ -31,10 +31,15 @@ for indexDay = 1:length(dates)
             startTime = adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).startCol);
             endTime = adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).endCol);
             time = endTime - startTime;
+            inputCSV(indexCSV).transitTime = time;
             beeTransitTimes{beeCounter,1} = folderPrefix+scanNums(indexScan);
             beeTransitTimes{beeCounter,2} = time;
             beeCounter = beeCounter+1;
-            indexCSV = indexCSV + 1;
+            if(indexCSV < countMaxCSV)
+                indexCSV = indexCSV + 1;
+            else
+                break;
+            end
         end
 
     end

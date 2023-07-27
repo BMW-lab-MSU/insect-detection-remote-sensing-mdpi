@@ -6,54 +6,42 @@ runtimeSummary = cell(2,6);
 % Matlab Columns
 tic
 matlabChptsColsOriginal;
-matlabChptsColsOriginal;
-matlabChptsColsOriginal;
-runtimeSummary{1,1} = toc/3;
+runtimeSummary{1,1} = toc;
 runtimeSummary{2,1} = "Matlab Columns";
 clearvars -except runtimeSummary
 
 % Matlab Rows
 tic
 matlabChptsRowsOriginal;
-matlabChptsRowsOriginal;
-matlabChptsRowsOriginal;
-runtimeSummary{1,2} = toc/3;
+runtimeSummary{1,2} = toc;
 runtimeSummary{2,2} = "Matlab Rows";
 clearvars -except runtimeSummary
 
 % Matlab Both
 tic
 matlabChptsBothOriginal;
-matlabChptsBothOriginal;
-matlabChptsBothOriginal;
-runtimeSummary{1,3} = toc/3;
+runtimeSummary{1,3} = toc;
 runtimeSummary{2,3} = "Matlab Both";
 clearvars -except runtimeSummary
 
 % gfpop Columns
 tic
 gfpopColsOriginal;
-gfpopColsOriginal;
-gfpopColsOriginal;
-runtimeSummary{1,4} = toc/3;
+runtimeSummary{1,4} = toc;
 runtimeSummary{2,4} = "gfpop Columns";
 clearvars -except runtimeSummary
 
 % gfpop Rows
 tic
 gfpopRowsOriginal;
-gfpopRowsOriginal;
-gfpopRowsOriginal;
-runtimeSummary{1,5} = toc/3;
+runtimeSummary{1,5} = toc;
 runtimeSummary{2,5} = "gfpop Rows";
 clearvars -except runtimeSummary
 
 % gfpop Both
 tic
 gfpopBothOriginal;
-gfpopBothOriginal;
-gfpopBothOriginal;
-runtimeSummary{1,6} = toc/3;
+runtimeSummary{1,6} = toc;
 runtimeSummary{2,6} = "gfpop Both";
 clearvars -except runtimeSummary
 
