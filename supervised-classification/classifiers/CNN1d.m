@@ -186,7 +186,7 @@ classdef CNN1d < DeepLearning1dClassifier
         function obj = CNN1d(params,trainingOpts,opts)
             arguments
                 params.FilterSize=16
-                params.NFilters=10
+                params.NFilters=20
                 params.DropoutProbability=0.2
                 params.SequenceLength=1024
                 params.NClasses=2
