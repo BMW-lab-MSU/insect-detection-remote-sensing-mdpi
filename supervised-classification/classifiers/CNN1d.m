@@ -185,15 +185,15 @@ classdef CNN1d < DeepLearning1dClassifier
 
         function obj = CNN1d(params,trainingOpts,opts)
             arguments
-                params.FilterSize=20
-                params.NFilters=20
+                params.FilterSize=16
+                params.NFilters=10
                 params.DropoutProbability=0.2
                 params.SequenceLength=1024
                 params.NClasses=2
                 params.ClassNames=categorical([false,true])
                 params.FalseNegativeCost=[]
                 params.Cost=[1 1]
-                trainingOpts.MaxEpochs=5
+                trainingOpts.MaxEpochs=20
                 trainingOpts.InitialLearnRate=0.01
                 trainingOpts.MiniBatchSize=2048
                 opts.UseGPU=(true && canUseGPU())
