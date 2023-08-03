@@ -44,7 +44,7 @@ end
 features = table;
 features.WaveletMaxRowAvg = maxMean;
 features.WaveletMaxRowStd = maxStd;
-features.WaveletAvg = avgMean;
+features.WaveletAvg = avg;
 features.WaveletAvgRowSkewness = avgSkewness;
 features.WaveletMaxRowPeak = maxPeak;
 features.WaveletMaxRowDiff = maxDiff;
