@@ -8,7 +8,7 @@ end
 
 maxMean = zeros(rows,1,'like',X);
 maxStd = zeros(rows,1,'like',X);
-avgMean = zeros(rows,1,'like',X);
+avg = zeros(rows,1,'like',X);
 avgSkewness = zeros(rows,1,'like',X);
 maxPeak = zeros(rows,1,'like',X);
 maxDiff = zeros(rows,1,'like',X);
@@ -34,7 +34,7 @@ parfor(i = 1:rows, nWorkers)
 
     maxMean(i) = max(mean(cwavelet,2));
     maxStd(i) = max(std(cwavelet,0,2));
-    avgMean(i) = mean(mean(cwavelet,2));
+    avg(i) = mean(cwavelet,'all');
     avgSkewness(i) = mean(skewness(cwavelet,1,2));
     maxPeak(i) = max(max(cwavelet));
     maxDiff(i) = max(max(diff(cwavelet)));
@@ -42,11 +42,11 @@ parfor(i = 1:rows, nWorkers)
 end
 
 features = table;
-features.WaveletMaxMean = maxMean;
-features.WaveletMaxStd = maxStd;
-features.WaveletAvgMean = avgMean;
-features.WaveletAvgSkewness = avgSkewness;
-features.WaveletMaxPeak = maxPeak;
-features.WaveletMaxDiff = maxDiff;
+features.WaveletMaxRowAvg = maxMean;
+features.WaveletMaxRowStd = maxStd;
+features.WaveletAvg = avgMean;
+features.WaveletAvgRowSkewness = avgSkewness;
+features.WaveletMaxRowPeak = maxPeak;
+features.WaveletMaxRowDiff = maxDiff;
 
 end
