@@ -39,10 +39,14 @@ classifierParams = results(minIdx).userdata.Classifier.Hyperparams;
 samplingParams.UndersampleRatio = results(minIdx).undersampleRatio;
 samplingParams.NOversample = results(minIdx).nOversample;
 
+% Save the full classification results
+classificationResults = results(minIdx).userdata;
+classificationResults = rmfield(classificationResults,"Classifier");
+
 disp(objective)
 disp(samplingParams)
 
 save(resultsDir + filesep + classifierName + "BestParams",...
-    "samplingParams","objective","classifierParams","-v7.3");
+    "samplingParams","objective","classifierParams","classificationResults","-v7.3");
 
 end

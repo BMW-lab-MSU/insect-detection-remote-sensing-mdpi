@@ -79,5 +79,7 @@ userdata.Recall = recall;
 userdata.F2 = f2;
 userdata.F3 = f3;
 userdata.MCC = mcc;
+% TODO: update PredLabels to PredictedLabels
 userdata.PredLabels = predLabels;
+userdata.TrueLabels = trueLabels;
 end
