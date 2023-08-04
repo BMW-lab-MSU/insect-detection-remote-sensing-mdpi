@@ -1,4 +1,4 @@
-function [barHandle,fig,ax] = sortedBar(values,locationsOrNames,opts)
+function [barHandle,ax] = sortedBar(values,locationsOrNames,opts)
 arguments
     values (1,:) {mustBeNumeric}
     locationsOrNames (1,:) {mustBeSameSizeOrEmpty(locationsOrNames,values),mustBeNumericOrString(locationsOrNames)} = []
@@ -26,9 +26,6 @@ end
 if ~isempty(locationsOrNames)
     sortedLocationsOrNames = locationsOrNames(sortIdx);
 end
-
-% Create the bar plot
-fig = figure();
 
 barHandle = bar(sortedValues,...
     Horizontal=opts.Horizontal,...
