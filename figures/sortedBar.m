@@ -47,8 +47,10 @@ end
 % Set the y/x tick labels to the sorted locations or names
 if ~isempty(locationsOrNames)
     if opts.Horizontal
+        yticks(1:numel(sortedLocationsOrNames));
         yticklabels(sortedLocationsOrNames);
     else
+        xticks(1:numel(sortedLocationsOrNames));
         xticklabels(sortedLocationsOrNames);
     end
 end
@@ -103,6 +105,9 @@ end
 
 function mustBeNumericOrString(a)
 % mustBeNumericOrString Validate that the input is number or a string
+
+    % TODO: add support for cell arrays of character arrays
+
     if ~isnumeric(a) && ~isstring(a)
         eid = 'mustBeNumericOrString:notNumericOrString';
         msg = 'Input must be numeric or a string';
