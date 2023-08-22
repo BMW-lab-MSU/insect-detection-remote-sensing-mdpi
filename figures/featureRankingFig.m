@@ -9,8 +9,6 @@ features = vertcat(trainingFeatures{:});
 
 nFeatures = width(features);
 
-featureNames = string(features.Properties.VariableNames);
-
 mi = table2array(readtable(featureAnalysisResultsDir + filesep + 'mi.csv'));
 
 featureNames = string(features.Properties.VariableNames);
