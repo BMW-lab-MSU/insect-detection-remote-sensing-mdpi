@@ -13,10 +13,10 @@ featureNames = string(features.Properties.VariableNames);
 
 mi = table2array(readtable(featureAnalysisResultsDir + filesep + 'mi.csv'));
 
+featureNames = string(features.Properties.VariableNames);
 
 %%
 close all;
-
 fontSize = 8;
 fontName = "Tex Gyre Pagella";
 
@@ -32,8 +32,6 @@ xlabel('Importance')
 
 set(gca, 'FontSize', fontSize)
 set(gca, 'FontName', fontName)
-
-% fig.Visible = 'off';
 
 %%
 exportgraphics(fig, 'figures/featureRanking.pdf', 'ContentType', 'vector')
