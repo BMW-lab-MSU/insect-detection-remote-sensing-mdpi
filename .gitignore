@@ -5,3 +5,5 @@
 *.mex*
 
 *.pdf
+
+__pycache__
