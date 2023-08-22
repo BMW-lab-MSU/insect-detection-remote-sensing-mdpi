@@ -3,29 +3,33 @@
 beehiveDataSetup;
 
 load(trainingDataDir + filesep + "trainingFeatures","trainingFeatures");
-load(trainingDataDir + filesep + "trainingData","trainingRowLabels");
 
-
+%%
 features = vertcat(trainingFeatures{:});
-labels = vertcat(trainingRowLabels{:});
+
+nFeatures = width(features);
+
+featureNames = string(features.Properties.VariableNames);
+
+mi = table2array(readtable(featureAnalysisResultsDir + filesep + 'mi.csv'));
+
 
 %%
 close all;
-[idx, scores] = fscmrmr(features, labels);
 
-%%
-fontSize = 10;
+fontSize = 8;
 fontName = "Tex Gyre Pagella";
 
-colors = colororder(brewermap([],'dark2'));
+colors = colororder(brewermap([],'paired'));
+blue = colors(2,:);
 
-fig = figure('Units', 'centimeter', 'Position', [2 2 18.46 20]);
+fig = figure('Units', 'centimeter', 'Position', [2 2 18.46 22]);
 
-bar(scores(idx),0.7,'FaceColor',colors(1,:),'Horizontal',true);
+sortedBar(mi,featureNames,ShowValuesInBars=false,FaceColor=blue,...
+    LabelFontSize=fontSize,FontName=fontName);
+
 xlabel('Importance')
-yticks(1:numel(idx))
-yticklabels(features.Properties.VariableNames(idx))
-% xtickangle(45)
+
 set(gca, 'FontSize', fontSize)
 set(gca, 'FontName', fontName)
 

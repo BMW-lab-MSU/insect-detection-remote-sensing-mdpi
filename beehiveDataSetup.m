@@ -11,6 +11,7 @@ validationDataDir = baseDataDir + filesep + "validation";
 
 %% Results directories
 baseResultsDir = "../results";
+featureAnalysisResultsDir = baseResultsDir + filesep + "feature-analysis";
 trainingResultsDir = baseResultsDir + filesep + "training";
 samplingResultsDir = trainingResultsDir + filesep + "data-sampling";
 default2dCNNResultsDir = trainingResultsDir + filesep + "default-params";
