@@ -9,4 +9,4 @@ metadata = horzcat(juneMetadata,julyMetadata);
 
 %% compute the average PRF for each image
 
-meanPRF = averagePRF(vertcat(metadata.Timestamps));
+meanPRF = averagePRF(vertcat(metadata.Timestamps))
