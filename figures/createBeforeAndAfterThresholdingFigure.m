@@ -24,8 +24,6 @@ imageNum = 889;
 ogImage = original.juneData{imageNum};
 thresholdedImage = thresholded.juneData{imageNum};
 
-
-
 %%
 
 % Display Settings
@@ -33,7 +31,7 @@ rowStop = 178;
 colStop = 1024;
 
 % Font Settings
-imgFontName = "Times New Roman";
+imgFontName = "TeX Gyre Pagella";
 imgFontSize = 10;
 
 % Time Settings
