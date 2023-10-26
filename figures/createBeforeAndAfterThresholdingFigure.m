@@ -1,12 +1,3 @@
-% Generate the plots for the MDPI journal paper.
-% Plot 1: Four examples of bees (body, wings, blips, hard target)
-% Plot 2: Transit and Frequency Histograms
-
-% Example Bees Figures
-%   Body: 06/24-095001-193
-%   Wings: 06/24-095001-221
-%   Blip: 06/24-095001-154
-%   Hard Target: 06/24-111746-32
 clear;
 
 % Data path setup
@@ -27,7 +18,7 @@ thresholdedImage = thresholded.juneData{imageNum};
 %%
 
 % Display Settings
-rowStop = 178;
+rowStop = 60;
 colStop = 1024;
 
 % Font Settings
@@ -45,7 +36,7 @@ range = original.juneMetadata(imageNum).Range;
 %%
 
 % Figure and Layout Settings
-figSize = [18.46, 7];
+figSize = [13.86, 7];
 
 fig1 = figure("Units","centimeters",Position=[1 1 figSize(1) figSize(2)]);
 t1 = tiledlayout(fig1,1,2,"TileSpacing","tight","Padding","compact");
@@ -56,7 +47,7 @@ t1.YLabel.String = "Range (m)";
 t1.YLabel.FontName = imgFontName;
 t1.YLabel.FontSize = imgFontSize;
 
-colorLims = [min(ogImage,[],"all"), max(ogImage,[],"all")];
+colorLims = [-0.2, 0.1];
 
 % Body Settings
 p1 = nexttile;
@@ -87,9 +78,17 @@ cbar.FontSize = 10;
 cbar.FontName = 'Times New Roman';
 
 % Colormap
+colors = colormap(brewermap([],'Paired'));
+red = colors(6,:);
+
 cmap = colormap(brewermap([],'Blues'));
 colormap(flipud(cmap));
 
+
+% Rectangle Annotations
+annotation(fig1,'rectangle',[0.09 0.51 0.045 0.087],'Color',red,'LineWidth',1.25);
+annotation(fig1,'rectangle',[0.316 0.53 0.076 0.087],'Color',red,'LineWidth',1.25);
+annotation(fig1,'rectangle',[0.465 0.51 0.0459 0.087],'Color',red,'LineWidth',1.25);
+annotation(fig1,'rectangle',[0.684 0.53 0.076 0.087],'Color',red,'LineWidth',1.25);
+
 exportgraphics(fig1,"figures/thresholdingExample.pdf","ContentType","vector");
-
-
