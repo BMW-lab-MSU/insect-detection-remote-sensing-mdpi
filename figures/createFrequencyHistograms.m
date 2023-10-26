@@ -87,7 +87,8 @@ xticks([0,600,1200])
 ylims = ylim();
 yticks([0,ylims(2)])
 
-legend(["No bee", "Bee"],"FontSize",fontSize,"FontName",fontName)
+leg = legend(["No bee", "Bee"],"FontSize",fontSize,"FontName",fontName);
+leg.EdgeColor = [1,1,1];
 
 title('(c)')
 
