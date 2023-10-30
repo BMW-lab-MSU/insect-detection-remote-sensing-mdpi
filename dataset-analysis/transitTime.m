@@ -2,7 +2,8 @@
 % 2. Load each folder and grab metadata
 % 3. Index into adjusted_data_junecal.time with the stop column and start
 % column and find the difference between the two.
-baseDir = "../../data/raw";
+beehiveDataSetup;
+
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];
 folderPrefix = "MSU-horticulture-farm-bees-";
 imageNum0623 = ["122126" "135615" "141253" "144154" "145241"];
@@ -12,7 +13,7 @@ imageNum0729 = ["093945" "095958" "101924"];
 scanNumbers = {imageNum0623, imageNum0624, imageNum0728, imageNum0729};
 dataFilename = "adjusted_data_junecal_volts";
 
-data = readtable("../../data/raw/labels.csv");
+data = readtable(rawDataDir + filesep + "labels.csv");
 inputCSV = table2struct(data);
 indexCSV = 1;
 countMaxCSV = numel(inputCSV);
@@ -23,13 +24,13 @@ for indexDay = 1:length(dates)
     scanNums = scanNumbers{indexDay};
 
     for indexScan = 1:length(scanNums)
-        filePath = baseDir + filesep + date + filesep + folderPrefix + scanNums(indexScan);
-        load(filePath + filesep + dataFilename);
+        filePath = rawDataDir + filesep + date + filesep + folderPrefix + scanNums(indexScan);
+        d = load(filePath + filesep + dataFilename);
 
         while(strcmp(folderPrefix+scanNums(indexScan),inputCSV(indexCSV).scanName))
             inputCSV(indexCSV).scanName
-            startTime = adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).startCol);
-            endTime = adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).endCol);
+            startTime = d.adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).startCol);
+            endTime = d.adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).endCol);
             time = endTime - startTime;
             inputCSV(indexCSV).transitTime = time;
             beeTransitTimes{beeCounter,1} = folderPrefix+scanNums(indexScan);
@@ -46,4 +47,4 @@ for indexDay = 1:length(dates)
 
 end
 
-save("beeTransitTimes.mat","beeTransitTimes","-v7.3");
+save(datasetAnalysisResultsDir + filesep + "beeTransitTimes.mat","beeTransitTimes","-v7.3");

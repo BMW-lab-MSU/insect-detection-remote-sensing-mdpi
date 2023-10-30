@@ -17,3 +17,4 @@ hyperparameterResultsDir = trainingResultsDir + filesep + "hyperparameter-tuning
 finalClassifierDir = trainingResultsDir + filesep + "classifiers";
 testingResultsDir = baseResultsDir + filesep + "testing";
 changepointResultsDir = baseResultsDir + filesep + "changepoint-results";
+datasetAnalysisResultsDir = baseResultsDir + filesep + "dataset-analysis";
