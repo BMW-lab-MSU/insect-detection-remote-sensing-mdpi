@@ -1,53 +1,55 @@
-load("../../data/testing/testingData.mat","testingImgLabels","testingRowLabels");
+beehiveDataSetup;
+
+load(testingDataDir + filesep + "testingData.mat","testingImgLabels","testingRowLabels");
 rowLabelVector = cell2mat(testingRowLabels');
-baseDir = "../../results/changepoint-results/";
+
 %%
-load(baseDir + "rowResultsOriginal_matlab.mat");
+load(changepointResultsDir + filesep + "rowResultsOriginal_matlab.mat");
 [rowOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [rowOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(baseDir + "colResultsOriginal_matlab.mat");
+load(changepointResultsDir + filesep + "colResultsOriginal_matlab.mat");
 [colOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [colOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(baseDir + "bothResultsOriginal_matlab.mat");
+load(changepointResultsDir + filesep + "bothResultsOriginal_matlab.mat");
 [bothOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [bothOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 % %%
-% load(baseDir + "rowResultsFiltered_matlab.mat");
+% load(changepointResultsDir + filesep + "rowResultsFiltered_matlab.mat");
 % [rowFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 % %%
-% load(baseDir + "colResultsFiltered_matlab.mat");
+% load(changepointResultsDir + filesep + "colResultsFiltered_matlab.mat");
 % [colFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 % %%
-% load(baseDir + "bothResultsFiltered_matlab.mat");
+% load(changepointResultsDir + filesep + "bothResultsFiltered_matlab.mat");
 % [bothFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 %%
-load(baseDir + "rowResultsOriginal_gfpop.mat");
+load(changepointResultsDir + filesep + "rowResultsOriginal_gfpop.mat");
 [rowOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [rowOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(baseDir + "colResultsOriginal_gfpop.mat");
+load(changepointResultsDir + filesep + "colResultsOriginal_gfpop.mat");
 [colOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [colOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(baseDir + "bothResultsOriginal_gfpop.mat");
+load(changepointResultsDir + filesep + "bothResultsOriginal_gfpop.mat");
 [bothOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [bothOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 % %%
-% load(baseDir + "rowResultsFiltered_gfpop.mat");
+% load(changepointResultsDir + filesep + "rowResultsFiltered_gfpop.mat");
 % [rowFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 % %%
-% load(baseDir + "colResultsFiltered_gfpop.mat");
+% load(changepointResultsDir + filesep + "colResultsFiltered_gfpop.mat");
 % [colFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 % %%
-% load(baseDir + "bothResultsFiltered_gfpop.mat");
+% load(changepointResultsDir + filesep + "bothResultsFiltered_gfpop.mat");
 % [bothFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 %%
 figure(1); clf;
@@ -78,8 +80,8 @@ subplot(122); confusionchart(bothOriginalMatRows); title("matlab Original Both -
 %%
 finalImageResults = {rowOriginalGfpop,colOriginalGfpop,bothOriginalGfpop,rowOriginalMat,colOriginalMat,bothOriginalMat;
                      "Rows gfpop","Columns gfpop","Both gfpop","Rows Matlab","Columns Matlab","Both Matlab"};
-save("../../results/changepoint-results/finalImageResults.mat","finalImageResults","-v7.3");
+save(changepointResultsDir + filesep + "finalImageResults.mat","finalImageResults","-v7.3");
 
 finalRowResults = {rowOriginalGfpopRows,colOriginalGfpopRows,bothOriginalGfpopRows,rowOriginalMatRows,colOriginalMatRows,bothOriginalMatRows;
                      "Rows gfpop","Columns gfpop","Both gfpop","Rows Matlab","Columns Matlab","Both Matlab"};
-save("../../results/changepoint-results/finalRowResults.mat","finalRowResults","-v7.3");
+save(changepointResultsDir + filesep + "finalRowResults.mat","finalRowResults","-v7.3");

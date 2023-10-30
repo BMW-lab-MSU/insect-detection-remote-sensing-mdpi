@@ -3,6 +3,9 @@
 % Runs through the LiDAR images with verification after detecting
 % changepoint.
 
+%% Path setup
+beehiveDataSetup;
+
 %% Graph Generation
 
 % Parameters
@@ -22,7 +25,7 @@ beeGraph = gfpopGraph(edges=[edge1 edge2 edge3 edge4 edge5 edge6],allNullEdges=t
 
 %% Bee Image Iteration
 tic
-load("../../data/testing/testingData.mat");
+load(testingDataDir + filesep + "testingData.mat");
 
 numImages = length(testingData);
 testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
@@ -65,4 +68,4 @@ testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
 results = {testingResultsLabel,testingRowLabelPredicted,testingResultData,"Img Results | Row Results | Data"};
-save("../../results/changepoint-results/rowResultsOriginal_gfpop.mat","results",'-v7.3');
+save(changepointResultsDir + filesep + "rowResultsOriginal_gfpop.mat","results",'-v7.3');

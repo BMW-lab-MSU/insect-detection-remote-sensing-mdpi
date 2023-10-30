@@ -1,6 +1,9 @@
+%% Path setup
+beehiveDataSetup;
+
 %% Bee Image Iteration
 tic
-load("../../data/testing/testingDataFiltered.mat");
+load(testingDataDir + filesep + "testingDataFiltered.mat");
 
 numImages = length(testingData);
 testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
@@ -31,7 +34,7 @@ testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
 results = {testingResultsLabel,testingResultData,"Results | Data"};
-save("../../results/changepoint-results/rowResultsFiltered_matlab.mat","results",'-v7.3');
+save(changepointResultsDir + filesep + "rowResultsFiltered_matlab.mat","results",'-v7.3');
 
 runtime = toc;
-save("../../results/changepoint-results/runtimes/rowFilteredRuntime_matlab.mat","runtime")
+save(changepointResultsDir + filesep + "runtimes" + filesep + "rowFilteredRuntime_matlab.mat","runtime")

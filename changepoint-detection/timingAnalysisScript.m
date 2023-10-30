@@ -45,4 +45,4 @@ runtimeSummary{1,6} = toc;
 runtimeSummary{2,6} = "gfpop Both";
 clearvars -except runtimeSummary
 
-save("../../results/changepoint-results/runtimes/changepointRuntimeSummary","runtimeSummary","-v7.3");
+save(changepointResultsDir + filesep + "runtimes" + filesep + "changepointRuntimeSummary","runtimeSummary","-v7.3");

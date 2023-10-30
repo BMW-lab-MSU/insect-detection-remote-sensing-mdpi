@@ -1,7 +1,12 @@
-load("../../data/training/trainingDataFiltered.mat","trainingData","trainingImgLabels");
+%% Path setup
+beehiveDataSetup;
+
+%% Load data
+load(trainingDataDir + filesep + "trainingDataFiltered.mat","trainingData","trainingImgLabels");
 trainingDataFiltered = trainingData;
 trainingImgLabelsFiltered = trainingImgLabels;
-load("../../data/training/trainingData.mat","trainingData","trainingImgLabels");
+load(trainingDataDir + filesep + "trainingData.mat","trainingData","trainingImgLabels");
+
 %% Graph Generation
 
 % Parameters
