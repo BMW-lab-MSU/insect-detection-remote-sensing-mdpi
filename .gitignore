@@ -6,4 +6,6 @@
 
 *.pdf
 
+*.mat
+
 __pycache__
