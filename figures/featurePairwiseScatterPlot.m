@@ -11,7 +11,7 @@ features = vertcat(trainingFeatures{:});
 labels = vertcat(trainingRowLabels{:});
 
 %% Select which features to plot
-featureNames = ["Skewness", "WaveletAvgRowSkewness", "Kurtosis"];
+featureNames = ["Skewness", "WaveletAvgSkewness", "Kurtosis"];
 
 featuresToPlot = [];
 
