@@ -3,6 +3,7 @@
 % Plot 2: Transit and Frequency Histograms
 
 clear figures;
+beehiveDataSetup;
 
 %% General Paper Settings
 
@@ -22,8 +23,8 @@ red = colors(6,:);
 %% Figure 2 : Transit Time and Frequency Histograms
 
 % Transit Time and Frequency Figures
-load("transit-frequency-analysis/CSVInfoWithFrequenciesFiltered.mat");
-load("transit-frequency-analysis/beeTransitTimes.mat")
+load(datasetAnalysisResultsDir + filesep + "beeFundamentalFrequencies.mat");
+load(datasetAnalysisResultsDir + filesep + "beeTransitTimes.mat")
 
 transitTimes = [beeTransitTimes{:,2}];
 
@@ -56,7 +57,7 @@ p6.XLabel.String = "Frequency (Hz)";
 p6.XLabel.FontSize = fontSize;
 p6.XLabel.FontName = fontName;
 p6.Title.String = "(b)"; p6.Title.FontWeight = "bold";
-h2 = histogram([inputCSV.beeFreqFiltered]); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
+h2 = histogram([beeFundamentalFrequencies{:,2}]); h2.EdgeColor = edgeColor; h2.FaceColor = faceColor; h2.EdgeAlpha = edgeAlpha; h2.FaceAlpha = faceAlpha;
 p6.XLim = [0 p6.XLim(2)];
 
 t2.YLabel.String = "Bee count";
