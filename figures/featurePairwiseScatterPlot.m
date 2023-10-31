@@ -26,10 +26,10 @@ fontName = "Tex Gyre Pagella";
 
 colors = colororder(brewermap([],'paired'));
 blue = colors(2,:);
-red = colors(7,:);
+yellow = colors(7,:);
 
-markers = "od";
-markerSizes = [3 3];
+markers = "sd";
+markerSizes = [4.5 4.5];
 
 group = categorical(labels,unique(labels),["No Bee", "Bee"]);
 
@@ -38,7 +38,12 @@ group = categorical(labels,unique(labels),["No Bee", "Bee"]);
 
 fig = figure('Units', 'centimeter', 'Position', [2 2 13.86 13.86]);
 
-[h,ax,bigax] = gplotmatrix(featuresToPlot,[],group,[blue;red],markers,markerSizes,[],'grpbars',featureNames);
+[h,ax,bigax] = gplotmatrix(featuresToPlot,[],group,[blue;yellow],markers,markerSizes,[],'grpbars',featureNames);
+
+% Make legend invisible
+legendobj = ax(1,3).Legend;
+set(legendobj.BoxFace, 'ColorType','truecoloralpha', 'ColorData',uint8(255*[1;1;1;0]));
+set(legendobj.BoxEdge, 'ColorType','truecoloralpha', 'ColorData',uint8(255*[1;1;1;0]));
 
 set(gca, 'FontSize', fontSize)
 set(gca, 'FontName', fontName)
