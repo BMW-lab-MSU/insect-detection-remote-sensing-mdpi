@@ -26,7 +26,7 @@ fig = figure('Units', 'centimeter', 'Position', [2 2 18.46 22]);
 sortedBar(mi,featureNames,ShowValuesInBars=false,FaceColor=blue,...
     LabelFontSize=fontSize,FontName=fontName);
 
-xlabel('Importance')
+xlabel('Mutual information')
 
 set(gca, 'FontSize', fontSize)
 set(gca, 'FontName', fontName)
