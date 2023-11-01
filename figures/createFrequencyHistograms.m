@@ -48,8 +48,8 @@ box off
 
 xticks([0,200,400])
 
-ylims = ylim();
-yticks([0,ylims(2)])
+% ylims = ylim();
+% yticks([0,ylims(2)])
 
 title('(a)')
 
@@ -68,8 +68,8 @@ box off
 title('(b)')
 
 xticks([0,400,800])
-ylims = ylim();
-yticks([0,ylims(2)])
+% ylims = ylim();
+% yticks([0,ylims(2)])
 
 set(gca, 'FontSize', fontSize)
 set(gca, 'FontName', fontName)
@@ -84,8 +84,8 @@ hold off
 box off
 
 xticks([0,600,1200])
-ylims = ylim();
-yticks([0,ylims(2)])
+% ylims = ylim();
+% yticks([0,ylims(2)])
 
 leg = legend(["No bee", "Bee"],"FontSize",fontSize,"FontName",fontName);
 leg.EdgeColor = [1,1,1];
