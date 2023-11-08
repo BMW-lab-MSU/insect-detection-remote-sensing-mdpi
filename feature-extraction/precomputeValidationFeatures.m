@@ -1,8 +1,12 @@
 % SPDX-License-Identifier: BSD-3-Clause
+function precomputeValidationFeatures
+
 %% Setup
 if isempty(gcp('nocreate'))
     parpool();
 end
+
+beehiveDataSetup;
 
 %% Load data
 load(validationDataDir + filesep + "validationData","validationData","validationMetadata")

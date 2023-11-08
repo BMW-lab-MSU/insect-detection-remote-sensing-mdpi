@@ -1,8 +1,12 @@
 % SPDX-License-Identifier: BSD-3-Clause
+function precomputeTrainingFeatures
+
 %% Setup
 if isempty(gcp('nocreate'))
     parpool();
 end
+
+beehiveDataSetup;
 
 %% Load data
 load(trainingDataDir + filesep + "trainingData","trainingData","trainingMetadata")
