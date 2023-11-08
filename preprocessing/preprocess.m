@@ -1,4 +1,7 @@
 % SPDX-License-Identifier: BSD-3-Clause
+function preprocess
+
+beehiveDataSetup;
 
 %% Load in data
 filenames = ["2022-06-combined", "2022-07-combined"];
@@ -52,3 +55,4 @@ save(preprocessedDataDir + filesep + "2022-07-preprocessed.mat", ...
     'julyData', 'julyRowLabels', 'julyImgLabels', ...
     'julyMetadata', '-v7.3');
 
+end
