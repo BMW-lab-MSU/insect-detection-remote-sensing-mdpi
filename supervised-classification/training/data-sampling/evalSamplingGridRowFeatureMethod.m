@@ -19,8 +19,8 @@ beehiveDataSetup;
 
 % Set the sampling grid parameters
 load(trainingDataDir + filesep + "samplingGridRowBased");
-undersampleRatio = samplingGrid(gridIndex).UndersamplingRatio;
-nOversample = samplingGrid(gridIndex).NSyntheticInsect;
+undersampleRatio = samplingGrid(:,gridIndex).UndersamplingRatio;
+nOversample = samplingGrid(:,gridIndex).NSyntheticInsect;
 
 % Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData",...
