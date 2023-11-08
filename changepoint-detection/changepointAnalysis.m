@@ -18,15 +18,6 @@ load(changepointResultsDir + filesep + "bothResultsOriginal_matlab.mat");
 [bothOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [bothOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
-% %%
-% load(changepointResultsDir + filesep + "rowResultsFiltered_matlab.mat");
-% [rowFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
-% %%
-% load(changepointResultsDir + filesep + "colResultsFiltered_matlab.mat");
-% [colFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
-% %%
-% load(changepointResultsDir + filesep + "bothResultsFiltered_matlab.mat");
-% [bothFilteredMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 %%
 load(changepointResultsDir + filesep + "rowResultsOriginal_gfpop.mat");
 [rowOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
@@ -42,29 +33,14 @@ load(changepointResultsDir + filesep + "bothResultsOriginal_gfpop.mat");
 [bothOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [bothOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
-% %%
-% load(changepointResultsDir + filesep + "rowResultsFiltered_gfpop.mat");
-% [rowFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
-% %%
-% load(changepointResultsDir + filesep + "colResultsFiltered_gfpop.mat");
-% [colFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
-% %%
-% load(changepointResultsDir + filesep + "bothResultsFiltered_gfpop.mat");
-% [bothFilteredGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 %%
 figure(1); clf;
-% subplot(241); confusionchart(rowFilteredGfpop); title("gfpop Filtered Rows");
-% subplot(242); confusionchart(colFilteredGfpop); title("gfpop Filtered Cols");
-% subplot(243); confusionchart(rowFilteredMat); title("matlab Filtered Rows");
-% subplot(244); confusionchart(colFilteredMat); title("matlab Filtered Cols");
 subplot(141); confusionchart(rowOriginalGfpop); title("gfpop Original Rows - Images");
 subplot(142); confusionchart(colOriginalGfpop); title("gfpop Original Cols - Images");
 subplot(143); confusionchart(rowOriginalMat); title("matlab Original Rows - Images");
 subplot(144); confusionchart(colOriginalMat); title("matlab Original Cols - Images");
 
 figure(2); clf;
-% subplot(221); confusionchart(bothFilteredGfpop); title("gfpop Filtered Both");
-% subplot(222); confusionchart(bothFilteredMat); title("matlab Filtered Both");
 subplot(121); confusionchart(bothOriginalGfpop); title("gfpop Original Both - Images");
 subplot(122); confusionchart(bothOriginalMat); title("matlab Original Both - Images");
 

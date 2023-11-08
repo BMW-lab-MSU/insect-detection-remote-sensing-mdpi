@@ -2,9 +2,6 @@
 beehiveDataSetup;
 
 %% Load data
-load(trainingDataDir + filesep + "trainingDataFiltered.mat","trainingData","trainingImgLabels");
-trainingDataFiltered = trainingData;
-trainingImgLabelsFiltered = trainingImgLabels;
 load(trainingDataDir + filesep + "trainingData.mat","trainingData","trainingImgLabels");
 
 %% Graph Generation
