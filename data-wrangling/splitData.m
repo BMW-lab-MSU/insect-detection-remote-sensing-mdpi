@@ -1,4 +1,5 @@
 % SPDX-License-Identifier: BSD-3-Clause
+function splitData
 %% Setup
 % Set random number generator properties for reproducibility
 rng(0, 'twister');
@@ -7,6 +8,7 @@ rng(0, 'twister');
 % The June days are being used as the training/validation set and the July days
 % are used as the testing set. This emulates a scenario where you collect data,
 % train, then test the models during the next data collection campaign.
+beehiveDataSetup;
 
 % load training data
 load(preprocessedDataDir + filesep + "2022-06-preprocessed")
@@ -57,3 +59,4 @@ save(validationDataDir + filesep + "validationData.mat", ...
     'validationData', 'validationRowLabels', 'validationImgLabels', ...
     'validationMetadata', 'holdoutPartition', '-v7.3');
 
+end

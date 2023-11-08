@@ -1,5 +1,7 @@
 % SPDX-License-Identifier: BSD-3-Clause
-%% Setup
+function combineDataForTrainingTesting
+
+beehiveDataSetup;
 
 FOLDER_PREFIX = "MSU-horticulture-farm-bees-";
 
@@ -34,3 +36,5 @@ save(combinedDataDir + filesep + "2022-06-combined.mat", ...
 save(combinedDataDir + filesep + "2022-07-combined.mat", ...
     'julyData', 'julyRowLabels', 'julyImgLabels', ...
     'julyMetadata', '-v7.3');
+
+end

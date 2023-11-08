@@ -1,3 +1,7 @@
+function convertAllLabels
+
+beehiveDataSetup;
+
 DATA_FILENAME = "adjusted_data_junecal_volts.mat";
 LABEL_FILENAME = "labels.csv";
 
@@ -29,4 +33,6 @@ for date = dateDirs
 
         save(fullfile(rawDataDir, date, run, "labels.mat"), 'rowLabels', 'imageLabels');
     end
+end
+
 end
