@@ -1,9 +1,8 @@
-function evalSamplingGridRowDataMethod(classifierType,undersampleRatio,nOversample,params,opts)
+function evalSamplingGridRowDataMethod(classifierType,gridIndex,params,opts)
 
 arguments
     classifierType function_handle
-    undersampleRatio (1,1) double
-    nOversample (1,1) {mustBeInteger}
+    gridIndex (1,1) {mustBeInteger}
     params.ClassifierParams = {}
     opts.UseParallel = false
     opts.UseGPU = false
@@ -17,6 +16,11 @@ end
 
 % Set up data paths
 beehiveDataSetup;
+
+% Set the sampling grid parameters
+load(trainingDataDir + filesep + "samplingGridRowBased");
+undersampleRatio = samplingGrid(gridIndex).UndersamplingRatio;
+nOversample = samplingGrid(gridIndex).NSyntheticInsect;
 
 % Load in the training data
 load(trainingDataDir + filesep + "trainingData","trainingData",...
