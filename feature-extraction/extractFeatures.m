@@ -37,13 +37,6 @@ arguments
     opts.UseParallel (1,1) logical = false
 end
 
-% TODO: revist this... maybe we should get rid of it.
-% if height(X) == 178
-%     % only zero out rows when we are working with an actual image; we don't want to zero out rows of synthetic data
-%     row_reduced = rowcollector(X, 'UseParallel', opts.UseParallel);
-% else
-%     row_reduced = X;
-% end
 timeFeatures = extractTimeDomainFeatures(X);
 
 freqFeatures = extractFreqDomainFeatures(X, avgSamplingFrequency, 'UseParallel', opts.UseParallel);
