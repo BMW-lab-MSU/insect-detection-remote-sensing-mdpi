@@ -1,7 +1,7 @@
-function selectBestSamplingParams(classifierName,resultsDir)
+function selectBestSamplingParams(classifierName)
 % selectBestSamplingParams select the best under/oversampling parameteers
 %
-%   selectBestSamplingParams(classifierName,resultsDir) collects the
+%   selectBestSamplingParams(classifierName) collects the
 %   data-sampling grid search results for a given classifier, then selects
 %   and save which grid parameters minimized the objective function.
 %
@@ -10,11 +10,12 @@ function selectBestSamplingParams(classifierName,resultsDir)
 
 arguments
     classifierName (1,1) string
-    resultsDir (1,1) string
 end
 
+beehiveDataSetup;
+
 % Find all the results files
-files = dir(resultsDir + filesep + classifierName + "Undersample*.mat");
+files = dir(samplingResultsDir + filesep + classifierName + "Undersample*.mat");
 filenames = string({files.name});
 
 if isempty(files)
@@ -23,7 +24,7 @@ end
 
 % Load in the results
 for fileNum = 1:numel(filenames)
-    results(fileNum) = load(resultsDir + filesep + filenames(fileNum));
+    results(fileNum) = load(samplingResultsDir + filesep + filenames(fileNum));
 end
 
 % Find the parameters that minimized the objective function
@@ -46,7 +47,7 @@ classificationResults = rmfield(classificationResults,"Classifier");
 disp(objective)
 disp(samplingParams)
 
-save(resultsDir + filesep + classifierName + "BestParams",...
+save(samplingResultsDir + filesep + classifierName + "BestParams",...
     "samplingParams","objective","classifierParams","classificationResults","-v7.3");
 
 end
