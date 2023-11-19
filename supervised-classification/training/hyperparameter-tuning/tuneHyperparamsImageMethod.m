@@ -9,7 +9,7 @@ arguments
 end
 
 % Seed the random number generator for reproducibility
-rng(7);
+rng(7,'twister');
 
 if opts.UseParallel
     if isempty(gcp('nocreate'))
