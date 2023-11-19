@@ -60,11 +60,11 @@ end
 fit(classifier,trainingData,trainingLabels);
 
 % Predict labels on the validation set
-predLabels = predict(classifier,validationData);
+predictedLabels = predict(classifier,validationData);
 
 % Compute performance metrics
 trueLabels = classifier.formatLabels(validationLabels);
-confusionMatrix = confusionmat(trueLabels, predLabels);
+confusionMatrix = confusionmat(trueLabels, predictedLabels);
 
 [accuracy, precision, recall, f2, f3, mcc] = analyzeConfusion(confusionMatrix);
 objective = -mcc;
@@ -79,7 +79,6 @@ userdata.Recall = recall;
 userdata.F2 = f2;
 userdata.F3 = f3;
 userdata.MCC = mcc;
-% TODO: update PredLabels to PredictedLabels
-userdata.PredLabels = predLabels;
+userdata.PredictedLabels = predictedLabels;
 userdata.TrueLabels = trueLabels;
 end

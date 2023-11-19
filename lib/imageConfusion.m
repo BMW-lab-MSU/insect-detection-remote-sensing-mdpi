@@ -1,8 +1,8 @@
-function [confmat,trueImageLabels,predImageLabels] = imageConfusion(pred, target)
+function [confmat,trueImageLabels,predictedImageLabels] = imageConfusion(predicted, target)
 
-if isa(pred,"categorical")
+if isa(predicted,"categorical")
     % Convert from categorical to logical so we can use any() later
-    pred = pred == "true";
+    predicted = predicted == "true";
     target = target == "true";
 end
 
@@ -10,11 +10,11 @@ end
 
 nImages = numel(pred)/178;
 
-predLabelsCell = mat2cell(pred, 178*ones(1,nImages), 1);
+predictedLabelsCell = mat2cell(predicted, 178*ones(1,nImages), 1);
 trueLabelsCell = mat2cell(target, 178*ones(1,nImages),1);
 
 
 % get vectors of image labels
 trueImageLabels = cellfun(@(c) any(c), trueLabelsCell);
-predImageLabels = cellfun(@(c) any(c), predLabelsCell);
-confmat = confusionmat(trueImageLabels, predImageLabels);
+predictedImageLabels = cellfun(@(c) any(c), predictedLabelsCell);
+confmat = confusionmat(trueImageLabels, predictedImageLabels);
