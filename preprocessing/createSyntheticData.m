@@ -52,10 +52,6 @@ parfor (i = 1:nInsects, nWorkers)
             randn(N_VARIATIONS, width(insectData), 'like', data) * ...
             max(variations, [], 'all')/2;
 
-        % the original lidar data is normalized between 0 and 1, so we do the
-        % same to the new data;
-        % variations = normalize(variations, 2, 'range');
-
         % put the variations into the correct location in synthData
         if nAugmented < j * N_VARIATIONS
             nAugmentedLeft = mod(nAugmented, (j - 1) * N_VARIATIONS);
