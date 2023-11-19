@@ -8,9 +8,6 @@ arguments
     opts.NIterations = 15
 end
 
-% Seed the random number generator for reproducibility
-rng(7,'twister');
-
 if opts.UseParallel
     if isempty(gcp('nocreate'))
         parpool();
@@ -56,6 +53,9 @@ clear "trainingData" "trainingMetadata";
 minfcn = @(optimizable)validationObjFcn(classifierType,features,labels,...
     validationFeatures,validationRowLabels,UseParallel=opts.UseParallel,...
     UseGPU=opts.UseGPU,Static=originalHyperparameters,Optimizable=optimizable);
+
+% Seed the random number generator for reproducibility
+rng(7,'twister');
 
 % Do the parameter search!
 results = bayesopt(minfcn,optimizableParams,IsObjectiveDeterministic=true,...
