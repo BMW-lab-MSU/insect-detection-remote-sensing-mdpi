@@ -90,4 +90,6 @@ end
 save(hyperparameterResultsDir + filesep + filename,...
     "hyperparams","results","-v7.3");
 
+writeValidationResultsToTxtFile(classifierName,true,results,validationRowLabels);
+
 end

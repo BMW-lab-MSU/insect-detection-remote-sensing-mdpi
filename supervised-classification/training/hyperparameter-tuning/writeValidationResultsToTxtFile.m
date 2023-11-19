@@ -1,8 +1,10 @@
-function writeValidationResultsToTxtFile(classifierName,isRowMethod)
+function writeValidationResultsToTxtFile(classifierName,isRowMethod,results,validationRowLabels)
 
 arguments
     classifierName (1,1) string
     isRowMethod (1,1) logical
+    results (1,1) struct
+    validationRowLabels = []
 end
 
 % Setup data paths
@@ -10,11 +12,6 @@ beehiveDataSetup;
 
 % Open output file
 fd = fopen(hyperparameterResultsDir + filesep + classifierName + "Results.txt", "w");
-
-% Load in the hyperparameter tuning results
-load(hyperparameterResultsDir + filesep + classifierName + "Hyperparams.mat","results");
-
-
 
 if isRowMethod
     % Find the results with the minimum objective
@@ -32,12 +29,6 @@ if isRowMethod
             rowResults = classificationResults;
         end
     end
-
-    % Load in the validation labels since we didn't save them in the
-    % results struct... 
-    %TODO: we might want to be consistent with the testing results and save
-    % the true validation labels in the validation results struct
-    load(validationDataDir + filesep + "validationData","validationRowLabels");
 
     if contains(classifierName,"CNN1d")
         trueLabels = DeepLearning1dClassifier.formatLabels(validationRowLabels);
