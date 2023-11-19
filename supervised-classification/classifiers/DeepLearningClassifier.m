@@ -26,7 +26,21 @@ classdef (Abstract) DeepLearningClassifier < Classifier
             [labels,scores] = classify(obj.Model,formattedData);
         end
 
-        function fit(obj,trainingData,trainingLabels)
+        function fit(obj,trainingData,trainingLabels,opts)
+            arguments
+                obj
+                trainingData
+                trainingLabels
+                opts.Reproducible = true
+                opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
+            end
+
+            if opts.Reproducible
+                rng(opts.Seed,"twister");
+                if obj.UseGPU
+                    gpurng(opts.Seed,"Threefry");
+                end
+            end
 
             formattedData = obj.formatData(trainingData);
             labels = obj.formatLabels(trainingLabels);

@@ -11,7 +11,7 @@ classdef (Abstract) Classifier < handle
     end
     
     methods (Abstract)
-        fit(obj,trainingData,trainingLabels)
+        fit(obj,trainingData,trainingLabels,opts)
         [labels,scores] = predict(obj,data)
     end
 

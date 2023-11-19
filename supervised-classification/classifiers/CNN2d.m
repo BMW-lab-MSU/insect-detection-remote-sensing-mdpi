@@ -274,6 +274,15 @@ classdef CNN2d < DeepLearning2dClassifier
                 trainingOpts.InitialLearnRate=0.01
                 trainingOpts.MiniBatchSize=64
                 opts.UseGPU=(true && canUseGPU())
+                opts.Reproducible = true
+                opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
+            end
+
+            if opts.Reproducible
+                rng(opts.Seed,"twister");
+                if opts.UseGPU
+                    gpurng(opts.Seed,"Threefry");
+                end
             end
 
             nLayers = height(params.FilterSize);

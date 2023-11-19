@@ -24,7 +24,21 @@ classdef SVM < StatsToolboxClassifier
     end
 
     methods
-        function fit(obj,trainingData,trainingLabels)
+        function fit(obj,trainingData,trainingLabels,opts)
+            arguments
+                obj
+                trainingData
+                trainingLabels
+                opts.Reproducible = true
+                opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
+            end
+
+            if opts.Reproducible
+                rng(opts.Seed,"twister");
+                if obj.UseGPU
+                    gpurng(opts.Seed,"Threefry");
+                end
+            end
 
             formattedData = SVM.formatData(trainingData);
             labels = SVM.formatLabels(trainingLabels);
@@ -64,7 +78,7 @@ classdef SVM < StatsToolboxClassifier
                 params.FalseNegativeCost = []
                 params.Cost = ones(2) - eye(2)
                 params.ScoreTransform = "none"
-                opts.UseGPU = false;
+                opts.UseGPU = false
             end
 
             % if the kernel isn't polynomial, we can't have the

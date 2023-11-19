@@ -57,7 +57,18 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
     end
 
     methods
-        function fit(obj,trainingData,trainingLabels)
+        function fit(obj,trainingData,trainingLabels,opts)
+            arguments
+                obj
+                trainingData
+                trainingLabels
+                opts.Reproducible = true
+                opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
+            end
+
+            if opts.Reproducible
+                rng(opts.Seed,"twister");
+            end
 
             data = StatsNeuralNetwork.formatData(trainingData);
             labels = StatsNeuralNetwork.formatLabels(trainingLabels);
