@@ -7,6 +7,8 @@ arguments
     nAugmented (1,1) {mustBeNumeric, mustBeNonnegative}
     avgSamplingFrequency (1,1) {mustBeNumeric}
     opts.UseParallel (1,1) logical = false
+    opts.Reproducible = false
+    opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
 end
 
 % Return early if we aren't creating synthetic insects or if there aren't any
@@ -17,7 +19,8 @@ if nAugmented == 0 || ~any(labels)
     return
 end
 
-synthData = createSyntheticData(data, labels, nAugmented, 'UseParallel', opts.UseParallel);
+synthData = createSyntheticData(data, labels, nAugmented, 'UseParallel', opts.UseParallel, ...
+    'Reproducible', opts.Reproducible, 'Seed', opts.Seed);
 
 newFeatures = extractFeatures(synthData, avgSamplingFrequency, 'UseParallel', opts.UseParallel);
 

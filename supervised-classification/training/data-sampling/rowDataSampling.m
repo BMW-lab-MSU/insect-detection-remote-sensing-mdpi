@@ -39,7 +39,7 @@ if isempty(features)
     parfor(imageNum = 1:numel(data), nWorkers)
         % Create synthesic insect time series rows
         [synthData,synthLabels] = createSyntheticData(newData{imageNum},...
-            newLabels{imageNum},nOversample);
+            newLabels{imageNum},nOversample,Reproducible=true);
 
         newData{imageNum} = vertcat(newData{imageNum},synthData);
         newLabels{imageNum} = vertcat(newLabels{imageNum},synthLabels);
@@ -51,7 +51,7 @@ else
         % Create synthetic insect features
         [synthFeatures,synthLabels] = ...
             createSyntheticFeatures(newData{imageNum},newLabels{imageNum},...
-                nOversample,avgSamplingFrequency);
+                nOversample,avgSamplingFrequency,Reproducible=true);
     
         newFeatures{imageNum} = vertcat(newFeatures{imageNum},synthFeatures);
         newLabels{imageNum} = vertcat(newLabels{imageNum},synthLabels);

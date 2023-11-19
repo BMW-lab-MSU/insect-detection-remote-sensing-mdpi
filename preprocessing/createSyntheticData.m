@@ -4,12 +4,18 @@ arguments
     labels (:, 1) logical
     nAugmented (1,1) {mustBeNumeric, mustBeNonnegative}
     opts.UseParallel (1,1) logical = false
+    opts.Reproducible = false
+    opts.Seed (1,1) uint32 {mustBeNonnegative} = 0
 end
 
 if opts.UseParallel
     nWorkers = gcp('nocreate').NumWorkers;
 else
     nWorkers = 0;
+end
+
+if opts.Reproducible
+    rng(opts.Seed,'twister');
 end
 
 N_VARIATIONS = 6;
