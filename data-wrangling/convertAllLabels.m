@@ -28,10 +28,10 @@ for date = dateDirs
         nRows = size(adjusted_data_junecal(1).data, 1);
 
         labelFilepath = fullfile(rawDataDir, date, run, LABEL_FILENAME);
-        rowLabels = createRowLabelVectors(labelFilepath, nImages, nRows);
+        [rowLabels,rowConfidence] = createRowLabelVectors(labelFilepath, nImages, nRows);
         imageLabels = createImageLabelVector(labelFilepath, nImages);
 
-        save(fullfile(rawDataDir, date, run, "labels.mat"), 'rowLabels', 'imageLabels');
+        save(fullfile(rawDataDir, date, run, "labels.mat"), 'rowLabels', 'rowConfidence', 'imageLabels');
     end
 end
 

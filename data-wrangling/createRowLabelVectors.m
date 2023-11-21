@@ -1,8 +1,9 @@
-function rowLabels = createRowLabelVectors(csvFile, nImages, nRows)
+function [rowLabels,rowConfidence] = createRowLabelVectors(csvFile, nImages, nRows)
 
     labelTable = readtable(csvFile);
 
     rowLabels = mat2cell(false(nRows, nImages), nRows, ones(nImages, 1))';
+    rowConfidence = mat2cell(false(nRows, nImages), nRows, ones(nImages, 1))';
 
     nInsects = height(labelTable);
 
@@ -15,6 +16,7 @@ function rowLabels = createRowLabelVectors(csvFile, nImages, nRows)
         % labels into a binary classification problem
 
         rowLabels{insect.imageNum}(insect.startRow:insect.endRow) = true;
+        rowConfidence{insect.imageNum}(insect.startRow:insect.endRow) = insect.confidence;
     end
 end
 
