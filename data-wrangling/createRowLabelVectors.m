@@ -3,7 +3,7 @@ function [rowLabels,rowConfidence] = createRowLabelVectors(csvFile, nImages, nRo
     labelTable = readtable(csvFile);
 
     rowLabels = mat2cell(false(nRows, nImages), nRows, ones(nImages, 1))';
-    rowConfidence = mat2cell(false(nRows, nImages), nRows, ones(nImages, 1))';
+    rowConfidence = mat2cell(zeros(nRows, nImages,'uint8'), nRows, ones(nImages, 1))';
 
     nInsects = height(labelTable);
 
