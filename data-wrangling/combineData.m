@@ -1,4 +1,4 @@
-function [data, rowLabels, imgLabels, metadata] = combineData(dates, folderPrefix, folderTimestamps, rawDataDir)
+function [data, rowLabels, rowConfidence, imgLabels, metadata] = combineData(dates, folderPrefix, folderTimestamps, rawDataDir)
 % SPDX-License-Identifier: BSD-3-Clause
 
 % TODO: argument validation
@@ -14,6 +14,7 @@ metadata = struct('Day', string(), 'FolderName', string(), 'FileName', string(),
 
 data = {};
 rowLabels = {};
+rowConfidence = {};
 imgLabels = false;
 
 %% Folder Setup
@@ -42,6 +43,7 @@ for index = 1:length(dates)
             data{globalImageNum} = adjusted_data_junecal(scanImageNum).data;
 
             rowLabels(globalImageNum) = labels.rowLabels(scanImageNum);
+            rowConfidence(globalImageNum) = labels.rowConfidence(scanImageNum);
             imgLabels(globalImageNum) = labels.imageLabels(scanImageNum); 
 
             metadata(globalImageNum).Day = date;

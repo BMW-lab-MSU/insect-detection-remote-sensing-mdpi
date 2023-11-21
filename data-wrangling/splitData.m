@@ -27,6 +27,8 @@ trainingImgLabels = juneImgLabels(training(holdoutPartition));
 validationImgLabels = juneImgLabels(test(holdoutPartition));
 trainingRowLabels = juneRowLabels(training(holdoutPartition));
 validationRowLabels = juneRowLabels(test(holdoutPartition));
+trainingRowConfidence = juneRowConfidence(training(holdoutPartition));
+validationRowConfidence = juneRowConfidence(test(holdoutPartition));
 trainingMetadata = juneMetadata(training(holdoutPartition));
 validationMetadata = juneMetadata(test(holdoutPartition));
 
@@ -34,6 +36,7 @@ validationMetadata = juneMetadata(test(holdoutPartition));
 testingData = julyData;
 testingImgLabels = julyImgLabels;
 testingRowLabels = julyRowLabels;
+testingRowConfidence = julyRowConfidence;
 testingMetadata = julyMetadata;
 
 
@@ -42,21 +45,21 @@ if ~exist(testingDataDir)
     mkdir(baseDataDir, "testing");
 end
 save(testingDataDir + filesep + "testingData.mat", ...
-    'testingData', 'testingRowLabels', 'testingImgLabels', ...
-    'testingMetadata', '-v7.3');
+    'testingData', 'testingRowLabels', 'testingRowConfidence', ...
+    'testingImgLabels', 'testingMetadata', '-v7.3');
 
 if ~exist(trainingDataDir)
     mkdir(baseDataDir, "training");
 end
 save(trainingDataDir + filesep + "trainingData.mat", ...
-    'trainingData', 'trainingRowLabels', 'trainingImgLabels', ...
-    'trainingMetadata', 'holdoutPartition', '-v7.3');
+    'trainingData', 'trainingRowLabels', 'trainingRowConfidence', ...
+    'trainingImgLabels', 'trainingMetadata', 'holdoutPartition', '-v7.3');
 
 if ~exist(validationDataDir)
     mkdir(baseDataDir, "validation");
 end
 save(validationDataDir + filesep + "validationData.mat", ...
-    'validationData', 'validationRowLabels', 'validationImgLabels', ...
-    'validationMetadata', 'holdoutPartition', '-v7.3');
+    'validationData', 'validationRowLabels', 'validationRowConfidence' ...
+    'validationImgLabels', 'validationMetadata', 'holdoutPartition', '-v7.3');
 
 end
