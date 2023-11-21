@@ -3,7 +3,7 @@ function writeValidationResultsToTxtFile(classifierName,isRowMethod,results,vali
 arguments
     classifierName (1,1) string
     isRowMethod (1,1) logical
-    results (1,1) struct
+    results (1,1)
     validationRowLabels = []
 end
 
