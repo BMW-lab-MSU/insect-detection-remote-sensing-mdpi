@@ -8,7 +8,7 @@ end
 
 % SPDX-License-Identifier: BSD-3-Clause
 
-nImages = numel(pred)/178;
+nImages = numel(predicted)/178;
 
 predictedLabelsCell = mat2cell(predicted, 178*ones(1,nImages), 1);
 trueLabelsCell = mat2cell(target, 178*ones(1,nImages),1);
