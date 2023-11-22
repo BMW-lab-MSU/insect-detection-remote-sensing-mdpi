@@ -3,7 +3,7 @@ beehiveDataSetup;
 
 %% Bee Image Iteration
 tic
-load(testingDatadir + filesep + "testingData.mat");
+load(testingDataDir + filesep + "testingData.mat");
 
 numImages = length(testingData);
 testingResultsLabel = zeros(numImages,2);     % Image # | Insect Present 
