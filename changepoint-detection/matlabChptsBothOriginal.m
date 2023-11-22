@@ -57,4 +57,8 @@ testingResultsLabel(beeIndeces,2) = 1;
 
 % Saving Full Directory Structure
 results = {testingResultsLabel,testingRowLabelPredicted,testingResultData,"Img Results | Row Results | Data"};
+
+if ~exist(changepointResultsDir,'dir')
+    mkdir(changepointResultsDir);
+end
 save(changepointResultsDir + filesep + "bothResultsOriginal_matlab.mat","results",'-v7.3');
