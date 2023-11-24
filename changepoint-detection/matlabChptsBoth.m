@@ -61,4 +61,4 @@ results = {testingResultsLabel,testingRowLabelPredicted,testingResultData,"Img R
 if ~exist(changepointResultsDir,'dir')
     mkdir(changepointResultsDir);
 end
-save(changepointResultsDir + filesep + "bothResultsOriginal_matlab.mat","results",'-v7.3');
+save(changepointResultsDir + filesep + "matlabChptsBothResults.mat","results",'-v7.3');

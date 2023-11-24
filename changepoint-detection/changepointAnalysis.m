@@ -4,32 +4,32 @@ load(testingDataDir + filesep + "testingData.mat","testingImgLabels","testingRow
 rowLabelVector = cell2mat(testingRowLabels');
 
 %%
-load(changepointResultsDir + filesep + "rowResultsOriginal_matlab.mat");
+load(changepointResultsDir + filesep + "matlabChptsRowsResults");
 [rowOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [rowOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(changepointResultsDir + filesep + "colResultsOriginal_matlab.mat");
+load(changepointResultsDir + filesep + "matlabChptsColsResults");
 [colOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [colOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(changepointResultsDir + filesep + "bothResultsOriginal_matlab.mat");
+load(changepointResultsDir + filesep + "matlabChptsBothResults.mat");
 [bothOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [bothOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(changepointResultsDir + filesep + "rowResultsOriginal_gfpop.mat");
+load(changepointResultsDir + filesep + "gfpopRowsResults.mat");
 [rowOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [rowOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(changepointResultsDir + filesep + "colResultsOriginal_gfpop.mat");
+load(changepointResultsDir + filesep + "gfpopColsResults.mat");
 [colOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [colOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
 %%
-load(changepointResultsDir + filesep + "bothResultsOriginal_gfpop.mat");
+load(changepointResultsDir + filesep + "gfpopBothResults.mat");
 [bothOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
 [bothOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);

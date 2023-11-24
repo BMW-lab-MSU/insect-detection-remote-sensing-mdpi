@@ -1,3 +1,8 @@
+% gfpop rows with original images
+
+% Runs through the LiDAR images with verification after detecting
+% changepoint.
+
 %% Path setup
 beehiveDataSetup;
 
@@ -35,26 +40,15 @@ parfor imageNum = 1:length(testingData)
     rowsPredicted = zeros(1,size(image,1));
 
     % Row Iteration
-    beeBoth = cell(1,size(image,1));
+    beeRows = cell(1,size(image,1));
     for row = 1:size(image,1)
         if(range(image(row,:) > mean(image(row,:))))
-            tmpResultsRow = gfpop(image(row,:),beeGraph,"mean");
-            if(any(tmpResultsRow.states.contains("BEE")))
-                if(numel(tmpResultsRow.changepoints(tmpResultsRow.states == "BEE")) < 5)
-                    columnsFromRow = tmpResultsRow.changepoints(tmpResultsRow.states == "BEE");
-                    for colIndex = 1:numel(columnsFromRow)
-                        col = columnsFromRow(colIndex);
-                        tmpResultsCol = gfpop(image(:,col),beeGraph,"mean");
-                        if(any(tmpResultsCol.states.contains("BEE")))
-                            rowsFromCol = tmpResultsCol.changepoints(tmpResultsCol.states == "BEE");
-                            for rowIndex = 1:numel(rowsFromCol)
-                                tmpRow = rowsFromCol(rowIndex);
-                                if(norm(double([row col]) - double([tmpRow col])) < 4)
-                                    beeBoth{row} = {tmpResultsRow,tmpResultsCol};
-                                    rowsPredicted(row) = 1;
-                                end
-                            end
-                        end
+            tmpResults = gfpop(image(row,:),beeGraph,"mean");
+            if(any(tmpResults.states.contains("BEE")))
+                if(numel(tmpResults.changepoints(tmpResults.states == "BEE")) < 5)
+                    if(any(tmpResults.parameters(tmpResults.states == "BEE") > mean(image(row,:))))
+                        beeRows{1,row} = tmpResults;
+                        rowsPredicted(row) = 1;
                     end
                 end
             end
@@ -63,8 +57,8 @@ parfor imageNum = 1:length(testingData)
 
     testingRowLabelPredicted{imageNum,1} = rowsPredicted;
 
-    if(any(~cellfun(@isempty,beeBoth)))
-        testingResultData{imageNum,1} = beeBoth;
+    if(any(~cellfun(@isempty,beeRows)))
+        testingResultData{imageNum} = beeRows;
     end
 
 end
@@ -78,4 +72,4 @@ results = {testingResultsLabel,testingRowLabelPredicted,testingResultData,"Img R
 if ~exist(changepointResultsDir,'dir')
     mkdir(changepointResultsDir);
 end
-save(changepointResultsDir + filesep + "bothResultsOriginal_gfpop.mat","results",'-v7.3');
+save(changepointResultsDir + filesep + "gfpopRowsResults.mat","results",'-v7.3');

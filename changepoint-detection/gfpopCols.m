@@ -83,4 +83,4 @@ results = {testingResultsLabel,testingRowLabelPredicted,testingResultData,"Img R
 if ~exist(changepointResultsDir,'dir')
     mkdir(changepointResultsDir);
 end
-save(changepointResultsDir + filesep + "colResultsOriginal_gfpop.mat","results",'-v7.3');
+save(changepointResultsDir + filesep + "gfpopColsResults.mat","results",'-v7.3');
