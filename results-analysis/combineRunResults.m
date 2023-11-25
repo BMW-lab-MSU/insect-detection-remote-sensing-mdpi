@@ -193,7 +193,7 @@ if isRowMethod
     % Compute the image-based results
     results.Image.Confusion = imageConfusion(results.Row.PredictedLabels,trueLabels);
     
-    [a, p, r, f2, mcc] = analyzeConfusion(results.Image.Confusion);
+    [a, p, r, f2, ~, mcc] = analyzeConfusion(results.Image.Confusion);
     results.Image.Accuracy = a;
     results.Image.Precision = p;
     results.Image.Recall = r;

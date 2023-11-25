@@ -22,7 +22,7 @@ results.Image.PredictedLabels = predict(classifier,testingData);
 results.Image.Confusion = confusionmat(results.Image.TrueLabels,...
     results.Image.PredictedLabels);
 
-[a, p, r, f2, mcc] = analyzeConfusion(results.Image.Confusion);
+[a, p, r, f2, ~, mcc] = analyzeConfusion(results.Image.Confusion);
 results.Image.Accuracy = a;
 results.Image.Precision = p;
 results.Image.Recall = r;

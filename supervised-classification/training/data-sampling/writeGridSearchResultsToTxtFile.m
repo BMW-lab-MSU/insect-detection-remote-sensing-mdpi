@@ -17,7 +17,7 @@ fd = fopen(samplingResultsDir + filesep + classifierName + "Results.txt", "w");
 % Compute the image-based results
 imageResults.Confusion = imageConfusion(rowResults.PredictedLabels,rowResults.TrueLabels);
 
-[a, p, r, f2, mcc] = analyzeConfusion(imageResults.Confusion);
+[a, p, r, f2, ~, mcc] = analyzeConfusion(imageResults.Confusion);
 imageResults.Accuracy = a;
 imageResults.Precision = p;
 imageResults.Recall = r;
