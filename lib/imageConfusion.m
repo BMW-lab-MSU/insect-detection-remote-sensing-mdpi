@@ -1,8 +1,10 @@
 function [confmat,trueImageLabels,predictedImageLabels] = imageConfusion(predicted, target)
 
+% Convert from categorical to logical so we can use any() later
 if isa(predicted,"categorical")
-    % Convert from categorical to logical so we can use any() later
     predicted = predicted == "true";
+end
+if isa(target,"categorical")
     target = target == "true";
 end
 
