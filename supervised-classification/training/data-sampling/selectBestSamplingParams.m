@@ -50,4 +50,6 @@ disp(samplingParams)
 save(samplingResultsDir + filesep + classifierName + "BestParams",...
     "samplingParams","objective","classifierParams","classificationResults","-v7.3");
 
+writeGridSearchResultsToTxtFile(classifierName,classificationResults,samplingParams,classifierParams)
+
 end
