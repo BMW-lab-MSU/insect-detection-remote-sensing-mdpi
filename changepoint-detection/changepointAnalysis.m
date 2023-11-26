@@ -3,61 +3,99 @@ beehiveDataSetup;
 load(testingDataDir + filesep + "testingData.mat","testingImgLabels","testingRowLabels");
 rowLabelVector = cell2mat(testingRowLabels');
 
+dict = dictionary(["matlabRows","matlabCols","matlabBoth","gfpopRows","gfpopCols","gfpopBoth"],struct());
+
 %%
 load(changepointResultsDir + filesep + "matlabChptsRowsResults");
-[rowOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+dict("matlabRows").Image = computeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
-[rowOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
+dict("matlabRows").Row = computeResults(logical(rowPredictedVector),rowLabelVector);
+
 %%
 load(changepointResultsDir + filesep + "matlabChptsColsResults");
-[colOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+dict("matlabCols").Image = computeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
-[colOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
+dict("matlabCols").Row = computeResults(logical(rowPredictedVector),rowLabelVector);
+
 %%
 load(changepointResultsDir + filesep + "matlabChptsBothResults.mat");
-[bothOriginalMat,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+dict("matlabBoth").Image = computeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
-[bothOriginalMatRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
+dict("matlabBoth").Row = computeResults(logical(rowPredictedVector),rowLabelVector);
+
 %%
 load(changepointResultsDir + filesep + "gfpopRowsResults.mat");
-[rowOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+dict("gfpopRows").Image = computeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
-[rowOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
+dict("gfpopRows").Row = computeResults(logical(rowPredictedVector),rowLabelVector);
+
 %%
 load(changepointResultsDir + filesep + "gfpopColsResults.mat");
-[colOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+dict("gfpopCols").Image = computeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
-[colOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
+dict("gfpopCols").Row = computeResults(logical(rowPredictedVector),rowLabelVector);
+
 %%
 load(changepointResultsDir + filesep + "gfpopBothResults.mat");
-[bothOriginalGfpop,~,~] = analyzeResults(logical(results{1,1}(:,2)),testingImgLabels);
+dict("gfpopBoth").Image = computeResults(logical(results{1,1}(:,2)),testingImgLabels);
 rowPredictedVector = cell2mat(results{1,2}');
-[bothOriginalGfpopRows,~,~] = analyzeResults(logical(rowPredictedVector),rowLabelVector);
+dict("gfpopBoth").Row = computeResults(logical(rowPredictedVector),rowLabelVector);
+
 %%
-figure(1); clf;
-subplot(141); confusionchart(rowOriginalGfpop); title("gfpop Original Rows - Images");
-subplot(142); confusionchart(colOriginalGfpop); title("gfpop Original Cols - Images");
-subplot(143); confusionchart(rowOriginalMat); title("matlab Original Rows - Images");
-subplot(144); confusionchart(colOriginalMat); title("matlab Original Cols - Images");
+writeToTxtFile(dict);
 
-figure(2); clf;
-subplot(121); confusionchart(bothOriginalGfpop); title("gfpop Original Both - Images");
-subplot(122); confusionchart(bothOriginalMat); title("matlab Original Both - Images");
 
-figure(3); clf;
-subplot(141); confusionchart(rowOriginalGfpopRows); title("gfpop Original Rows - Rows");
-subplot(142); confusionchart(colOriginalGfpopRows); title("gfpop Original Cols - Rows");
-subplot(143); confusionchart(rowOriginalMatRows); title("matlab Original Rows - Rows");
-subplot(144); confusionchart(colOriginalMatRows); title("matlab Original Cols - Rows");
-
-figure(4); clf;
-subplot(121); confusionchart(bothOriginalGfpopRows); title("gfpop Original Both - Rows");
-subplot(122); confusionchart(bothOriginalMatRows); title("matlab Original Both - Rows");
 %%
-finalImageResults = {rowOriginalGfpop,colOriginalGfpop,bothOriginalGfpop,rowOriginalMat,colOriginalMat,bothOriginalMat;
-                     "Rows gfpop","Columns gfpop","Both gfpop","Rows Matlab","Columns Matlab","Both Matlab"};
-save(changepointResultsDir + filesep + "finalImageResults.mat","finalImageResults","-v7.3");
+function results = computeResults(true, predicted)
+    results.Confusion = confusionmat(true,predicted);
+    [a,p,r,f2,~,mcc] = analyzeConfusion(results.Confusion);
+    results.Accuracy = a;
+    results.Precision = p;
+    results.Recall = r;
+    results.F2 = f2;
+    results.MCC = mcc;
+end
 
-finalRowResults = {rowOriginalGfpopRows,colOriginalGfpopRows,bothOriginalGfpopRows,rowOriginalMatRows,colOriginalMatRows,bothOriginalMatRows;
-                     "Rows gfpop","Columns gfpop","Both gfpop","Rows Matlab","Columns Matlab","Both Matlab"};
-save(changepointResultsDir + filesep + "finalRowResults.mat","finalRowResults","-v7.3");
+function writeToTxtFile(results)
+    beehiveDataSetup;
+
+    methodNames = keys(results);
+
+    fd = fopen(changepointResultsDir + filesep + "combinedResults.txt","w");
+
+    for method = methodNames'
+        fprintf(fd,"%s\n",method);
+        fprintf(fd,"--------------------------\n");
+
+        fprintf(fd,"Row results:\n");
+
+        fprintf(fd,"Confusion\n");
+        fprintf(fd,"\t%6u\t%6u\n",results(method).Row.Confusion(1,1),results(method).Row.Confusion(1,2));
+        fprintf(fd,"\t%6u\t%6u\n",results(method).Row.Confusion(2,1),results(method).Row.Confusion(2,2));
+
+        fprintf(fd,"Precision = %.3f\n",results(method).Row.Precision);
+        fprintf(fd,"Recall = %.3f\n",results(method).Row.Recall);
+        fprintf(fd,"F2 = %.3f\n",results(method).Row.F2);
+        fprintf(fd,"MCC = %.3f\n",results(method).Row.MCC);
+        fprintf(fd,"Accuracy = %.3f\n",results(method).Row.Accuracy);
+
+        fprintf(fd,"\n\n");
+
+        fprintf(fd,"Image results:\n");
+
+        fprintf(fd,"Confusion\n");
+        fprintf(fd,"\t%6u\t%6u\n",results(method).Image.Confusion(1,1),results(method).Image.Confusion(1,2));
+        fprintf(fd,"\t%6u\t%6u\n",results(method).Image.Confusion(2,1),results(method).Image.Confusion(2,2));
+
+        fprintf(fd,"Precision = %.3f\n",results(method).Image.Precision);
+        fprintf(fd,"Recall = %.3f\n",results(method).Image.Recall);
+        fprintf(fd,"F2 = %.3f\n",results(method).Image.F2);
+        fprintf(fd,"MCC = %.3f\n",results(method).Image.MCC);
+        fprintf(fd,"Accuracy = %.3f\n",results(method).Image.Accuracy);
+
+        fprintf(fd,"\n\n");
+    end
+
+    fclose(fd);
+
+end
