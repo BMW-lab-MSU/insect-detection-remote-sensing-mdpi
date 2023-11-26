@@ -1,5 +1,7 @@
 beehiveDataSetup;
 
+resultsDirs = ["../results/testing","../results2/testing","../results3/testing"];
+
 classifiers = ["RUSBoost","AdaBoost","StatsNeuralNetwork1Layer",...
     "StatsNeuralNetwork3Layer","StatsNeuralNetwork5Layer",...
     "StatsNeuralNetwork7Layer","CNN1d1Layer","CNN1d3Layer","CNN1d5Layer",...
@@ -30,29 +32,33 @@ beeIdx = find(trueLabels);
 
 for classifier = classifiers
     disp(classifier)
-    load(testingResultsDir + filesep + classifier + "Results.mat")
 
-    predictions = results.Row.PredictedLabels;
-    if iscategorical(predictions)
-        predictions = predictions=='true';
+    for i = 1:numel(resultsDirs)
+        load(resultsDirs(i) + filesep + classifier + "Results.mat")
+
+        predictions = results.Row.PredictedLabels;
+        if iscategorical(predictions)
+            predictions = predictions=='true';
+        end
+
+        wasPredictionCorrect = predictions == trueLabels;
+
+        wasBeePredictionCorrect = wasPredictionCorrect(beeIdx);
+
+        beeConfidenceRatings = confidenceRatings(beeIdx);
+
+        for confidenceLevel = confidenceLevels'
+            idx = find(beeConfidenceRatings == confidenceLevel);
+
+            metrics(confidenceLevel).NumCorrect(i) = sum(wasBeePredictionCorrect(idx) == true);
+            metrics(confidenceLevel).NumIncorrect(i) = sum(wasBeePredictionCorrect(idx) == false);
+            metrics(confidenceLevel).PctCorrect(i) = metrics(confidenceLevel).NumCorrect(i) / numel(idx);
+            metrics(confidenceLevel).NumBees(i) = numel(idx);
+
+        end
     end
 
-    wasPredictionCorrect = predictions == trueLabels;
-
-    wasBeePredictionCorrect = wasPredictionCorrect(beeIdx);
-
-    beeConfidenceRatings = confidenceRatings(beeIdx);
-
-    for confidenceLevel = confidenceLevels'
-        idx = find(beeConfidenceRatings == confidenceLevel);
-
-        metrics(confidenceLevel).NumCorrect = sum(wasBeePredictionCorrect(idx) == true);
-        metrics(confidenceLevel).NumIncorrect = sum(wasBeePredictionCorrect(idx) == false);
-        metrics(confidenceLevel).PctCorrect = metrics(confidenceLevel).NumCorrect / numel(idx);
-        metrics(confidenceLevel).NumBees = numel(idx);
-
-        confidenceMetrics(classifier).Confidence = metrics;
-    end
+    confidenceMetrics(classifier).Confidence = metrics;
 end
 
 for i = 1:numel(changepointMethods)
@@ -74,16 +80,10 @@ for i = 1:numel(changepointMethods)
         metrics(confidenceLevel).NumIncorrect = sum(wasBeePredictionCorrect(idx) == false);
         metrics(confidenceLevel).PctCorrect = metrics(confidenceLevel).NumCorrect / numel(idx);
         metrics(confidenceLevel).NumBees = numel(idx);
-
-        confidenceMetrics(changepointMethods(i)).Confidence = metrics;
     end
+
+    confidenceMetrics(changepointMethods(i)).Confidence = metrics;
 end
 
 save(testingResultsDir + filesep + "confidenceRatingEffects.mat","confidenceMetrics")
 
-pctCorrect = zeros(nMethods,numel(confidenceLevels));
-for i = 1:nMethods
-    pctCorrect(i,:) = [confidenceMetrics(methodNames(i)).Confidence.PctCorrect];
-end
-
-bar(categorical(methodNames),pctCorrect)
