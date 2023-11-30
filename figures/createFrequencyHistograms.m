@@ -33,7 +33,7 @@ yellow = colors(7,:);
 %%
 close all;
 
-fig = figure('Units', 'centimeter', 'Position', [2 2 13.86 4]);
+fig = figure('Units', 'centimeter', 'Position', [2 2 18.46 6.5]);
 
 tlayout = tiledlayout(1,3);
 
