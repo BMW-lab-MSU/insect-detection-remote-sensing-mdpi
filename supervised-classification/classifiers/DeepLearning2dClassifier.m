@@ -1,5 +1,7 @@
 classdef (Abstract) DeepLearning2dClassifier < DeepLearningClassifier
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     methods (Static)
 
         function formattedData = formatData(data)

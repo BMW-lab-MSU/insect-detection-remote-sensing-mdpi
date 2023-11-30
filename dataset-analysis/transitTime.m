@@ -2,6 +2,8 @@
 % 2. Load each folder and grab metadata
 % 3. Index into adjusted_data_junecal.time with the stop column and start
 % column and find the difference between the two.
+
+% SPDX-License-Identifier: BSD-3-Clause
 beehiveDataSetup;
 
 dates = ["2022-06-23" "2022-06-24" "2022-07-28" "2022-07-29"];

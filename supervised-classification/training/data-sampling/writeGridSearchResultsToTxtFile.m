@@ -1,5 +1,7 @@
 function writeGridSearchResultsToTxtFile(classifierName,rowResults,samplingParams,classifierParams)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierName (1,1) string
     rowResults (1,1)

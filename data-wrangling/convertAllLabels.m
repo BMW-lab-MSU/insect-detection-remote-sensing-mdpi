@@ -1,5 +1,7 @@
 function convertAllLabels
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 beehiveDataSetup;
 
 DATA_FILENAME = "adjusted_data_junecal_volts.mat";

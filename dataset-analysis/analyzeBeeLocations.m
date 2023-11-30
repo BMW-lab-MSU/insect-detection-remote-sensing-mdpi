@@ -1,4 +1,5 @@
 function analyzeBeeLocations
+% SPDX-License-Identifier: BSD-3-Clause
 
 beehiveDataSetup;
 

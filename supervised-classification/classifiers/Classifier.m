@@ -1,5 +1,7 @@
 classdef (Abstract) Classifier < handle
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     properties (Abstract, SetAccess = protected, GetAccess = public)
         Model
         Hyperparams

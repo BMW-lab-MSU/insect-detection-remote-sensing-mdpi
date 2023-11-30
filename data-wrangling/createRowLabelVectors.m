@@ -1,5 +1,7 @@
 function [rowLabels,rowConfidence] = createRowLabelVectors(csvFile, nImages, nRows)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     labelTable = readtable(csvFile);
 
     rowLabels = mat2cell(false(nRows, nImages), nRows, ones(nImages, 1))';

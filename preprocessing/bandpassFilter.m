@@ -1,5 +1,7 @@
 function filtered = bandpassFilter(x,order,passband,fs)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     x {mustBeNumeric}
     order (1,1) {mustBeInteger}

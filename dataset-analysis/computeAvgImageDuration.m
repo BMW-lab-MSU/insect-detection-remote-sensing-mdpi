@@ -1,3 +1,4 @@
+% SPDX-License-Identifier: BSD-3-Clause
 %% Load in meatadata
 
 load(combinedDataDir + filesep + "2022-06-combined", "juneMetadata")

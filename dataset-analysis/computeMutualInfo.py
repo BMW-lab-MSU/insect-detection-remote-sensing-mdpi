@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: BSD-3-Clause
 from sklearn.feature_selection import mutual_info_classif
 from scipy.io import loadmat
 import numpy as np

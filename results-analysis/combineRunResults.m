@@ -1,3 +1,4 @@
+% SPDX-License-Identifier: BSD-3-Clause
 clear;
 %% Load in the validation labels
 % XXX: we wouldn't have to do this if we had saved the actual best results and

@@ -1,5 +1,7 @@
 function displayDataSamplingResults(classifierName)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 beehiveDataSetup;
 
 % Find all the data-sampling results files

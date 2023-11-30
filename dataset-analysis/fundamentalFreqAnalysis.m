@@ -1,3 +1,4 @@
+% SPDX-License-Identifier: BSD-3-Clause
 % 1. Load CSV and create struct with image folder, image, column start and end
 % 2. Load each folder and grab metadata
 % 3. Index into adjusted_data_junecal.time with the stop column and start

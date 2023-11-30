@@ -1,5 +1,7 @@
 function createCNN1d5LayerHyperparamSearchRange()
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 CLASSIFIER_NAME = "CNN1d5Layer";
 
 % Set up data paths

@@ -25,6 +25,8 @@
 %%%     exGraph = gfpopGraph([upEdge dwEdge],startState="up",endState="down",allNullEdges=true);
 %%%     
 
+% SPDX-License-Identifier: MIT
+
 function outputGraph = gfpopGraph(varargin)
 
     % Setting up optional inputs

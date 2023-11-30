@@ -1,5 +1,7 @@
 function trainCNN2dManualParams(classifierType,params,opts)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierType function_handle
     params.ClassifierParams = {}

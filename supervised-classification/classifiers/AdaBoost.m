@@ -1,5 +1,7 @@
 classdef AdaBoost < TreeEnsemble
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     properties (Access = protected)
         TreeParams
         EnsembleParams

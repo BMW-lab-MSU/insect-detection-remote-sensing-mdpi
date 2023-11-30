@@ -1,5 +1,7 @@
 function testRowDataMethod(classifierName)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierName (1,1) string
 end

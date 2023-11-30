@@ -1,5 +1,7 @@
 function createStatsNeuralNetwork1LayerHyperparamSearchRange()
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 CLASSIFIER_NAME = "StatsNeuralNetwork1Layer";
 
 % Set up data paths

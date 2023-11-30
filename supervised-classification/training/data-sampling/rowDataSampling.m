@@ -1,6 +1,8 @@
 function [newData,newLabels,newFeatures] = rowDataSampling(undersampleRatio,...
     nOversample,data,labels,timestamps,features,opts)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     undersampleRatio
     nOversample

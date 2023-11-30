@@ -1,4 +1,7 @@
 function [barHandle,ax] = sortedBar(values,locationsOrNames,opts)
+
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     values (1,:) {mustBeNumeric}
     locationsOrNames (1,:) {mustBeSameSizeOrEmpty(locationsOrNames,values),mustBeNumericOrString(locationsOrNames)} = []
@@ -19,6 +22,7 @@ arguments
     opts.FontName (1,1) string = get(groot, 'defaultAxesFontName')
     opts.SortDirection = "descend"
 end
+
 
 % Sort the values
 [sortedValues,sortIdx] = sort(values,opts.SortDirection);

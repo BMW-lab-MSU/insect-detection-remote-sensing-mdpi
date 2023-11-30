@@ -1,3 +1,5 @@
+% SPDX-License-Identifier: BSD-3-Clause
+
 %% Path setup
 addpath(".")
 addpath("feature-extraction")

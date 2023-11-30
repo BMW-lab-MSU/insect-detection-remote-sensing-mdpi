@@ -2,6 +2,9 @@
 % Plot 1: Four examples of bees (body, wings, blips, hard target)
 % Plot 2: Transit and Frequency Histograms
 
+% SPDX-License-Identifier: BSD-3-Clause
+
+
 clear figures;
 beehiveDataSetup;
 

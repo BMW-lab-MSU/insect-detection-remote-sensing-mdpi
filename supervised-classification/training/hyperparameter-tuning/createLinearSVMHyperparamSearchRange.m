@@ -1,5 +1,7 @@
 function createLinearSVMHyperparamSearchRange()
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 CLASSIFIER_NAME = "LinearSVM";
 
 % Set up data paths

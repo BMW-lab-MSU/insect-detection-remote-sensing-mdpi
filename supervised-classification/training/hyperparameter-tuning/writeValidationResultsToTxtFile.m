@@ -1,5 +1,7 @@
 function writeValidationResultsToTxtFile(classifierName,isRowMethod,results,validationRowLabels)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierName (1,1) string
     isRowMethod (1,1) logical

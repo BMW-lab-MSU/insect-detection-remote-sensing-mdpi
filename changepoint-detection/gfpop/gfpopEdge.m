@@ -35,6 +35,8 @@
 %%%     edge1 = gfpopEdge(0,0,"null",1,0,Inf,0,NaN,NaN);
 %%%
 
+% SPDX-License-Identifier: MIT
+
 function edge = gfpopEdge(state1,state2,edgeType,varargin)
     
     % Default Values for Optional Inputs

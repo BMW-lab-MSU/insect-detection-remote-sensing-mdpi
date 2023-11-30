@@ -1,4 +1,6 @@
 classdef (Abstract) DeepLearningClassifier < Classifier
+
+% SPDX-License-Identifier: BSD-3-Clause
     
     properties (SetAccess=protected, GetAccess=public)
         Layers

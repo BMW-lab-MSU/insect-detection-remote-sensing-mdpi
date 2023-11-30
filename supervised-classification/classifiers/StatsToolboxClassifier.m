@@ -1,5 +1,7 @@
 classdef (Abstract) StatsToolboxClassifier < Classifier
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     methods (Static)
         function formattedData = formatData(data)
             formattedData = vertcat(data{:});

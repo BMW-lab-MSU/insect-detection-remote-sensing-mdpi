@@ -1,5 +1,7 @@
 function [confmat,trueImageLabels,predictedImageLabels] = imageConfusion(predicted, target)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 % Convert from categorical to logical so we can use any() later
 if isa(predicted,"categorical")
     predicted = predicted == "true";

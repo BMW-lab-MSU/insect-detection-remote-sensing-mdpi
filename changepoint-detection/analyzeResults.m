@@ -1,3 +1,4 @@
+% SPDX-License-Identifier: BSD-3-Clause
 function [confMat,accuracy,recall] = analyzeResults(predicted,true)
 
     confMat = confusionmat(true,predicted);

@@ -1,5 +1,7 @@
 function trainRowDataMethod(classifierName,classifierConstructor,opts)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierName (1,1) string
     classifierConstructor (1,1) function_handle

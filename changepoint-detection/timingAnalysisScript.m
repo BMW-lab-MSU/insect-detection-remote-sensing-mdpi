@@ -1,3 +1,4 @@
+% SPDX-License-Identifier: BSD-3-Clause
 %% Timing Analysis
 % Runs through each of the algorithms three times and averages the time.
 

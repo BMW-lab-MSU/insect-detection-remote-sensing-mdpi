@@ -1,6 +1,8 @@
 %%% Invisible function that takes in a graph structure and rearranges it
 %%% into a specific order for the gfpop function.
 
+% SPDX-License-Identifier: MIT
+
 function [orderGraph,vertexNames] = gfpopGraphReorder(input)
     
 inputGraph = table(input.state1',input.state2',input.type',input.parameter',input.penalty',input.K',input.a',input.min',input.max','VariableNames',["state1" "state2" "type" "parameter" "penalty" "K" "a" "min" "max"]);

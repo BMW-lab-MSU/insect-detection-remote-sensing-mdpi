@@ -5,6 +5,8 @@ function analyzeLocationInvariance
 % were located far away. The vast majority of our images have bees at close
 % range bins, due to the beehives being close to the lidar.
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 beehiveDataSetup;
 
 % The 5 layer 2D CNN had the best recall, so we're looking at that one.

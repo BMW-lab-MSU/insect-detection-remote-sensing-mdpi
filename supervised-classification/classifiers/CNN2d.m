@@ -1,5 +1,7 @@
 classdef CNN2d < DeepLearning2dClassifier
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     properties (SetAccess=immutable,GetAccess=public)
         Name
     end

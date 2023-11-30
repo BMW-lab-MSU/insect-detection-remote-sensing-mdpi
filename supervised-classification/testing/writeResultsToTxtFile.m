@@ -1,5 +1,7 @@
 function writeResultsToTxtFile(classifierName,results,dir)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierName (1,1) string
     results (1,1) struct

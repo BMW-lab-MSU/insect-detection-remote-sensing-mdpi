@@ -1,5 +1,7 @@
 function imageLabels = createImageLabelVector(csvFile, nImages)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
     labelTable = readtable(csvFile);
 
     imageLabels = false(nImages, 1);

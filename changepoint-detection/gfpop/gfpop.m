@@ -19,6 +19,8 @@
 %%%     ouput = gfpop(inputData,updown,"mean",ones(1,length(inputData)));                          
 %%%
 
+% SPDX-License-Identifier: MIT
+
 function result = gfpop(data,graph,type,varargin)
 
     % Checking inputs

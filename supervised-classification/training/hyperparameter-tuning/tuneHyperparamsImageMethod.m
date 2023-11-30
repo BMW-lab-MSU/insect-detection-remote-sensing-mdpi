@@ -1,5 +1,7 @@
 function tuneHyperparamsImageMethod(classifierName,classifierType,opts)
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 arguments
     classifierName (1,1) string
     classifierType (1,1) function_handle

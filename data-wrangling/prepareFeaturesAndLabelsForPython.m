@@ -1,5 +1,7 @@
 function prepareFeaturesAndLabelsForPython
 
+% SPDX-License-Identifier: BSD-3-Clause
+
 beehiveDataSetup
 
 load(trainingDataDir + filesep + "trainingFeatures","trainingFeatures");

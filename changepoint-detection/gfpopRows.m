@@ -1,3 +1,4 @@
+% SPDX-License-Identifier: BSD-3-Clause
 % gfpop rows with original images
 
 % Runs through the LiDAR images with verification after detecting
