@@ -3,17 +3,13 @@ beehiveDataSetup;
 
 resultsDirs = ["../results/testing","../results2/testing","../results3/testing"];
 
-classifiers = ["RUSBoost","AdaBoost","StatsNeuralNetwork1Layer",...
+classifiers = ["RUSBoost","AdaBoost","LinearSVM","StatsNeuralNetwork1Layer",...
     "StatsNeuralNetwork3Layer","StatsNeuralNetwork5Layer",...
     "StatsNeuralNetwork7Layer","CNN1d1Layer","CNN1d3Layer","CNN1d5Layer",...
     "CNN1d7Layer"];
 
-changepointMethods = ["gfpopRows","matlabRows","gfpopCols","matlabCols",...
-    "gfpopBoth","matlabBoth"];
-changepointResultsFilename = ["rowResultsOriginal_gfpop",...
-    "rowResultsOriginal_matlab","colResultsOriginal_gfpop",...
-    "colResultsOriginal_matlab","bothResultsOriginal_gfpop",...
-    "bothResultsOriginal_matlab"];
+changepointMethods = ["gfpopRows","matlabChptsRows","gfpopCols","matlabChptsCols",...
+    "gfpopBoth","matlabChptsBoth"];
 
 methodNames = [classifiers, changepointMethods];
 
@@ -64,7 +60,7 @@ end
 
 for i = 1:numel(changepointMethods)
     disp(changepointMethods(i))
-    load(changepointResultsDir + filesep + changepointResultsFilename(i))
+    load(changepointResultsDir + filesep + changepointMethods(i) + "Results.mat")
 
     predictions = logical(horzcat(results{2}{:})');
 
