@@ -15,6 +15,7 @@ end
 
 % Display the results
 [results.objective]
+[results.undersampleRatio]
 
 % Plot the results as a surface plot
 undersampleGrid = reshape([results.undersampleRatio],4,[]);
