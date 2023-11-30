@@ -1,4 +1,11 @@
+% Some of the algorithms are not fully deterministic, so they
+% get different results on different runs. This script will compute
+% the mean and standard deviation of the classification metrics for each
+% algorithm over multiple runs. The results need to be in different results
+% folders.
+
 % SPDX-License-Identifier: BSD-3-Clause
+
 clear;
 %% Load in the validation labels
 % XXX: we wouldn't have to do this if we had saved the actual best results and
@@ -9,6 +16,7 @@ beehiveDataSetup;
 load(validationDataDir + filesep + "validationData","validationRowLabels");
 
 %% Setup parameters
+% Change these directories as needed.
 combinedDir = "../combined-results";
 dirs = ["../results","../results2","../results3"];
 
