@@ -237,3 +237,21 @@ Once all the scripts have been run, the results can be analyzed and collected by
 
 ## Figures [📁](figures)
 For information on recreating the figures, please see the [figures](figures) folder.
+
+# Citation
+You can cite this code as follows:
+```
+@software{trevor_vannoy_2023_10055810,
+  author       = {Trevor C. Vannoy and
+                  Nathaniel B. Sweeney and
+                  Bradley M. Whitaker},
+  title        = {{BMW-lab-MSU/insect-detection-remote-sensing-mdpi: 
+                   v1.0.0}},
+  month        = oct,
+  year         = 2023,
+  publisher    = {Zenodo},
+  version      = {1.0.0},
+  doi          = {10.5281/zenodo.10055810},
+  url          = {https://doi.org/10.5281/zenodo.10055810}
+}
+```
