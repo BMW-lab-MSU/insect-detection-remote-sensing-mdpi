@@ -6,6 +6,11 @@ This software is associated with the publication titled "Comparison of Supervise
 
 The associated dataset can be found at [https://zenodo.org/doi/10.5281/zenodo.10055762](https://zenodo.org/doi/10.5281/zenodo.10055762). 
 
+- [Data setup](#data-setup)
+- [Running the code](#running-the-code)
+- [Citation](#citation)
+- [License](#license)
+
 # Data setup
 You can specify the locations of the data and results folders in the `beehiveDataSetup.m` script. By default, the scripts uses the following relative path setup, where `code` is a folder containing this repository:
 ```
