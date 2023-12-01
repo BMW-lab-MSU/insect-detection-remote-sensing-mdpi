@@ -42,6 +42,13 @@ In the above setup, the dataset goes into the `raw` folder. The dataset can be d
 
 The folder icons (📁) after the headings link to the relevant folder in the repository.
 
+There are three main portions of code, listed below. You have to run the data preparation first, but the supervised learning and changepoint detection sections are independent. Use the following links to jump to the sections.
+
+- [Data preparation](#data-preparation)
+- [Supervised learning](#supervised-learning)
+- [Changepoint detection](#changepoint-detection)
+
+
 ## Data preparation [📁](data-wrangling)
 
 0. (optional) Convert the csv label files into .mat files using `convertAllLabels.m`; this has already been done in the archived dataset.
