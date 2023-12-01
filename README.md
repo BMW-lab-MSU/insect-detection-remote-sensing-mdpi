@@ -36,7 +36,8 @@ In the above setup, the dataset goes into the `raw` folder. The dataset can be d
 
 In general, you need to call `pathSetup.m` first before running anything, as that script adds all the folders in this repo to your MATLAB path. Additionally, if you use the default relative data path setup described above, you must run all of your code from the root of this repository, not the subfolders; if you specify full paths in `beehiveDataSetup.m`, then you can run the code from anywhere.
 
-This code is designed to run on a computing cluster. If you have access to a computing cluster that uses slurm, you can update and use the scripts in the `slurm` folder. The code will still run perfectly fine on a normal desktop computer&mdash;it will just take longer.
+> [!TIP]
+> This code is designed to run on a computing cluster. If you have access to a computing cluster that uses slurm, you can update and use the scripts in the `slurm` folder. The code will still run perfectly fine on a normal desktop computer&mdash;it will just take longer.
 
 The folder icons (📁) after the headings link to the relevant folder in the repository.
 
@@ -47,7 +48,12 @@ The folder icons (📁) after the headings link to the relevant folder in the re
 2. Preprocess the data using `preprocess.m`
 3. Split the preprocessed data into the training, validation, and testing sets. `spiltData.m`
 
+<details>
+<summary>Using slurm</summary>
+
 If you have access to a slurm cluster, these steps can be done by running [`prepare-data.sh`](slurm/perpare-data.sh).
+
+</details>
 
 ## Supervised learning [📁](supervised-classification)
 
@@ -59,11 +65,21 @@ Before training any of the feature-based algorithms, we need to precompute the f
 - validation data: `precomputeValidationFeatures.m`
 - testing data: `precomputeTestingFeatures.m`
 
+<details>
+<summary>Using slurm</summary>
+
 If you have access to a slurm cluster, these steps can be done by running [`precompute-features.sh`](slurm/precompute-features.sh).
+
+</details>
 
 ### Training [📁](supervised-classification/training/)
 
-If you have access to a slurm cluster, all the training and testing can be launched using [`run-row-methods.sh`](slurm/run-row.methods.sh) and [`run-image-methods.sh`](slurm/run-image-methods.sh). Otherwise, follow the steps below
+<details>
+<summary>Using slurm</summary>
+
+If you have access to a slurm cluster, all the training and testing can be launched using [`run-row-methods.sh`](slurm/run-row.methods.sh) and [`run-image-methods.sh`](slurm/run-image-methods.sh).
+
+</details>
 
 #### Data sampling parameter tuning (row methods only)
 For the row-based methods, we first need to create the grid search parameters using `createDataSamplingGrid.m`. Once that is done, we can perform the grid search.
@@ -151,7 +167,12 @@ trainImageMethod("CNN2d3Layer");
 
 ### Testing [📁](supervised-classification/testing/)
 
-Again, if you have access to a slurm cluster, all the training and testing code can be launched using [`run-row-methods.sh`](slurm/run-row.methods.sh) and [`run-image-methods.sh`](slurm/run-image-methods.sh). Otherwise, follow the steps below for testing the training algorithms.
+<details>
+<summary>Using slurm</summary>
+
+Again, if you have access to a slurm cluster, all the training and testing code can be launched using [`run-row-methods.sh`](slurm/run-row.methods.sh) and [`run-image-methods.sh`](slurm/run-image-methods.sh).
+
+</details>
 
 Similar to the hyperparameter tuning, there are three different testing functions, one for each of the algorithm types:
 - feature engineering methods: `testRowFeatureMethod`
@@ -173,7 +194,12 @@ See the train*.slurm scripts in the [`slurm`](slurm) folder to see the function 
 
 There are two different changepoint detection methods (gfpop and MATLAB's `findchangepts`); for each method, there are three different procedures: analyzing the rows, analyzing the columns, or analyzing both the rows and columns.
 
+<details>
+<summary>Using slurm</summary>
+
 If you have access to a slurm cluster, you can run all the changepoint algorithms with [`run-changepoint-methods.sh`](slurm/run-changepoint-methods.sh). The `gfpop` mex wrapper still needs to be [compiled](#gfpop) before launching the slurm jobs.
+
+</details>
 
 ### MATLAB `findchangepts`
 `findchangepts` requires MATLAB's Signal Processing Toolbox. To run the algorithms, the [data must be prepared](#data-preparation) already.
