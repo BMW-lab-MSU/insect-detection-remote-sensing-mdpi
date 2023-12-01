@@ -4,7 +4,7 @@
 
 This software is associated with the publication titled "Comparison of Supervised Learning and Changepoint Detection for Insect Detection in Lidar Data" by authors T. C. Vannoy, N. B. Sweeney, J. A. Shaw, and B. M. Whitaker." by authors T. C. Vannoy, N. B. Sweeney, J. A. Shaw, and B. M. Whitaker.
 
-The associated dataset can be found at [https://zenodo.org/doi/10.5281/zenodo.10055762](https://zenodo.org/doi/10.5281/zenodo.10055762).
+The associated dataset can be found at [https://zenodo.org/doi/10.5281/zenodo.10055762](https://zenodo.org/doi/10.5281/zenodo.10055762). 
 
 # Data setup
 You can specify the locations of the data and results folders in the `beehiveDataSetup.m` script. By default, the scripts uses the following relative path setup, where `code` is a folder containing this repository:
