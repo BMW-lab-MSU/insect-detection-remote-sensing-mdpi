@@ -34,7 +34,8 @@ In the above setup, the dataset goes into the `raw` folder. The dataset can be d
 
 # Running the code
 
-In general, you need to call `pathSetup.m` first before running anything, as that script adds all the folders in this repo to your MATLAB path. Additionally, if you use the default relative data path setup described above, you must run all of your code from the root of this repository, not the subfolders; if you specify full paths in `beehiveDataSetup.m`, then you can run the code from anywhere.
+> [!IMPORTANT]
+> In general, you need to call `pathSetup.m` first before running anything, as that script adds all the folders in this repo to your MATLAB path. Additionally, if you use the default relative data path setup described above, you must run all of your code from the root of this repository, not the subfolders; if you specify full paths in `beehiveDataSetup.m`, then you can run the code from anywhere.
 
 > [!TIP]
 > This code is designed to run on a computing cluster. If you have access to a computing cluster that uses slurm, you can update and use the scripts in the `slurm` folder. The code will still run perfectly fine on a normal desktop computer&mdash;it will just take longer.
