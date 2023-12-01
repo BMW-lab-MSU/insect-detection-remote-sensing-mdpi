@@ -255,3 +255,6 @@ You can cite this code as follows:
   url          = {https://doi.org/10.5281/zenodo.10055810}
 }
 ```
+
+# License
+All code in this repository, except the [`gfpop`](changepoint-detection/gfpop) code, is licensed under the BSD 3-Clause License. `gfpop` is licensed under the MIT License.
