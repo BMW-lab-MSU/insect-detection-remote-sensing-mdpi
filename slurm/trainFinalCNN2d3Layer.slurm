@@ -18,11 +18,6 @@
 #SBATCH --job-name=cnn2d3layer-training
 #SBATCH --output=log/%x-%A-%a.out         # standard output from job
 #SBATCH --error=log/%x-%A-%a.err          # standard error from job
-##
-## Optional parameters - remove one leading hashtag to enable
-##
-## Run 'man sbatch' for more information on the options above.
-## Below, enter commands needed to execute your workload
 
 module load cuDNN/8.7.0.84-CUDA-11.8.0
 

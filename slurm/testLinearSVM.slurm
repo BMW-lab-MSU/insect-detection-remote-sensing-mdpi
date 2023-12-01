@@ -15,11 +15,6 @@
 #SBATCH --job-name=linear-svm-testing
 #SBATCH --output=log/%x-%j.out         # standard output from job
 #SBATCH --error=log/%x-%j.err          # standard error from job
-##
-## Optional parameters - remove one leading hashtag to enable
-##
-## Run 'man sbatch' for more information on the options above.
-## Below, enter commands needed to execute your workload
 
 module load math/matlab/2023a
 
