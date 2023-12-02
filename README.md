@@ -130,6 +130,17 @@ Once the grid search for an algorithm is done, run the `selectBestSamplingParams
 selectBestSamplingParams("AdaBoost")
 ```
 
+#### Train default 2D CNNs (image methods only) [📁](supervised-classification/training/cnn2d-default-training/)
+For the image-based methods (2D CNNs), we need to train networks with the default hyperparameters. This is because the default hyperparameters might perform better than the parameters found during tuning, and thus we would prefer to use the default parameters for the final training.
+
+The default 2D CNNS can be trained with the `trainCNN2dManualParams` function. See the trainDefaultCNN2d*.slurm scripts to see the relevant function call for each 2D CNN.
+
+For example, here's the code used to train the default 3-layer 2D CNN:
+```matlab
+p.FilterSize=[16,2;,16,2;16,2];
+p.Nfilters=[20,20,20];
+trainCNN2dManualParams(@CNN2d,UseGPU=true,ClassifierParams=p) 
+```
 
 #### Model hyperparameter tuning [📁](supervised-classification/training/hyperparameter-tuning/)
 
