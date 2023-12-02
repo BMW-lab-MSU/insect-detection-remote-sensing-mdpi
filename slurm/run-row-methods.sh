@@ -30,7 +30,7 @@ for classifier in "${classifiers[@]}"; do
         output=`sbatch createBoostedTreesHyperparamSearchRange.slurm`
         jobid2=`echo "${output}" | cut -d' ' -f4`
     else
-        output=`sbatch create"${classifier}HyperparamSearchRange.slurm`
+        output=`sbatch create"${classifier}"HyperparamSearchRange.slurm`
         jobid2=`echo "${output}" | cut -d' ' -f4`
     fi
 
