@@ -11,7 +11,7 @@ features = vertcat(trainingFeatures{:});
 labels = vertcat(trainingRowLabels{:});
 
 %% Select which features to plot
-featureNames = ["Skewness", "WaveletAvgSkewness", "Kurtosis"];
+featureNames = ["Skewness", "WaveletAvgRowSkewness", "Kurtosis"];
 
 featuresToPlot = [];
 
@@ -22,7 +22,7 @@ end
 
 %% Plot properties
 fontSize = 9;
-fontName = "Tex Gyre Pagella";
+fontName = "TeXGyrePagella";
 
 colors = colororder(brewermap([],'paired'));
 blue = colors(2,:);
@@ -47,6 +47,10 @@ set(legendobj.BoxEdge, 'ColorType','truecoloralpha', 'ColorData',uint8(255*[1;1;
 
 set(gca, 'FontSize', fontSize)
 set(gca, 'FontName', fontName)
+
+% set(gca, 'TickLabelInterpreter', 'latex')
+% ytickformat('$%g$')
+yticklabels(strrep(yticklabels,'-','−'));
 
 % fig.Visible = 'off';
 
