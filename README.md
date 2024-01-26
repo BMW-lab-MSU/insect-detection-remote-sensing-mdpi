@@ -261,14 +261,13 @@ You can cite this code as follows:
   author       = {Trevor C. Vannoy and
                   Nathaniel B. Sweeney and
                   Bradley M. Whitaker},
-  title        = {{BMW-lab-MSU/insect-detection-remote-sensing-mdpi: 
-                   v1.0.0}},
+  title        = {{BMW-lab-MSU/insect-detection-remote-sensing-mdpi 
+                   }},
   month        = oct,
   year         = 2023,
   publisher    = {Zenodo},
-  version      = {1.0.0},
-  doi          = {10.5281/zenodo.10055810},
-  url          = {https://doi.org/10.5281/zenodo.10055810}
+  doi          = {10.5281/zenodo.10055809},
+  url          = {https://zenodo.org/doi/10.5281/zenodo.10055809}
 }
 ```
 
