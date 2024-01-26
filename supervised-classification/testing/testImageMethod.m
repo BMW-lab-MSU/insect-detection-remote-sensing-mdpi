@@ -1,4 +1,12 @@
 function testImageMethod(classifierName)
+% testImageMethod test image-based algorithm on the testing set
+%
+%   testImageMethod(classifierName) tests the classifer referred to by
+%   classifierName. 
+% 
+%   classifierName is the classifer name used when saving files,
+%   not the name of the class that implements the classifier, e.g.
+%   CNN2D5Layer, not CNN2D.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

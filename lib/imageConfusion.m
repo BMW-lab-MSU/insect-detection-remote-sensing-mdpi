@@ -1,4 +1,10 @@
 function [confmat,trueImageLabels,predictedImageLabels] = imageConfusion(predicted, target)
+% imageConfusion agglomerate row labels into an image-based confusion matrix.
+%
+%   [confmat,trueImageLabels,predictedImageLabels] = ...
+%       imageConfusion(predicted,target)
+%   takes row-based predicted labels and target labels and then returns an
+%   image-based confusion matrix, along with true and predicted image labels.
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -10,8 +16,7 @@ if isa(target,"categorical")
     target = target == "true";
 end
 
-% SPDX-License-Identifier: BSD-3-Clause
-
+% TODO: don't hardcode the number of rows in each image (178, as of now).
 nImages = numel(predicted)/178;
 
 predictedLabelsCell = mat2cell(predicted, 178*ones(1,nImages), 1);

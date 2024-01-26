@@ -13,13 +13,8 @@ classifiers=(\
     "StatsNeuralNetwork5Layer"\
     "StatsNeuralNetwork7Layer")
 
-
-
-
-
 output=`sbatch createDataSamplingGrid.slurm`
 jobid_grid=`echo "${output}" | cut -d' ' -f4`
-
 
 for classifier in "${classifiers[@]}"; do
     output=`sbatch --dependency=afterok:${jobid_grid} samplingGridSearch"${classifier}".slurm`

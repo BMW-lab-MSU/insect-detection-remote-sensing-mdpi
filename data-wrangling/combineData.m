@@ -1,4 +1,46 @@
 function [data, rowLabels, rowConfidence, imgLabels, metadata] = combineData(dates, folderPrefix, folderTimestamps, rawDataDir)
+% combineData combine data from individual folders into one mat file.
+%
+% Data are organized in the following folder hiearchy:
+% ├── yyyy-mm-dd
+% │   ├── prefix-hhmmss
+% │   ├── prefix-hhmmss
+% │   └── prefix-hhmmss
+% ├── yyyy-mm-dd
+% │   ├── prefix-hhmmss
+% │   ├── prefix-hhmmss
+% │   └── prefix-hhmmss
+% 
+% Where prefix is the folder prefix (e.g., description of the location
+% or project). hhmmss is a 24-hour ISO-format timestamp indicating when the
+% data collection run started. Each prefix-timestamp folder contains the
+% data files: individual mat files for each image, and an adjusted_data file
+% that contains all the individual images, metdata, etc. after some
+% preprocessing. The adjusted_data file is what gets used in this function.
+%
+% [data,rowLabels,rowConfidence,imgLabels,metadata] = ...
+%   combineData(dates,folderPrefix,folderTimestamps,rawDataDir) 
+%
+% Inputs:
+%   - dates (string): Vector of dates corresponding to the folder names that
+%       will be combined.
+%   - folderPrefix (string): Prefix of the folders.
+%   - folderTimestamps (string): Vector of timestamps corresponding to the
+%       folder names that will be combined.
+%   - rawDataDir (string): Name of the top-level folder that contains the data.
+%
+% Outputs:
+%   - data: Cell array containing all of the data. Each cell contains an image.
+%   - rowLabels: Cell array containing the row labels. Each cell corresponds to
+%       one image.
+%   - rowConfidence: Cell array containing the confidence raings. Each cell
+%       corresponds to one image.
+%   - imgLabels: Array of ground truth image labels: 1 indicates that the image
+%       contains one or more insects.
+%   - metadata: Struct containing metadata for each image. Metadata includes
+%       the day, folder name, pan angle, tilt angle, range bins (in meters),
+%       and the timestamps for each pulse in the image.
+
 % SPDX-License-Identifier: BSD-3-Clause
 
 % TODO: argument validation

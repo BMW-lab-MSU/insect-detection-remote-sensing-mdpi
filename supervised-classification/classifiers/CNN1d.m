@@ -1,4 +1,13 @@
 classdef CNN1d < DeepLearning1dClassifier
+% CNN1d Wrapper for 1D CNNs from the Deep Learning Toolbox
+%
+%   CNN1d Methods:
+%       CNN1d - Constructor
+%
+%   For full documentation of other methods, see the html documentation or the
+%   Classifier help text.
+%
+%   See also Classifier, DeepLearning1dClassifier
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -27,14 +36,8 @@ classdef CNN1d < DeepLearning1dClassifier
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
-            % bayesopt uses tables instead of structs, but we need to use
-            % structs so we can convert Name-Value pairs into a cell array
-            % that we can pass to the classifier constructor
-            if isa(optimizableParams,"table")
-                formattedParams = table2struct(optimizableParams);
-            else
-                formattedParams = optimizableParams;
-            end
+
+            formattedParams = formatOptimizableParams@Classifier(optimizableParams);
 
             fieldNames = fields(formattedParams);
 
@@ -186,6 +189,45 @@ classdef CNN1d < DeepLearning1dClassifier
     methods
 
         function obj = CNN1d(params,trainingOpts,opts)
+        % CNN1d Construct a 1D CNN classifier
+        %
+        %   Name-Value Arguments:
+        %       FilterSize          - Fitler sizes for each hidden layer. 
+        %                             When using one hidden layer, this can be a
+        %                             scalar. When using multiple hidden layers,
+        %                             it must be a vector specifying the filter
+        %                             size for each layer.
+        %       NFilters            - Number of filters for each hidden layer.
+        %                             When using one hidden layer, this can be
+        %                             a scaler. When using multiple hidden
+        %                             layers, it must be an array specifying
+        %                             the number of filters for each layer.
+        %       DropboutProbability - Dropout probability after each
+        %                             convolutional layer.
+        %       SequenceLength      - Length of the input sequences.
+        %       NClasses            - Number of classes.
+        %       ClassNames          - Categorical vector of class names.
+        %       FalseNegativeCost   - False negative cost. This parameter
+        %                             overrides the Cost parameter.
+        %       Cost                - Vector specifying the cost of false
+        %                             positives and false negatives.
+        %       MaxEpochs           - Maximum number of training epochs.
+        %       InitialLearnRate    - Initial learning rate for training.
+        %       MiniBatchSize       - Minibatch size for training.
+        %       UseGPU              - Whether to use a GPU for training and
+        %                             inference.
+        %       Reproducible        - Whether to seed the random number
+        %                             generators to try to increase
+        %                             reproducibility. Note that some CUDA
+        %                             functions are non-deterministic, so
+        %                             training is unlikely to be 100%
+        %                             reproducible.
+        %       Seed                - The value to seed the random number
+        %                             generator with, if Reproducible is true.
+        %
+        %   The default parameters can be seen with CNN1d.getDefaultParameters()
+        %
+        %   See also trainNetwork, trainingOptions
             arguments
                 params.FilterSize=16
                 params.NFilters=20

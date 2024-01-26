@@ -1,4 +1,7 @@
 classdef (Abstract) TreeEnsemble < StatsToolboxClassifier
+% TreeEnsemble Abstract base class for decision tree ensembles.
+%
+% See also Classifier, StatsToolboxClassifier, AdaBoost, RUSBoost
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -12,17 +15,33 @@ classdef (Abstract) TreeEnsemble < StatsToolboxClassifier
     end
 
     properties (Abstract, Access = protected)
+        % Decision tree hyperparameters
         TreeParams
+        % Ensmeble hyperparameters
         EnsembleParams
+        % Aggregation method hyperparameters
         MethodParams
     end
 
     properties (Abstract, Constant)
+        % Which ensemble aggregation method to use.
         AggregationMethod
     end
 
     methods
         function fit(obj,trainingData,trainingLabels,opts)
+        % FIT Train the classifier
+        %
+        %   FIT(trainingData,trainingLabels) trains the neural network using
+        %   trainingData and trainingLabels. trainingData is a cell array of
+        %   matrices or tables. trainingLabels is a cell array of label vectors.
+        %
+        %   Name-Value Parameters:
+        %       Reproducible    - Whether or not to seed the random number
+        %                         generator to make the training more
+        %                         reproducible.
+        %       Seed            - The value used to seed the random number
+        %                         generator.
             arguments
                 obj
                 trainingData

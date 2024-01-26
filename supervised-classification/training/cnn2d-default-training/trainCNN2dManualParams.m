@@ -1,4 +1,13 @@
 function trainCNN2dManualParams(classifierType,params,opts)
+% trainCNN2dManualParams train a 2D CNN
+%
+%   trainCNN2dManualParams(classifierType,params) trains a 2D CNN. 
+%   classifierType is a handle to the 2D CNN class, i.e. @CNN2D. params is a
+%   struct containing fields for the CNN's hyperparameters.
+%
+%   Name-Value arguments:
+%       UseParallel - Use the parallel computing toolbox
+%       UseGPU      - Use a GPU for training
 
 % SPDX-License-Identifier: BSD-3-Clause
 

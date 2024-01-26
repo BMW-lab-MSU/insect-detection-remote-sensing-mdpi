@@ -1,4 +1,9 @@
+% Analyze the effects that label confidence rating has on the classification
+% results for each row-based classifier. This is used to create Figure 13 in
+% the paper.
+
 % SPDX-License-Identifier: BSD-3-Clause
+
 beehiveDataSetup;
 
 resultsDirs = ["../results/testing","../results2/testing","../results3/testing"];

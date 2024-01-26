@@ -1,4 +1,20 @@
 function [harmonicFrequencies, harmonicIdx] = findHarmonics(peakLocations, fundamentalLocation, nHarmonics, avgSamplingFrequency, fftSize, opts)
+% findHarmonics find the harmonic frequencies given a set of locations and
+% location of the fundamental frequency.
+%
+% Inputs:
+%   - peakLocations: Vector of peak locations/indices.
+%   - fundamentalLocation: Index where the fundamental frequency is located.
+%   - nHarmonics: Number of harmonics to look for.
+%   - avgSamplingFrequency: The average sampling frequency of the corresponding
+%       time series / image.
+%   - fftSize: Number of points in the fft that was used.
+%
+% Outputs:
+%   - harmonicFrequencies: Vector of the harmonic frequencies corresponding to
+%       fundamental location that was passed in.
+%   - harmonicIdx: Indices where the harmonics were found in peakLocations.
+
 arguments
     peakLocations (1,:) {mustBeInteger}
     fundamentalLocation (1,1) {mustBeInteger}

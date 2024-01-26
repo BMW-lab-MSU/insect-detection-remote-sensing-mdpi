@@ -1,4 +1,12 @@
 function [rowLabels,rowConfidence] = createRowLabelVectors(csvFile, nImages, nRows)
+% createRowlabelVectors convert csv labels into vectors of row labels.
+%
+% [rowLabels,rowConfidence] = createRowLabelVectors(csvFile,nImages,nRows)
+% takes the labels csv file, and returns an nImages-by-1 cell array containing
+% the row labels for each image. Each cell contains an nRows-by-1 vector where
+% each element indicates whether there's an insect in that row. The function
+% also returns a cell array containing the confidence ratings for each row in
+% each image.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

@@ -7,22 +7,25 @@ function features = extractTimeDomainFeatures(X)
 %
 %   The extracted features are:
 %       'RowMeanMinusImageMean' - The mean of the obvservation minus the mean
-%                                 of the entire image
-%       'Range'                 - The range of each row
-%       'StdDev'                - The standard deviation of each row
-%       'MaxFirstDiff'          - The maximum absolute first difference in each row
-%       'MaxSecondDiff'         - The maximum absolute second difference in each row
-%       'RMS'                   - The root mean square of each row
-%       'ImpulseFactor'         - The impulse factor of each row; this is the ratio
-%                                 of the max absolute value over the mean absolute value
-%       'CresetFactor'          - The crest factor of each row; this is the max absolute
-%                                 value divided by the rms
-%       'ShapeFactor'           - The shape factor of each row; this is the rms divided
-%                                 by the mean absolute value
-%       'Median'                - The median value of each row
-%       'MAD'                   - The median absolute deviation of each row
-%       'Skewness'              - The mean-centered skewness of each row
-%       'Kurtosis'              - The mean-centered kurtosis of each row
+%                                 of the entire image.
+%       'Range'                 - The range of each row.
+%       'StdDev'                - The standard deviation of each row.
+%       'MaxFirstDiff'          - The maximum absolute first difference in
+%                                 each row.
+%       'MaxSecondDiff'         - The maximum absolute second difference in 
+%                                 each row.
+%       'RMS'                   - The root mean square of each row.
+%       'ImpulseFactor'         - The impulse factor of each row; this is the 
+%                                 ratio of the max absolute value over the mean 
+%                                 absolute value.
+%       'CresetFactor'          - The crest factor of each row; this is the max 
+%                                 absolute value divided by the rms.
+%       'ShapeFactor'           - The shape factor of each row; this is the rms 
+%                                 divided by the mean absolute value.
+%       'Median'                - The median value of each row.
+%       'MAD'                   - The median absolute deviation of each row.
+%       'Skewness'              - The mean-centered skewness of each row.
+%       'Kurtosis'              - The mean-centered kurtosis of each row.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

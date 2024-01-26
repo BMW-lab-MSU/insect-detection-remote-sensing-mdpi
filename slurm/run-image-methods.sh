@@ -6,7 +6,6 @@ classifiers=(\
     "CNN2d5Layer"\
     "CNN2d7Layer")
 
-
 for classifier in "${classifiers[@]}"; do
     output=`sbatch trainDefault"${classifier}".slurm`
     jobid1=`echo "${output}" | cut -d' ' -f4`

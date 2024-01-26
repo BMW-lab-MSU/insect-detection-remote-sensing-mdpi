@@ -1,4 +1,12 @@
 function testRowFeatureMethod(classifierName)
+% testRowFeatureMethod test row- and feature-based algorithm on the testing set
+%
+%   testRowFeatureMethod(classifierName) tests the classifer referred to by
+%   classifierName. 
+% 
+%   classifierName is the classifer name used when saving files,
+%   not the name of the class that implements the classifier, e.g.
+%   StatsNeuralNetwork1Layer, not StatsNeuralNetwork.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

@@ -5,29 +5,41 @@ function features = extractFeatures(X, avgSamplingFrequency, opts)
 %   and returns the features as a table. Observations are rows in X.
 %
 %   The extracted time-domain features are:
-%       'RowMeanMinusImageMean' - The mean of the obvservation minus the mean
-%                                 of the entire image
-%       'StdDev'                - The standard deviation of each row
-%       'MaxDiff'               - The maximum absolute first difference in a row
+%       'RowMeanMinusImageMean'     - The mean of the obvservation minus the %                                     mean of the entire image.
+%       'StdDev'                    - The standard deviation of each row.
+%       'MaxDiff'                   - The maximum absolute first difference in
+%                                     a row.
 %
 %   The extracted ESD statistics are:
-%       'MeanEsd'                   - The mean of the ESD
-%       'StdEsd'                    - The standard deviation of the ESD
-%       'MedianEsd'                 - The median of the ESD
-%       'MadEsd'                    - The median absolute deviation of the ESD
-%       'SkewnessEsd'               - Zero-mean skewness of the ESD   
-%       'KurtosisEsd'               - Zero-mean kurtosis of the ESD     
+%       'MeanEsd'                   - The mean of the ESD.
+%       'StdEsd'                    - The standard deviation of the ESD.
+%       'MedianEsd'                 - The median of the ESD.
+%       'MadEsd'                    - The median absolute deviation of the ESD.
+%       'SkewnessEsd'               - Zero-mean skewness of the ESD.
+%       'KurtosisEsd'               - Zero-mean kurtosis of the ESD. 
 %       
 %   The extracted features for each harmonic are:
-%       'HarmonicHeight'            - The height of the harmonic
-%       'HarmonicLoc'               - The harmonic location (frequency bin)
-%       'HarmonicWidth'             - The harmonic's half-prominence peak width
-%       'HarmonicProminence'        - The harmonic's prominence
+%       'HarmonicHeight'            - The height of the harmonic.
+%       'HarmonicLoc'               - The harmonic location (frequency bin).
+%       'HarmonicWidth'             - The harmonic's half-prominence peak width.
+%       'HarmonicProminence'        - The harmonic's prominence.
 %
 %   The extracted features for all combinations of n-choose-2 harmonics are:
-%       'HarmonicHeightRatio'       - The ratio between harmonic heights
-%       'HarmonicWidthRatio'        - The ratio between harmonic widths
-%       'HarmonicProminenceRatio'   - The ratio between harmonic prominences
+%       'HarmonicHeightRatio'       - The ratio between harmonic heights.
+%       'HarmonicWidthRatio'        - The ratio between harmonic widths.
+%       'HarmonicProminenceRatio'   - The ratio between harmonic prominences.
+%
+%   The extracted features from the continuous wavelet trasnform are:
+%       'WaveletMaxRowAvg'          - The max average value of all frequency 
+%                                     bins.
+%       'WaveletMaxRowStd'          - The max standard deviation of all 
+%                                     frequency bins.
+%       'WaveletAvg'                - The average of the entire scalogram.
+%       'WaveletAvgRowSkewness'     - The average skewness of all frequency 
+%                                     bins.
+%       'WaveletMaxRowPeak'         - The max value of the entire scalogram.
+%       'WaveletMaxRowDiff'         - The max first difference of all frequency 
+%                                     bins.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

@@ -1,4 +1,11 @@
 function filtered = bandpassFilter(x,order,passband,fs)
+% bandpassFilter filter data using a Butterworth filter
+%
+%   filtered = bandpassFilter(x,order,passband,fs) filters the data in x using
+%   a Butterworth filter. order specifies the order of the filter, passband is 
+%   a 1-by-2 vector of passband frequencies, and fs is the data's sampling rate.
+%
+%   See also butter, zp2sos, sosfilt
 
 % SPDX-License-Identifier: BSD-3-Clause
 

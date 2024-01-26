@@ -1,4 +1,8 @@
+% Find true positive images that a classifier correctly found, but did not
+% correctly predict all rows in the image.
+
 % SPDX-License-Identifier: BSD-3-Clause
+
 %% Load in data
 beehiveDataSetup;
 

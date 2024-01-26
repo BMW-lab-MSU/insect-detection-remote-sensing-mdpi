@@ -1,4 +1,13 @@
 classdef CNN2d < DeepLearning2dClassifier
+% CNN2d Wrapper for 2D CNNs from the Deep Learning Toolbox
+%
+%   CNN2d Methods:
+%       CNN2d - Constructor
+%
+%   For full documentation of other methods, see the html documentation or the
+%   Classifier help text.
+%
+%   See also Classifier, DeepLearning2dClassifier
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -27,14 +36,8 @@ classdef CNN2d < DeepLearning2dClassifier
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
-            % bayesopt uses tables instead of structs, but we need to use
-            % structs so we can convert Name-Value pairs into a cell array
-            % that we can pass to the classifier constructor
-            if isa(optimizableParams,"table")
-                formattedParams = table2struct(optimizableParams);
-            else
-                formattedParams = optimizableParams;
-            end
+
+            formattedParams = formatOptimizableParams@Classifier(optimizableParams);
 
             fieldNames = fields(formattedParams);
 
@@ -81,7 +84,8 @@ classdef CNN2d < DeepLearning2dClassifier
             end
 
             if optimizingFilterSize
-                % FilterSize must be specified by itself without FilterHeight/Width.
+                % FilterSize must be specified by itself without
+                % FilterHeight/Width.
                 if nFilterSizeParams > 0 && (nFilterHeightParams > 0 || nFilterWidthParams > 0)
                     error("FilterSize cannot be specified along with FilterHeight or FilterWidth");
                 end
@@ -101,8 +105,8 @@ classdef CNN2d < DeepLearning2dClassifier
 
 
             if optimizingFilterSize
-                % Assmeble the FilterSize argument by combining the FilterSize variables
-                % or the FilterHeight and FilterWidth variables. 
+                % Assmeble the FilterSize argument by combining the FilterSize
+                % variables or the FilterHeight and FilterWidth variables. 
                 if filterIsSquare
                     if nFilterSizeParams > 1
                         filterSize = zeros(nFilterSizeParams,1);
@@ -121,15 +125,17 @@ classdef CNN2d < DeepLearning2dClassifier
                     end
 
                 else
-                    % Validate that the number of height and width parameters is correct.
+                    % Validate that the number of height and width parameters is
+                    % correct.
                     % 1. We can have the same number of FilterHeightX and
-                    % FilterWidthX parameters, each one specifying the height and width
-                    % for layer X.
-                    % 2. There can be one FilterHeight/FilterWidth parameter, and the
-                    % other parameter can have multiple. In this case, whichever
-                    % parameter was only specified once, is the same for each layer.
-                    % If the number of height and width parameters are valid, then
-                    % assmeble the FilterSize argument.
+                    % FilterWidthX parameters, each one specifying the height
+                    % and width for layer X.
+                    % 2. There can be one FilterHeight/FilterWidth parameter,
+                    % and the other parameter can have multiple. In this case,
+                    % whichever parameter was only specified once, is the same
+                    % for each layer. If the number of height and width
+                    % parameters are valid, then assmeble the FilterSize
+                    % argument.
                     if nFilterHeightParams == nFilterWidthParams
                         filterSize = zeros(nFilterHeightParams,2);
 
@@ -187,14 +193,14 @@ classdef CNN2d < DeepLearning2dClassifier
                     
             if optimizingNFilters
                 % Assmble the NFilters argument and validate that the NFilters
-                % and FilterSize argument sizes are consistent, i.e. they specify
-                % a valid number of layers.
-                % The number of layers is determined by the following. Either
+                % and FilterSize argument sizes are consistent, i.e. they
+                % specify a valid number of layers. The number of layers is
+                % determined by the following. Either
                 % 1. NFilters and FilterSize have the same number of elements,
                 % in which case the number of layers is the number of elements.
-                % Each element of NFilters and FilterSize specifies the respective
-                % paramaters for each layer.
-                % 2. NFilters has 1 element, and FilterSize has multiple. The 
+                % Each element of NFilters and FilterSize specifies the
+                % respective paramaters for each layer.
+                % 2. NFilters has 1 element, and FilterSize has multiple. The
                 % number of layers is the number of FilterSize arguments. Each
                 % layer has the same number of filters.
                 % 3. FilterSize has 1 element, and NFilters has multiple. The
@@ -263,6 +269,46 @@ classdef CNN2d < DeepLearning2dClassifier
     methods
 
         function obj = CNN2d(params,trainingOpts,opts)
+        % CNN2d Construct a 2D CNN classifier
+        %
+        %   Name-Value Arguments:
+        %       FilterSize          - Fitler sizes for each hidden layer. 
+        %                             When using one hidden layer, this is a
+        %                             vector of [filterWidth, filterHeight].
+        %                             When using multiple hidden layers, it must
+        %                             be an nLayers x 2 matrix, where each row
+        %                             specifies the filter size for that layer. 
+        %       NFilters            - Number of filters for each hidden layer.
+        %                             When using one hidden layer, this can be
+        %                             a scaler. When using multiple hidden
+        %                             layers, it must be an array specifying
+        %                             the number of filters for each layer.
+        %       DropboutProbability - Dropout probability after each
+        %                             convolutional layer.
+        %       ImageSize           - Input image size.
+        %       NClasses            - Number of classes.
+        %       ClassNames          - Categorical vector of class names.
+        %       FalseNegativeCost   - False negative cost. This parameter
+        %                             overrides the Cost parameter.
+        %       Cost                - Vector specifying the cost of false
+        %                             positives and false negatives.
+        %       MaxEpochs           - Maximum number of training epochs.
+        %       InitialLearnRate    - Initial learning rate for training.
+        %       MiniBatchSize       - Minibatch size for training.
+        %       UseGPU              - Whether to use a GPU for training and
+        %                             inference.
+        %       Reproducible        - Whether to seed the random number
+        %                             generators to try to increase
+        %                             reproducibility. Note that some CUDA
+        %                             functions are non-deterministic, so
+        %                             training is unlikely to be 100%
+        %                             reproducible.
+        %       Seed                - The value to seed the random number
+        %                             generator with, if Reproducible is true.
+        %
+        %   The default parameters can be seen with CNN2d.getDefaultParameters()
+        %
+        %   See also trainNetwork, trainingOptions
             arguments
                 params.FilterSize=[16 2]
                 params.NFilters=20

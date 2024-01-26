@@ -1,4 +1,10 @@
 function displayDataSamplingResults(classifierName)
+% displayDataSamplingResults display results from the data sampling grid search.
+%
+%   displayDataSamplingResults(classifierName) displays the results for the
+%   classifier referred to by classifierName. classifierName corresponds to the
+%   name used when saving results files, not the name of the class that
+%   implements the classifier.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

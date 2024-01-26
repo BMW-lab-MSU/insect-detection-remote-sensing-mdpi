@@ -1,10 +1,27 @@
 function features = extractTFFeatures(X, opts)
+% extractTFFeatures extract features from the continuous wavelet transform.
+%
+%   features = extractTFFeatures(X) computes the continuous wavelet transform 
+%   on the matrix, X, then extracts features from the wavelet transform.
+%   The features are returned as a table. Observations are rows in X.
+%
+%   The extracted features are:
+%       'WaveletMaxRowAvg'      - The max average value of all frequency bins.
+%       'WaveletMaxRowStd'      - The max standard deviation of all frequency 
+%                                 bins.
+%       'WaveletAvg'            - The average of the entire scalogram.
+%       'WaveletAvgRowSkewness' - The average skewness of all frequency bins.
+%       'WaveletMaxRowPeak'     - The max value of the entire scalogram.
+%       'WaveletMaxRowDiff'     - The max first difference of all frequency 
+%                                 bins.
+
+% SPDX-License-Identifier: BSD-3-Clause
 arguments
     X (:,:) {mustBeNumeric}
     opts.UseParallel = false
 end
 
-[rows,columns] = size(X);
+[rows,~] = size(X);
 
 maxMean = zeros(rows,1,'like',X);
 maxStd = zeros(rows,1,'like',X);
@@ -12,7 +29,6 @@ avg = zeros(rows,1,'like',X);
 avgSkewness = zeros(rows,1,'like',X);
 maxPeak = zeros(rows,1,'like',X);
 maxDiff = zeros(rows,1,'like',X);
-brkUp = zeros(rows,1,'like',X);
 
 if opts.UseParallel
     nWorkers = gcp('nocreate').NumWorkers;

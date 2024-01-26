@@ -1,4 +1,16 @@
 function [synthData,synthLabels] = createSyntheticData(data, labels, nAugmented, opts)
+% createSyntheticData create synthetic examples of a minority class
+%
+%   [synthData,synthLabels] = createSyntheticData(data,labels,nAugmented)
+%   creats nAugmented examples for each minority example in data. The minority
+%   label is assumed to be 1. Synthetic data and associated synthetic labels
+%   are returned.
+%
+%   Name-value options:
+%       UseParallel (logical):  - Use the Parallel Computing Toolbox
+%       Reproducible (logical): - Make the results reproducible
+%       Seed:                   - The seed for the random number generator if
+%                                 Reproducible is true
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -25,7 +37,7 @@ N_VARIATIONS = 6;
 
 insectIdx = find(labels == 1);
 
-% Return early is there aren't any insects in the data;
+% Return early if there aren't any insects in the data;
 % we can't create synthetic insects if no insects are available :)
 if isempty(insectIdx)
     synthData = [];

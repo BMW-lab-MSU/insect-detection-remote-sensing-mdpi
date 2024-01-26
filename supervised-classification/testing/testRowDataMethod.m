@@ -1,4 +1,12 @@
 function testRowDataMethod(classifierName)
+% testRowDataMethod test row- and data-based algorithm on the testing set
+%
+%   testRowDataMethod(classifierName) tests the classifer referred to by
+%   classifierName. 
+% 
+%   classifierName is the classifer name used when saving files,
+%   not the name of the class that implements the classifier, e.g.
+%   CNN1D5Layer, not CNN1D.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

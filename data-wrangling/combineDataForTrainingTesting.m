@@ -1,5 +1,14 @@
-% SPDX-License-Identifier: BSD-3-Clause
 function combineDataForTrainingTesting
+% combineDataForTrainingTesting combine the raw data into June and July files.
+%
+% The June data is used for training/validation, and the July data is used for
+% testing. This function combines the raw data from June into one file, and the
+% data from July into another file. These files are then later split into
+% training, validation, and testing sets with splitData.
+%
+% See also splitData, combineData
+
+% SPDX-License-Identifier: BSD-3-Clause
 
 beehiveDataSetup;
 

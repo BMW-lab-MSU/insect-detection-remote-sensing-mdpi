@@ -1,4 +1,12 @@
 classdef SVM < StatsToolboxClassifier
+% SVM Wrapper for SVM classifiers from the Stats/ML Toolbox
+%
+% SVM Methods:
+%   SVM - Constructor
+%
+% See the html documetation or the Classifier help text for more info.
+%
+% See also Classifier, StatsToolboxClassifier, fitcsvm, ClassificationSVM
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -27,6 +35,18 @@ classdef SVM < StatsToolboxClassifier
 
     methods
         function fit(obj,trainingData,trainingLabels,opts)
+        % FIT Train the classifier
+        %
+        %   FIT(trainingData,trainingLabels) trains the neural network using
+        %   trainingData and trainingLabels. trainingData is a cell array of
+        %   matrices or tables. trainingLabels is a cell array of label vectors.
+        %
+        %   Name-Value Arguments:
+        %       Reproducible    - Whether or not to seed the random number
+        %                         generator to make the training more
+        %                         reproducible.
+        %       Seed            - The value used to seed the random number
+        %                         generator.
             arguments
                 obj
                 trainingData
@@ -65,12 +85,33 @@ classdef SVM < StatsToolboxClassifier
         end
 
         function obj = SVM(params,opts)
+        % SVM Construct an SVM classifier
+        %
+        %   Name-Value Arguments:
+        %       BoxConstraint       - Positive scalar representing the box
+        %                             constraint.
+        %       KernelFunction      - Which kernel function to use. Options are
+        %                             linear, gaussian, rbf, and polynomial.
+        %       KernelScale         - Scale factor used to divide predictor
+        %                             values.
+        %       PolynomialOrder     - If the kernel function is polynomial,
+        %                             what order polynomial to use.
+        %       Standardize         - Whether to standardize the input data.
+        %       Solver              - Which solver to use. Options are ISDA,
+        %                             L1QP, and SMO.
+        %       FalseNegativeCost   - False negative cost. This parameter
+        %                             overrides the Cost parameter.
+        %       Cost                - Cost matrix.
+        %       ScoreTransform      - Which score transform to use.
+        %       UseGPU              - Whether or not to use a GPU for training
+        %                             and inference.
+        %
+        %   To see the default parameter values, run SVM.getDefaultParameters()
+        %
+        %   For more details on the parameters, see the fitcsvm documentation.
+        %
+        %   See also fitcsvm
             arguments
-                % TODO: additional argument validation
-                % set default hyperparameters; these default values
-                % are the same as MATLAB's default values as of 2023a.
-                % This doesn't include all possible parameters; just the ones
-                % that are commonly used and/or optimizable in fitcensemble.
                 params.BoxConstraint = 1
                 params.KernelFunction (1,1) string {mustBeMember(params.KernelFunction,["linear","gaussian","rbf","polynomial"])} = "linear"
                 params.KernelScale = 1

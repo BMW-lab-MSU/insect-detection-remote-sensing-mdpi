@@ -1,4 +1,10 @@
 function writeResultsToTxtFile(classifierName,results,dir)
+% writeResultsToTxtFile write testing results to a text file for easier viewing.
+%
+%   writeResultsToTxtfile(classifierName,results,dir) saves the results struct
+%   as <classifierName>Results.txt in dir.
+%
+%   Using a text file is easier than loading a mat file to view the results.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

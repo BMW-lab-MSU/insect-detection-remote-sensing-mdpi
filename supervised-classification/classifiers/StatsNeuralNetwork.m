@@ -1,10 +1,21 @@
 classdef StatsNeuralNetwork < StatsToolboxClassifier
+% StatsNeuralNetwork Wrapper for neural network classifiers from the Stats Toolbox
+%
+%   StatsNeuralNetwork Methods:
+%       StatsNeuralNetwork - Constructor
+%
+%   See the html docuemtnation or the Classifier help text for documentation
+%   on the other methods.
+%
+%   See also StatsToolboxClassifier, Classifier, fitcnet, ClassificationNeuralNetwork
 
 % SPDX-License-Identifier: BSD-3-Clause
 
     properties (SetAccess = protected, GetAccess = public)
         Model
         Hyperparams
+        % Whether to use a GPU or not.
+        % As of 2023a, the Stats Toolbox neural networks don't have GPU support.
         UseGPU = false
     end
 
@@ -23,11 +34,8 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
         end
 
         function formattedParams = formatOptimizableParams(optimizableParams)
-            if isa(optimizableParams,"table")
-                formattedParams = table2struct(optimizableParams);
-            else
-                formattedParams = optimizableParams;
-            end
+
+            formattedParams = formatOptimizableParams@Classifier(optimizableParams);
 
             fieldNames = fields(formattedParams);
 
@@ -60,6 +68,18 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
 
     methods
         function fit(obj,trainingData,trainingLabels,opts)
+        % FIT Train the classifier
+        %
+        %   FIT(trainingData,trainingLabels) trains the neural network using
+        %   trainingData and trainingLabels. trainingData is a cell array of
+        %   matrices or tables. trainingLabels is a cell array of label vectors.
+        %
+        %   Name-Value Arguments:
+        %       Reproducible    - Whether or not to seed the random number
+        %                         generator to make the training more
+        %                         reproducible.
+        %       Seed            - The value used to seed the random number
+        %                         generator.
             arguments
                 obj
                 trainingData
@@ -85,12 +105,25 @@ classdef StatsNeuralNetwork < StatsToolboxClassifier
         end
 
         function obj = StatsNeuralNetwork(params)
+        % StatsNeuralNetwork Construct a StatsNeuralNetwork object
+        %
+        %   Name-Value Arguments:
+        %       LayerSizes          - Array of hidden layer sizes. When using
+        %                             one hidden layer, this can be a scalar.
+        %       Standardize         - Whether or not to standardize input data.
+        %       Lambda              - Lambda regularization value.
+        %       Acitvations         - Which activiation function to use.
+        %                             Options are relu, tanh, sigmoid, and none.
+        %       FalseNegativeCost   - False negative cost in the cost matrix.
+        %                             This overrides the Cost parameter.
+        %       Cost                - Cost matrix.
+        %       ScoreTranform       - Which score transform to perform.
+        %
+        %   To see the default parameters, run
+        %   StatsNeuralNetwork.getDefaultParameters()
+        %
+        %   See also fitcnet
             arguments
-                % TODO: additional argument validation
-                % set default hyperparameters; these default values
-                % are the same as MATLAB's default values as of 2023a.
-                % This doesn't include  all possible parameters; just the ones
-                % that are commonly used and/or optimizable in fitcensemble.
                 params.LayerSizes = 10
                 params.Standardize = true
                 params.Lambda = 0

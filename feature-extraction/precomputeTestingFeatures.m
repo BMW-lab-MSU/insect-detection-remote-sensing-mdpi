@@ -1,5 +1,6 @@
-% SPDX-License-Identifier: BSD-3-Clause
 function precomputeTestingFeatures
+
+% SPDX-License-Identifier: BSD-3-Clause
 
 %% Setup
 if isempty(gcp('nocreate'))

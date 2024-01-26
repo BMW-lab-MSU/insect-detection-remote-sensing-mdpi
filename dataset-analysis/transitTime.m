@@ -1,7 +1,4 @@
-% 1. Load CSV and create struct with image folder, image, column start and end
-% 2. Load each folder and grab metadata
-% 3. Index into adjusted_data_junecal.time with the stop column and start
-% column and find the difference between the two.
+% Compute the transit time for each bee in the dataset
 
 % SPDX-License-Identifier: BSD-3-Clause
 beehiveDataSetup;
@@ -31,12 +28,16 @@ for indexDay = 1:length(dates)
 
         while(strcmp(folderPrefix+scanNums(indexScan),inputCSV(indexCSV).scanName))
             inputCSV(indexCSV).scanName
+
             startTime = d.adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).startCol);
             endTime = d.adjusted_data_junecal(inputCSV(indexCSV).imageNum).time(inputCSV(indexCSV).endCol);
+
             time = endTime - startTime;
             inputCSV(indexCSV).transitTime = time;
+
             beeTransitTimes{beeCounter,1} = folderPrefix+scanNums(indexScan);
             beeTransitTimes{beeCounter,2} = time;
+
             beeCounter = beeCounter+1;
             if(indexCSV < countMaxCSV)
                 indexCSV = indexCSV + 1;

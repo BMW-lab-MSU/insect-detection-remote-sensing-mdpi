@@ -1,5 +1,7 @@
-% SPDX-License-Identifier: BSD-3-Clause
 function preprocess
+% PREPROCESS threshold the data to remove reflection artifacts
+
+% SPDX-License-Identifier: BSD-3-Clause
 
 beehiveDataSetup;
 

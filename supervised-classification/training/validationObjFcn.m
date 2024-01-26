@@ -1,6 +1,42 @@
 function [objective,constraints,userdata] = ...
     validationObjFcn(classifierConstructor,...
     trainingData,trainingLabels,validationData,validationLabels,params,opts)
+% validationObjFcn train a classifier on the training data, and test on the
+% validation data.
+%
+%   Inputs:
+%       classifierConstructor:  - Handle to classifier's class
+%       trainingData:           - The training data
+%       trainingLabels:         - The training labels
+%       validationData:         - The validation data
+%       validationLabels:       - The validation labels
+%
+%   Optional Inputs:
+%       params:                 - Classifier parameters. This is a struct with
+%                                 Static and Optimizable fields. The static
+%                                 parameters field is itself a struct containing
+%                                 fields for each static parameter. The
+%                                 Optimizable field is an table of
+%                                 the OptimizableVariable values used
+%                                 in the current iteration of bayesopt.
+%
+%   Outputs:
+%       objective:              - Matthew's Correlation Coefficient obtained on
+%                                 the validation set.
+%       constraints:            - Not used, but needed for bayesopt.
+%       userdata:               - Full information about the classifier's
+%                                 performance on the validation set, as well
+%                                 as the classifier object itself.
+%
+%   Name-value options:
+%       UseParallel:            - Set the Stats and ML Toolbox to use the 
+%                                 Parallel Computing Toolbox.
+%       UseGPU:                 - Use a GPU for training.
+%
+%   Example:
+%       [objective,~,userdata] = validationObjFcn(@AdaBoost,trainingData,...
+%           trainingLabels,validationData,validationLabels,UseGPU=true)
+
 % SPDX-License-Identifier: BSD-3-Clause
 arguments
     classifierConstructor function_handle

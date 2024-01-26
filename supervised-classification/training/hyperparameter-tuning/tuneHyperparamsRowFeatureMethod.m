@@ -1,4 +1,20 @@
 function tuneHyperparamsRowFeatureMethod(classifierName,classifierType,opts)
+% tuneHyperparamsRowFeatureMethod perform hyperparameter tuning for feature-based methods
+%
+%   tuneHyperparamsRowFeatureMethod(classifierName,classifierType) performs
+%   hyperparameter tuning for the classifier specified by classifierName, e.g.,
+%   LinearSVM. classifierType is a handle to the classifier's class, e.g.,
+%   @SVM.
+%
+%   Name-value options:
+%       UseParallel - Use the parallell computing toolbox. The hyperparameter
+%                     tuning using bayesopt is not performed in parallel
+%                     because that is not reproducible. However, othe
+%                     computations can be performed in parallel. Defaults to
+%                     false.
+%       UseGPU      - Train using a GPU. Defaults to false.
+%       NIterations - Number of iterations to use during Bayesian optimizaiton.
+%                     Defaults to 15.
 
 % SPDX-License-Identifier: BSD-3-Clause
 

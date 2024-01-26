@@ -1,4 +1,13 @@
 classdef RUSBoost < TreeEnsemble
+% RUSBoost Wrapper for RUSBoost classifiers
+%
+%   RUSBoost Methods:
+%       RUSBoost - Constructor
+%
+%   See the html documentation or the Classifier help text for information on
+%   the other methods.
+%
+%   See also Classifier, TreeEnsemble
 
 % SPDX-License-Identifier: BSD-3-Clause
 
@@ -31,12 +40,38 @@ classdef RUSBoost < TreeEnsemble
 
     methods
         function obj = RUSBoost(treeParams,ensembleParams,params,opts)
+        % RUSBoost Constructor an RUSBoost classifier
+        %
+        %   Name-Value Arguments:
+        %       MaxNumSplits            - Maximium number of decision splits
+        %                                 per tree
+        %       MinLeafSize             - Each leaf has at least MinLeafSize
+        %                                 observations per tree leaf
+        %       NumVariablesToSample    - Number of predictors to select at
+        %                                 random for each split
+        %       SplitCriterion          - Criterion for choosing a split.
+        %                                 Options are gdi, deviance, and twoing
+        %       NumLearningCycles       - Number of ensemble learning cycles
+        %       FalseNegativeCost       - False negative cost to use in the
+        %                                 cost matrix. This parameter overrides
+        %                                 the Cost parameter.
+        %       Cost                    - Cost matrix
+        %       ScoreTransform          - Which score transform to use
+        %       LearnRate               - Learning rate for shrinkage 
+        %       UseGPU                  - Whether to use a GPU for training
+        %                                 and inference.
+        %
+        %   For default values, run RUSBoost.getDefaultParameters().
+        %
+        %   See the documentation for fitcensemble and templatetree for more
+        %   information on parameter values and meanings.
+        %
+        %   See also fitcensemble, templatetree
             arguments
-                % TODO: additional argument validation
-                % set default hyperparameters; these default values
-                % are the same as MATLAB's default values as of 2023a.
-                % This doesn't include  all possible parameters; just the ones
-                % that are commonly used and/or optimizable in fitcensemble.
+                % These default values are the same as MATLAB's default values
+                % as of 2023a. This doesn't include  all possible parameters;
+                % just the ones that are commonly used and/or optimizable in
+                % fitcensemble.
                 treeParams.MaxNumSplits = 10
                 treeParams.MinLeafSize = 1
                 treeParams.NumVariablesToSample = "all"

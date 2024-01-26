@@ -4,7 +4,6 @@ function selectBestSamplingParams(classifierName)
 %   selectBestSamplingParams(classifierName) collects the
 %   data-sampling grid search results for a given classifier, then selects
 %   and save which grid parameters minimized the objective function.
-%
 
 % SPDX-License-Identifier: BSD-3-Clause
 

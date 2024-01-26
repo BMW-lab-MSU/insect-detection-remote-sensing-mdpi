@@ -1,4 +1,20 @@
 function [newFeatures, labels] = createSyntheticFeatures(data, labels, nAugmented, avgSamplingFrequency, opts)
+% createSyntheticFeatures create synthetic features for minority class examples
+%
+%   [newFeatures,labels] = ...
+%       createSyntheticFeatures(data,labels,nAugmented,avgSamplingFrequency)
+%   creats nAugmented examples for each minority example in data. The minority
+%   label is assumed to be 1. Synthetic features and associated synthetic labels
+%   are returned. The average sampling frequency is required to extract
+%   some frequency-domain features from the synthetic examples.
+%
+%   Name-value options:
+%       UseParallel (logical):  - Use the Parallel Computing Toolbox
+%       Reproducible (logical): - Make the results reproducible
+%       Seed:                   - The seed for the random number generator if
+%                                 Reproducible is true
+%
+%   See also createSynethicData
 
 % SPDX-License-Identifier: BSD-3-Clause
 arguments

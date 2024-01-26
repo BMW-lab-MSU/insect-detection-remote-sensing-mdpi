@@ -1,5 +1,15 @@
-% SPDX-License-Identifier: BSD-3-Clause
 function splitData
+% splitData split data into training, validation, and testing sets.
+%
+% The June data is split 80/20 into training/validation. The July
+% data is used for testing as is.
+%
+% This function splits the *preprocessed* data, specifically. Thus the
+% data preprocessing must be done first.
+
+% SPDX-License-Identifier: BSD-3-Clause
+
+
 %% Setup
 % Set random number generator properties for reproducibility
 rng(0, 'twister');

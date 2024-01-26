@@ -1,4 +1,14 @@
 function evalSamplingGridRowFeatureMethod(classifierType,gridIndex,params,opts)
+% evalSamplingGridRowFeatureMethod evaluate a feature-based classifier at a grid point
+%
+%   evalSamplingGridRowFeatureMethod(classifierType,gridIndex,params) evaluates
+%   the classifier given by classifierType at gridIndex in the sampling grid search.
+%   classifierType is a handle to the classifier's class, e.g., @SVM. params is
+%   a struct with fields for each of the classifier's hyperparameters.
+%
+%   Name-value options:
+%       UseParallel - Use the parallel computing toolbox
+%       UseGPU      - Use a GPU for training
 
 % SPDX-License-Identifier: BSD-3-Clause
 

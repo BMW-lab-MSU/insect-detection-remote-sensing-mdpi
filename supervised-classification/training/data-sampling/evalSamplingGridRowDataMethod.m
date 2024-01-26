@@ -1,4 +1,14 @@
 function evalSamplingGridRowDataMethod(classifierType,gridIndex,params,opts)
+% evalSamplingGridRowDataMethod evaluate a data-based classifier at a grid point
+%
+%   evalSamplingGridRowDataMethod(classifierType,gridIndex,params) evaluates
+%   the classifier given by classifierType at gridIndex in the sampling grid search.
+%   classifierType is a handle to the classifier's class, e.g., @CNN1D. params is
+%   a struct with fields for each of the classifier's hyperparameters.
+%
+%   Name-value options:
+%       UseParallel - Use the parallel computing toolbox
+%       UseGPU      - Use a GPU for training
 
 % SPDX-License-Identifier: BSD-3-Clause
 
